@@ -46,13 +46,11 @@ export default class FieldPainter {
     this.zoomToFit(width, height);
   }
 
-  zoom(factor) {
-    console.log(paper.view.zoom);
-    const zoom = 2;
-    paper.view.zoom = zoom;
+  zoom() {
+    paper.view.zoom = paper.view.zoom * 1.1;
     paper.view.center = [
-      (FieldDimensions.widthInSteps / 2) * zoom,
-      (FieldDimensions.heightInSteps / 2) * zoom,
+      FieldDimensions.widthInSteps / 2,
+      FieldDimensions.heightInSteps / 2
     ];
   }
 

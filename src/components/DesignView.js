@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import SideBar from './Sidebar';
 import RightSideBar from './RightSideBar';
@@ -11,27 +11,33 @@ const styles = (theme) => {
       display: 'flex',
       flexDirection: 'column',
       flexGrow: 1,
-      backgroundColor: '#fafafa', 
+      backgroundColor: '#fafafa',
       marginTop: 64,
-      padding: 0, 
+      padding: 0,
       minWidth: 0,
-      overflow: 'scroll'
+      overflow: 'scroll',
     },
   };
 };
 
-function DesignView(props) {
-  const { classes } = props;
-  return (
-    <React.Fragment>
-      <SideBar />
-      <div className={classes.content}>
-        <Field />
-        <Timeline />
-      </div>
-      <RightSideBar />
-    </React.Fragment>
-  );
+class DesignView extends Component {
+  constructor(props) {
+    super(props);
+  }
+  //function DesignView(props) {
+  render() {
+    const { classes } = this.props;
+    return (
+      <React.Fragment>
+        <SideBar />
+        <div className={classes.content}>
+          <Field />
+          <Timeline />
+        </div>
+        <RightSideBar />
+      </React.Fragment>
+    );
+  }
 }
 
 export default withStyles(styles)(DesignView);
