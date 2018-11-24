@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Header from './components/Header';
 import DesignView from './components/DesignView';
-import SideBar from './components/Sidebar';
-import Field from './components/Field';
 import { CssBaseline } from '@material-ui/core';
-//import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 
 const theme = createMuiTheme({
   palette: {
-    type: 'dark',
+    type: 'light',
   },
 });
 
@@ -41,11 +38,6 @@ function ClippedDrawer(props) {
       <CssBaseline />
       <div className={classes.root}>
         <Header />
-        {/* <SideBar />
-        <div className={classes.content}>
-          <div className={classes.toolbar} />
-          <Field />
-        </div> */}
         <DesignView />
       </div>
     </MuiThemeProvider>

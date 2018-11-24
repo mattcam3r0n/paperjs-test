@@ -17,6 +17,7 @@ const styles = (theme) => ({
     position: 'relative',
     width: drawerWidth,
   },
+  toolbar: theme.mixins.toolbar
 });
 
 function SideBar(props) {

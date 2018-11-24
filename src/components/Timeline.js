@@ -2,15 +2,16 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
-  footer: {
+  timeline: {
     flex: 'none',
     height: '100px',
+    backgroundColor: '#fff'
   },
 });
 
 function Timeline(props) {
   const { classes } = props;
-  return <div className={classes.footer}>footer</div>;
-}
+    return <div className={classes.timeline}>footer</div>;
+};
 
 export default withStyles(styles)(Timeline);
