@@ -1,15 +1,16 @@
 import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import PlayArrow from '@material-ui/icons/PlayArrow';
+import ZoomIn from '@material-ui/icons/ZoomIn';
+import ZoomOut from '@material-ui/icons/ZoomOut';
+import Fullscreen from '@material-ui/icons/Fullscreen';
+import PanTool from '@material-ui/icons/PanTool';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 160;
+const drawerWidth = 64;
 
 const styles = (theme) => {
   console.log(theme);
@@ -21,7 +22,7 @@ const styles = (theme) => {
     toolbar: theme.mixins.toolbar,
     listItem: {
       paddingLeft: 12,
-      paddingRight: 12
+      paddingRight: 12,
     },
     listItemIcon: {
       marginRight: 8,
@@ -29,10 +30,13 @@ const styles = (theme) => {
     listItemText: {
       paddingLeft: 8,
     },
+    fab: {
+
+    }
   };
 };
 
-function SideBar(props) {
+function RightSideBar(props) {
   const { classes } = props;
   return (
     <Drawer
@@ -45,22 +49,24 @@ function SideBar(props) {
       {/* <List>{mailFolderListItems}</List> */}
       <List>
         <ListItem button className={classes.listItem}>
-          <ListItemIcon className={classes.listItemIcon}>
-            <PlayArrow />
-          </ListItemIcon>
-          <ListItemText primary="Marchers" className={classes.listItemText} />
+          <Button variant="fab" mini className={classes.fag} color="primary">
+            <ZoomIn/>
+          </Button>
         </ListItem>
         <ListItem button className={classes.listItem}>
-          <ListItemIcon className={classes.listItemIcon}>
-            <PlayArrow />
-          </ListItemIcon>
-          <ListItemText primary="Marchers" className={classes.listItemText} />
+          <Button variant="fab" mini className={classes.fag} color="secondary">
+            <ZoomOut/>
+          </Button>
         </ListItem>
         <ListItem button className={classes.listItem}>
-          <ListItemIcon className={classes.listItemIcon}>
-            <PlayArrow />
-          </ListItemIcon>
-          <ListItemText primary="Marchers" className={classes.listItemText} />
+          <Button variant="fab" mini className={classes.fag} color="inherit">
+            <Fullscreen/>
+          </Button>
+        </ListItem>
+        <ListItem button className={classes.listItem}>
+          <Button variant="fab" mini className={classes.fag} color="inherit">
+            <PanTool/>
+          </Button>
         </ListItem>
       </List>
       <Divider />
@@ -69,4 +75,4 @@ function SideBar(props) {
   );
 }
 
-export default withStyles(styles)(SideBar);
+export default withStyles(styles)(RightSideBar);

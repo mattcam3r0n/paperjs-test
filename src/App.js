@@ -9,6 +9,14 @@ const theme = createMuiTheme({
   palette: {
     type: 'light',
   },
+  overrides: {
+    root: {
+      // MuiListItemIcon: {
+      //   marginRight: 8,
+      //   color: 'red'
+      // }
+    }
+  }
 });
 
 const styles = (theme) => ({

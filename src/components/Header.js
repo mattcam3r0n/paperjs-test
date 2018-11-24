@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = (theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: 'black',
   },
 });
 
@@ -14,7 +15,7 @@ function Header(props) {
   const { classes } = props;
   return (
     <AppBar position="absolute" className={classes.appBar}>
-      <Toolbar>
+      <Toolbar variant="dense" >
         <Typography variant="title" color="inherit" noWrap>
           Precision
         </Typography>
