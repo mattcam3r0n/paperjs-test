@@ -1,13 +1,36 @@
 import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
+import { compose } from 'recompose';
+
+import paper from 'paper';
 import FieldPainter from '../lib/FieldPainter';
+import { reaction } from 'mobx';
+import PanTool from '../lib/PanTool';
 
 class Field extends Component {
-
   onResize = () => {
     if (!this.fieldPainter) return;
+    const { appState } = this.props;
     const fieldContainer = document.getElementById('fieldContainer');
-    this.fieldPainter.resize(fieldContainer.clientWidth, fieldContainer.clientHeight);
-  }
+    const { clientWidth, clientHeight } = fieldContainer;
+    this.fieldPainter.resize(clientWidth, clientHeight);
+
+    appState.setFieldContainerSize({
+      width: clientWidth,
+      height: clientHeight
+    });
+    appState.zoomToFit();
+  };
+
+  onPan = (delta) => {
+    const { appState } = this.props;
+    console.log('appState', appState);
+    console.log('onPan', appState.center.x, appState.center.y, delta);
+    appState.setCenter({
+      x: appState.center.x - delta.x,
+      y: appState.center.y - delta.y
+    });
+  };
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResize);
@@ -15,8 +38,27 @@ class Field extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.onResize);
+
+    reaction(
+      () => this.props.appState.zoomFactor,
+      (zoomFactor, reaction) => {
+        console.log('zoom factor is ', zoomFactor);
+        this.fieldPainter.zoom(zoomFactor);
+      }
+    );
+
+    reaction(
+      () => this.props.appState.center,
+      (center, reaction) => {
+        console.log('center is ', center);
+        this.fieldPainter.setCenter(center);
+      }
+    );
+
     this.drawField();
     this.onResize();
+
+    const panTool = new PanTool(this.onPan);
   }
 
   drawField() {
@@ -49,4 +91,7 @@ class Field extends Component {
   }
 }
 
-export default Field;
+export default compose(
+  inject('appState'),
+  observer,
+)(Field);

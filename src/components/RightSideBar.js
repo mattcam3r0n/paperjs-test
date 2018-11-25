@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { observer, inject } from 'mobx-react';
+import { compose } from 'recompose';
+
 import Drawer from '@material-ui/core/Drawer';
 import ZoomIn from '@material-ui/icons/ZoomIn';
 import ZoomOut from '@material-ui/icons/ZoomOut';
@@ -8,7 +12,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import { withStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 64;
 
@@ -30,49 +33,85 @@ const styles = (theme) => {
     listItemText: {
       paddingLeft: 8,
     },
-    fab: {
-
-    }
+    fab: {},
   };
 };
 
-function RightSideBar(props) {
-  const { classes } = props;
-  return (
-    <Drawer
-      variant="permanent"
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <div className={classes.toolbar} />
-      {/* <List>{mailFolderListItems}</List> */}
-      <List>
-        <ListItem button className={classes.listItem}>
-          <Button variant="fab" mini className={classes.fag} color="primary">
-            <ZoomIn/>
-          </Button>
-        </ListItem>
-        <ListItem button className={classes.listItem}>
-          <Button variant="fab" mini className={classes.fag} color="secondary">
-            <ZoomOut/>
-          </Button>
-        </ListItem>
-        <ListItem button className={classes.listItem}>
-          <Button variant="fab" mini className={classes.fag} color="inherit">
-            <Fullscreen/>
-          </Button>
-        </ListItem>
-        <ListItem button className={classes.listItem}>
-          <Button variant="fab" mini className={classes.fag} color="inherit">
-            <PanTool/>
-          </Button>
-        </ListItem>
-      </List>
-      <Divider />
-      {/* <List>{otherMailFolderListItems}</List> */}
-    </Drawer>
-  );
+class RightSideBar extends Component {
+  handleZoomIn = () => {
+    this.props.appState.zoomIn();
+  };
+
+  handleZoomOut = () => {
+    this.props.appState.zoomOut();
+  };
+
+  handleZoomToFit = () => {
+    this.props.appState.zoomToFit();
+  };
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.toolbar} />
+        {/* <List>{mailFolderListItems}</List> */}
+        <List>
+          <ListItem button className={classes.listItem}>
+            <Button
+              variant="fab"
+              mini
+              className={classes.fag}
+              color="primary"
+              onClick={this.handleZoomIn}
+            >
+              <ZoomIn />
+            </Button>
+          </ListItem>
+          <ListItem button className={classes.listItem}>
+            <Button
+              variant="fab"
+              mini
+              className={classes.fag}
+              color="secondary"
+              onClick={this.handleZoomOut}
+            >
+              <ZoomOut />
+            </Button>
+          </ListItem>
+          <ListItem button className={classes.listItem}>
+            <Button
+              variant="fab"
+              mini
+              className={classes.fag}
+              color="inherit"
+              onClick={this.handleZoomToFit}
+            >
+              <Fullscreen />
+            </Button>
+          </ListItem>
+          <ListItem button className={classes.listItem}>
+            <Button variant="fab" mini className={classes.fag} color="inherit">
+              <PanTool />
+            </Button>
+          </ListItem>
+        </List>
+        <Divider />
+        {/* <List>{otherMailFolderListItems}</List> */}
+      </Drawer>
+    );
+  }
 }
 
-export default withStyles(styles)(RightSideBar);
+//export default withStyles(styles)(RightSideBar);
+
+export default compose(
+  inject('appState'),
+  observer,
+  withStyles(styles)
+)(RightSideBar);

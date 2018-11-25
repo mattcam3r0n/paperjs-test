@@ -43,24 +43,36 @@ export default class FieldPainter {
     paper.view.viewSize.width = width;
     paper.view.viewSize.height = height;
     //paper.view.update();
-    this.zoomToFit(width, height);
   }
 
-  zoom() {
-    paper.view.zoom = paper.view.zoom * 1.1;
-    paper.view.center = [
-      FieldDimensions.widthInSteps / 2,
-      FieldDimensions.heightInSteps / 2
-    ];
+  zoom(zoomFactor) {
+    paper.view.zoom = zoomFactor;
+    this.center();
   }
 
   zoomToFit(width, height) {
-    const zoom = width / FieldDimensions.widthInSteps;
+    const zoom = this.calculateZoomToFitFactor(width, height);
     paper.view.zoom = zoom;
+    this.center();
+  }
+
+  center() {
+    this.setCenter({
+      x: FieldDimensions.widthInSteps / 2,
+      y: FieldDimensions.heightInSteps / 2
+    });
+  }
+  
+  setCenter(center) {
     paper.view.center = [
-      FieldDimensions.widthInSteps / 2,
-      FieldDimensions.heightInSteps / 2,
+      center.x,
+      center.y
     ];
+  }
+
+  calculateZoomToFitFactor(width, height) {
+    // TODO: need better algorithm that takes height into account
+    return width / FieldDimensions.widthInSteps;
   }
 
   drawFieldSurface() {
