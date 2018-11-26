@@ -59,22 +59,24 @@ export default class AppState {
   }
 
   setCenterDelta(delta) {
-    const newDelta = this.dejitter(delta.multiply(1.5));
+    const speed = 2;
+    const newDelta = this.dejitter(delta.multiply(speed));
     this.center = {
-      x: this.center.x - (newDelta.x),
-      y: this.center.y - (newDelta.y),
+      x: this.center.x - newDelta.x,
+      y: this.center.y - newDelta.y,
     };
     this.lastDelta = newDelta;
   }
 
   dejitter(delta) {
-    // sometimes the mouse delta jitters between, eg, -1.2 and 1.2 for some reason. 
+    // sometimes the mouse delta jitters between, eg, -1.2 and 1.2 for some reason.
     // try to detect and modify to smooth panning.
     if (!this.lastDelta) return delta;
 
+    const min = 0.5;
     return {
-        x: (Math.abs(delta.x + this.lastDelta.x) < 1) ? 0 : delta.x,
-        y: (Math.abs(delta.y + this.lastDelta.y) < 1) ? 0 : delta.y
+      x: Math.abs(delta.x + this.lastDelta.x) < min ? 0 : delta.x,
+      y: Math.abs(delta.y + this.lastDelta.y) < min ? 0 : delta.y,
     };
   }
 

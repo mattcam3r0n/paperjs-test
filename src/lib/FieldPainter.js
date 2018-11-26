@@ -7,6 +7,7 @@
 */
 import paper, { Color } from 'paper';
 import FieldDimensions from './FieldDimensions';
+import Marcher from './Marcher';
 
 const yardlineMarkers = [
   '',
@@ -32,6 +33,40 @@ export default class FieldPainter {
     this.drawFieldSurface();
     this.drawSidelines();
     this.drawYardlines();
+
+    // test
+    const m = [
+      new Marcher(paper, {
+        position: [18, 6],
+        rotation: 90,
+      }),
+      new Marcher(paper, {
+        position: [20, 6],
+        rotation: 90,
+      }),
+      new Marcher(paper, {
+        position: [22, 6],
+        rotation: 90,
+      }),
+      new Marcher(paper, {
+        position: [24, 6],
+        rotation: 90,
+      }),
+      new Marcher(paper, {
+        position: [18, 12],
+        rotation: 90,
+      }),
+      new Marcher(paper, {
+        position: [20, 12],
+      }),
+      new Marcher(paper, {
+        position: [22, 12],
+      }),
+      new Marcher(paper, {
+        position: [24, 12],
+      }),
+    ];
+
     paper.view.draw();
   }
 
@@ -59,23 +94,17 @@ export default class FieldPainter {
   center() {
     this.setCenter({
       x: FieldDimensions.widthInSteps / 2,
-      y: FieldDimensions.heightInSteps / 2
+      y: FieldDimensions.heightInSteps / 2,
     });
   }
-  
+
   setCenter(center) {
-    paper.view.center = [
-      center.x,
-      center.y
-    ];
+    paper.view.center = [center.x, center.y];
   }
 
   setCenterFromDelta(delta) {
     const { center } = paper.view;
-    paper.view.center = [
-      center.x - delta.x,
-      center.y - delta.y
-    ];
+    paper.view.center = [center.x - delta.x, center.y - delta.y];
   }
 
   calculateZoomToFitFactor(width, height) {
@@ -99,18 +128,18 @@ export default class FieldPainter {
       size: [width, height],
       strokeColor: 'white',
       strokeWidth: 0.25,
-      opacity: 0.75
+      opacity: 0.75,
     });
   }
 
   drawYardlines() {
-      for (let i = 0; i < 21; i++) {
+    for (let i = 0; i < 21; i++) {
       let x = FieldDimensions.goalLineX + i * 6;
       const yardline = new paper.Path({
         strokeColor: 'white',
         strokeWidth: 0.25,
-        opacity: 0.75
-    });
+        opacity: 0.75,
+      });
       yardline.add(
         [x, FieldDimensions.sidelineRect.top],
         [x, FieldDimensions.sidelineRect.bottom]
