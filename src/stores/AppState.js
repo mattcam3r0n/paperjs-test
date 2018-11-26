@@ -57,14 +57,8 @@ export default class AppState {
   }
 
   setCenterDelta(delta) {
-    // if (this.isJittery(delta)) {
-    //   console.log('jittery', delta, this.lastDelta);
-    //   return;
-    // }
     const newDelta = this.dejitter(delta);
     this.center = {
-      //     x: this.center.x - (delta.x * delta.length * 1.5),
-      //     y: this.center.y - (delta.y * delta.length * 1.5)
       x: this.center.x - newDelta.x,
       y: this.center.y - newDelta.y,
     };
@@ -72,20 +66,14 @@ export default class AppState {
   }
 
   dejitter(delta) {
+    // sometimes the mouse delta jitters between, eg, -1.2 and 1.2 for some reason. 
+    // try to detect and modify to smooth panning.
     if (!this.lastDelta) return delta;
-    const newDelta = {
-      x: delta.x,
-      y: delta.y,
+
+    return {
+        x: (Math.abs(delta.x + this.lastDelta.x) < 1) ? 0 : delta.x,
+        y: (Math.abs(delta.y + this.lastDelta.y) < 1) ? 0 : delta.y
     };
-    if (Math.abs(delta.x + this.lastDelta.x) < 1) {
-      newDelta.x = 0;
-    }
-
-    if (Math.abs(delta.y + this.lastDelta.y) < 1) {
-      newDelta.y = 0;
-    }
-
-    return newDelta;
   }
 
   setFieldContainerSize(newSize) {

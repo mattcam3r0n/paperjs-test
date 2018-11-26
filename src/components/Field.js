@@ -24,12 +24,7 @@ class Field extends Component {
 
   onPan = (delta) => {
     const { appState } = this.props;
-    // is it useful to track this thru mobx?
     appState.setCenterDelta(delta);
-    // non-mobx way
-    // just set field state directly?
-    // this.fieldPainter.setCenterFromDelta(delta);
-
   };
 
   componentWillUnmount() {
