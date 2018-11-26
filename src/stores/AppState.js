@@ -57,10 +57,10 @@ export default class AppState {
   }
 
   setCenterDelta(delta) {
-    const newDelta = this.dejitter(delta);
+    const newDelta = this.dejitter(delta.multiply(1.5));
     this.center = {
-      x: this.center.x - newDelta.x,
-      y: this.center.y - newDelta.y,
+      x: this.center.x - (newDelta.x),
+      y: this.center.y - (newDelta.y),
     };
     this.lastDelta = newDelta;
   }
