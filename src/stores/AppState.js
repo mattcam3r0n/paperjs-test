@@ -11,10 +11,12 @@ export default class AppState {
   center;
   fieldContainerSize;
   lastDelta;
+  activeTool;
 
   constructor() {
     this.authenticated = false;
     this.authenticating = false;
+    this.activeTool = 'pan';
     this.zoomFactor = 1;
     this.center = {
       x: FieldDimensions.widthInSteps / 2,
@@ -119,6 +121,7 @@ decorate(AppState, {
   zoomFactor: observable,
   center: observable,
   fieldContainerSize: observable,
+  activeTool: observable,
 
   zoomIn: action,
   zoomOut: action,

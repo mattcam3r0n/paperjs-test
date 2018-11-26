@@ -32,6 +32,7 @@ class Field extends Component {
   }
 
   componentDidMount() {
+    console.log('Field component did mount');
     window.addEventListener('resize', this.onResize);
 
     reaction(
@@ -63,6 +64,7 @@ class Field extends Component {
   }
 
   render() {
+    const { appState } = this.props;
     return (
       <div
         id="fieldContainer"
@@ -78,7 +80,7 @@ class Field extends Component {
           id="fieldCanvas"
           //   data-paper-resize="true"
           // style={{ width: '100%', height: '100%', border: 'solid 1px black' }}
-          style={{ border: 'none' }}
+          style={{ cursor: appState.activeTool == 'pan' ? 'grab' : 'default'}}
         />
       </div>
     );

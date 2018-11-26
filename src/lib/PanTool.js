@@ -8,7 +8,7 @@ export default class PanTool {
         this.panTool.onMouseDown = this.onMouseDown;
         this.panTool.onMouseDrag = throttle(this.onMouseDrag, 50);
         //this.panTool.onMouseDrag = this.onMouseDrag;
-        this.panTool.minDistance = 1;
+        //this.panTool.minDistance = 1;
         //this.panTool.maxDistance = 600;
     }
 

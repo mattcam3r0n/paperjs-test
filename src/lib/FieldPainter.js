@@ -88,7 +88,7 @@ export default class FieldPainter {
     const fieldSurface = new paper.Path.Rectangle({
       point: [left, top],
       size: [width, height],
-      fillColor: 'green',
+      fillColor: '#40703B',
     });
   }
 
