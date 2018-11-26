@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
+import { reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { compose } from 'recompose';
 
-import paper from 'paper';
 import FieldPainter from '../lib/FieldPainter';
-import { reaction } from 'mobx';
 import PanTool from '../lib/PanTool';
 
 class Field extends Component {
@@ -32,13 +31,12 @@ class Field extends Component {
   }
 
   componentDidMount() {
-    console.log('Field component did mount');
     window.addEventListener('resize', this.onResize);
 
+    // move these to init/wireup funcs?
     reaction(
       () => this.props.appState.zoomFactor,
       (zoomFactor, reaction) => {
-        console.log('zoom factor is ', zoomFactor);
         this.fieldPainter.zoom(zoomFactor);
       }
     );
@@ -53,6 +51,7 @@ class Field extends Component {
     this.drawField();
     this.onResize();
 
+    // where should this go?
     const panTool = new PanTool(this.onPan);
   }
 
@@ -80,7 +79,7 @@ class Field extends Component {
           id="fieldCanvas"
           //   data-paper-resize="true"
           // style={{ width: '100%', height: '100%', border: 'solid 1px black' }}
-          style={{ cursor: appState.activeTool == 'pan' ? 'grab' : 'default'}}
+          style={{ cursor: appState.activeTool === 'pan' ? 'grab' : 'default'}}
         />
       </div>
     );
