@@ -66,7 +66,7 @@ class RightSideBar extends Component {
             <Button
               variant="fab"
               mini
-              className={classes.fag}
+              className={classes.fab}
               color="primary"
               onClick={this.handleZoomIn}
             >
@@ -77,7 +77,7 @@ class RightSideBar extends Component {
             <Button
               variant="fab"
               mini
-              className={classes.fag}
+              className={classes.fab}
               color="secondary"
               onClick={this.handleZoomOut}
             >
@@ -88,7 +88,7 @@ class RightSideBar extends Component {
             <Button
               variant="fab"
               mini
-              className={classes.fag}
+              className={classes.fab}
               color="inherit"
               onClick={this.handleZoomToFit}
             >
@@ -96,7 +96,7 @@ class RightSideBar extends Component {
             </Button>
           </ListItem>
           <ListItem button className={classes.listItem}>
-            <Button variant="fab" mini className={classes.fag} color="inherit">
+            <Button variant="fab" mini className={classes.fab} color="inherit">
               <PanTool />
             </Button>
           </ListItem>

@@ -24,12 +24,12 @@ class Field extends Component {
 
   onPan = (delta) => {
     const { appState } = this.props;
-    console.log('appState', appState);
-    console.log('onPan', appState.center.x, appState.center.y, delta);
-    appState.setCenter({
-      x: appState.center.x - delta.x,
-      y: appState.center.y - delta.y
-    });
+    // is it useful to track this thru mobx?
+    appState.setCenterDelta(delta);
+    // non-mobx way
+    // just set field state directly?
+    // this.fieldPainter.setCenterFromDelta(delta);
+
   };
 
   componentWillUnmount() {
@@ -50,7 +50,6 @@ class Field extends Component {
     reaction(
       () => this.props.appState.center,
       (center, reaction) => {
-        console.log('center is ', center);
         this.fieldPainter.setCenter(center);
       }
     );

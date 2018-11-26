@@ -47,7 +47,7 @@ export default class FieldPainter {
 
   zoom(zoomFactor) {
     paper.view.zoom = zoomFactor;
-    this.center();
+    //this.center();
   }
 
   zoomToFit(width, height) {
@@ -67,6 +67,14 @@ export default class FieldPainter {
     paper.view.center = [
       center.x,
       center.y
+    ];
+  }
+
+  setCenterFromDelta(delta) {
+    const { center } = paper.view;
+    paper.view.center = [
+      center.x - delta.x,
+      center.y - delta.y
     ];
   }
 

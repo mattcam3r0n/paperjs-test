@@ -10,18 +10,19 @@ export default class AppState {
   zoomFactor;
   center;
   fieldContainerSize;
+  lastDelta;
 
   constructor() {
     this.authenticated = false;
     this.authenticating = false;
     this.zoomFactor = 1;
     this.center = {
-        x: FieldDimensions.widthInSteps / 2,
-        y: FieldDimensions.heightInSteps / 2
+      x: FieldDimensions.widthInSteps / 2,
+      y: FieldDimensions.heightInSteps / 2,
     };
     this.fieldContainerSize = {
-        width: FieldDimensions.width,
-        height: FieldDimensions.height
+      width: FieldDimensions.width,
+      height: FieldDimensions.height,
     };
   }
 
@@ -35,7 +36,16 @@ export default class AppState {
 
   zoomToFit() {
     // TODO: need better algorithm that takes height into account
-    this.zoomFactor = this.fieldContainerSize.width / FieldDimensions.widthInSteps;
+    this.zoomFactor =
+      this.fieldContainerSize.width / FieldDimensions.widthInSteps;
+    this.reCenter();
+  }
+
+  reCenter() {
+    this.center = {
+      x: FieldDimensions.widthInSteps / 2,
+      y: FieldDimensions.heightInSteps / 2,
+    };
   }
 
   setZoom(newFactor) {
@@ -43,13 +53,44 @@ export default class AppState {
   }
 
   setCenter(newCenter) {
-      console.log('setCenter', this.center, newCenter);
     this.center = newCenter;
+  }
+
+  setCenterDelta(delta) {
+    // if (this.isJittery(delta)) {
+    //   console.log('jittery', delta, this.lastDelta);
+    //   return;
+    // }
+    const newDelta = this.dejitter(delta);
+    this.center = {
+      //     x: this.center.x - (delta.x * delta.length * 1.5),
+      //     y: this.center.y - (delta.y * delta.length * 1.5)
+      x: this.center.x - newDelta.x,
+      y: this.center.y - newDelta.y,
+    };
+    this.lastDelta = newDelta;
+  }
+
+  dejitter(delta) {
+    if (!this.lastDelta) return delta;
+    const newDelta = {
+      x: delta.x,
+      y: delta.y,
+    };
+    if (Math.abs(delta.x + this.lastDelta.x) < 1) {
+      newDelta.x = 0;
+    }
+
+    if (Math.abs(delta.y + this.lastDelta.y) < 1) {
+      newDelta.y = 0;
+    }
+
+    return newDelta;
   }
 
   setFieldContainerSize(newSize) {
     this.fieldContainerSize = newSize;
-  };
+  }
 
   //   async fetchData(pathname, id) {
   //     let { data } = await axios.get(
@@ -94,7 +135,9 @@ decorate(AppState, {
   zoomIn: action,
   zoomOut: action,
   zoomToFit: action,
+  reCenter: action,
   setZoom: action,
   setCenter: action,
-  setFieldContainerSize: action
+  setCenterDelta: action,
+  setFieldContainerSize: action,
 });
