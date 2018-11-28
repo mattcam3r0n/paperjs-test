@@ -3,13 +3,11 @@ import { throttle } from 'underscore';
 
 export default class PanTool {
     constructor(onPan) {
+        this.name = 'pan';
         this.onPan = onPan;
-        this.panTool = new paper.Tool();
-        this.panTool.onMouseDown = this.onMouseDown;
-        this.panTool.onMouseDrag = throttle(this.onMouseDrag, 50);
-        //this.panTool.onMouseDrag = this.onMouseDrag;
-        //this.panTool.minDistance = 1;
-        //this.panTool.maxDistance = 600;
+        this.tool = new paper.Tool();
+        this.tool.onMouseDown = this.onMouseDown;
+        this.tool.onMouseDrag = throttle(this.onMouseDrag, 50);
     }
 
     onMouseDown = (event) => {
@@ -18,5 +16,16 @@ export default class PanTool {
     onMouseDrag = (event) => {
         // debounce?
         this.onPan(event.delta);
+    }
+
+    activate() {
+        this.tool.activate();
+    }
+
+    dispose() {
+        this.onMouseDown = null;
+        this.onMouseDrag = null;
+        this.tool.remove();
+        this.tool = null;
     }
 }

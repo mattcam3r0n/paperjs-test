@@ -1,4 +1,4 @@
-import paper, { PaperScope } from 'paper';
+import paper from 'paper';
 
 export default class Marcher {
     constructor(paperScope, options) {
@@ -43,17 +43,19 @@ export default class Marcher {
             new paper.Point(center.x - halfWidth, center.y + halfHeight),
         ];
 
-        const marcher = new paper.Path({
+        this._marcher = new paper.Path({
+            _itemType: "marcher",
             segments,
-            position: center,
             rotation: this.options.rotation || 0,
             strokeColor: 'black',
             strokeWidth: 0.1,
-            fillColor: 'red'
+            fillColor: 'red',
+            closed: true,
+            position: this.options.position
         });
         //marcher.selected = true;
-        marcher.closed = true;
-        marcher.position = this.options.position;
+        // marcher.closed = true;
+        // marcher.position = this.options.position;
         //marcher.scale(2, 1)
     }
 }

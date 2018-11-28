@@ -1,6 +1,5 @@
 import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';

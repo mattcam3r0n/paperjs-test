@@ -72,11 +72,11 @@ class RightSideBar extends Component {
   };
 
   handlePathTool = () => {
-    this.props.appState.activeTool = 'path';
+    this.props.appState.activatePointerTool();
   };
 
   handlePanTool = () => {
-    this.props.appState.activeTool = 'pan';
+    this.props.appState.activatePanTool();
   };
 
   testSlider = (e) => {

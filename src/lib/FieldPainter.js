@@ -5,23 +5,23 @@
     * all tools are activated via FieldPainter?
     * 
 */
-import paper, { Color } from 'paper';
+import paper from 'paper';
 import FieldDimensions from './FieldDimensions';
 import Marcher from './Marcher';
 
-const yardlineMarkers = [
-  '',
-  '10',
-  '20',
-  '30',
-  '40',
-  '50',
-  '40',
-  '30',
-  '20',
-  '10',
-  '',
-];
+// const yardlineMarkers = [
+//   '',
+//   '10',
+//   '20',
+//   '30',
+//   '40',
+//   '50',
+//   '40',
+//   '30',
+//   '20',
+//   '10',
+//   '',
+// ];
 
 export default class FieldPainter {
   constructor(canvas) {

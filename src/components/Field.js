@@ -4,7 +4,6 @@ import { observer, inject } from 'mobx-react';
 import { compose } from 'recompose';
 
 import FieldPainter from '../lib/FieldPainter';
-import PanTool from '../lib/PanTool';
 
 class Field extends Component {
   onResize = () => {
@@ -19,11 +18,6 @@ class Field extends Component {
       height: clientHeight
     });
     appState.zoomToFit();
-  };
-
-  onPan = (delta) => {
-    const { appState } = this.props;
-    appState.setCenterDelta(delta);
   };
 
   componentWillUnmount() {
@@ -52,7 +46,7 @@ class Field extends Component {
     this.onResize();
 
     // where should this go?
-    const panTool = new PanTool(this.onPan);
+    // const panTool = new PanTool(this.onPan);
   }
 
   drawField() {
@@ -79,7 +73,7 @@ class Field extends Component {
           id="fieldCanvas"
           //   data-paper-resize="true"
           // style={{ width: '100%', height: '100%', border: 'solid 1px black' }}
-          style={{ cursor: appState.activeTool === 'pan' ? 'grab' : 'default'}}
+          style={{ cursor: appState.activeTool && appState.activeTool.name === 'pan' ? 'grab' : 'default'}}
         />
       </div>
     );
