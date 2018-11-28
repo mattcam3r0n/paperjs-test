@@ -71,6 +71,14 @@ class RightSideBar extends Component {
     this.props.appState.zoomToFit();
   };
 
+  handlePathTool = () => {
+    this.props.appState.activeTool = 'path';
+  };
+
+  handlePanTool = () => {
+    this.props.appState.activeTool = 'pan';
+  };
+
   testSlider = (e) => {
     console.log(e.currentTarget.getBoundingClientRect());
     this.setState({
@@ -99,6 +107,7 @@ class RightSideBar extends Component {
                 mini
                 className={classes.fab}
                 color="inherit"
+                onClick={this.handlePathTool}
               >
                 <NearMe />
               </Button>
@@ -109,6 +118,7 @@ class RightSideBar extends Component {
                 mini
                 className={classes.fab}
                 color="inherit"
+                onClick={this.handlePanTool}
               >
                 <PanTool />
               </Button>

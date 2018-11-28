@@ -69,11 +69,11 @@ export default class AppState {
   }
 
   dejitter(delta) {
-    // sometimes the mouse delta jitters between, eg, -1.2 and 1.2 for some reason.
+    // sometimes the mouse delta jitters, eg. between -1.2 and 1.2
     // try to detect and modify to smooth panning.
     if (!this.lastDelta) return delta;
 
-    const min = 0.5;
+    const min = 0.3;
     return {
       x: Math.abs(delta.x + this.lastDelta.x) < min ? 0 : delta.x,
       y: Math.abs(delta.y + this.lastDelta.y) < min ? 0 : delta.y,
