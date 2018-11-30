@@ -2,6 +2,7 @@ import { observable, action, decorate } from 'mobx';
 import FieldDimensions from '../lib/FieldDimensions';
 import PanTool from '../lib/PanTool';
 import PointerTool from '../lib/PointerTool';
+import PathTool from '../lib/PathTool';
 
 export default class AppState {
   authenticated;
@@ -18,6 +19,7 @@ export default class AppState {
   constructor() {
     this.panTool = new PanTool(this.onPan);
     this.pointerTool = new PointerTool();
+    this.pathTool = new PathTool();
     this.pointerTool.activate();
     this.authenticated = false;
     this.authenticating = false;
@@ -44,8 +46,10 @@ export default class AppState {
   }
 
   activatePointerTool() {
-    this.pointerTool.activate();
-    this.activeTool = this.pointerTool;
+    // this.pointerTool.activate();
+    // this.activeTool = this.pointerTool;
+    this.pathTool.activate();
+    this.activeTool = this.pathTool;
   }
 
   zoomIn() {

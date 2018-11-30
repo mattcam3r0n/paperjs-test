@@ -6,6 +6,7 @@ export default class PointerTool {
     this.name = 'pointer';
     // this.onPan = onPan;
     this.tool = new paper.Tool();
+    this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
     // this.panTool.onMouseDown = this.onMouseDown;
     // this.panTool.onMouseDrag = throttle(this.onMouseDrag, 50);

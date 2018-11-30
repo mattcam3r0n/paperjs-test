@@ -12,6 +12,14 @@
 
 */
 export default class FieldDimensions {
+    static get stepSize() {
+        return 1;
+    }
+
+    static get obliqueStepSize() {
+        return Math.sqrt(6*6 + 6*6) / 8;
+    }
+
     static get widthInSteps() {
         return 156;
     }
