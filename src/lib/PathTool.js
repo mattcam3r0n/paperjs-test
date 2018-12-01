@@ -1,4 +1,4 @@
-import paper, { Path, Point } from 'paper';
+import paper, { Path, Point, PointText } from 'paper';
 import { round } from 'lodash';
 import FieldDimensions from './FieldDimensions';
 
@@ -8,11 +8,6 @@ export default class PathTool {
     this.tool = new paper.Tool();
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
-    // this.panTool.onMouseDown = this.onMouseDown;
-    // this.panTool.onMouseDrag = throttle(this.onMouseDrag, 50);
-    //this.panTool.onMouseDrag = this.onMouseDrag;
-    //this.panTool.minDistance = 1;
-    //this.panTool.maxDistance = 600;
   }
 
   onMouseMove = (event) => {
@@ -24,29 +19,7 @@ export default class PathTool {
         event.point
       );
       this.path.lastSegment.point = snapped;
-
-      // const p2 = event.point;
-      // const p1 = this.path.lastSegment.previous.point;
-      // const v = p2.subtract(p1);
-      // console.log('v', v);
-      // const a = this.radiansInDegrees(this.snapToAngle(p1, p2)) + 180;
-      // v.angle = a;
-      // console.log('v2', v);
-
-      // this.path.lastSegment.point = p1.add(v);
-
-      // console.log(
-      //   this.path.lastSegment.previous.point,
-      //   this.path.lastSegment.point,
-      //   this.path.lastSegment.point.subtract(
-      //     this.path.lastSegment.previous.point
-      //   ).angle,
-      //   this.normalizeAngle(
-      //     this.path.lastSegment.point.subtract(
-      //       this.path.lastSegment.previous.point
-      //     ).angle + 90
-      //   )
-      // );
+      this.drawPathSegmentLength(this.path.lastSegment);
     }
 
     if (item && item._itemType === 'marcher') {
@@ -56,6 +29,46 @@ export default class PathTool {
 
     this.unhighlightMarcher();
   };
+
+  drawPathSegmentLength(segment) {
+    const p1 = segment.point;
+    const p2 = segment.previous.point;
+    const v = p2.subtract(p1).divide(2);
+    let textPoint = p1.add(v);
+    if (this.isVertical(segment)) { // place to left of vertical line
+      textPoint = textPoint.add({ x: -1.5, y: 0 });
+    } else {
+      textPoint = textPoint.add({ x: 0, y: -0.5 });
+    }
+    const text = segment.pathSegmentLength || new PointText({
+      point: textPoint,
+      fontFamily: 'Courier New',
+      fontWeight: 'bold',
+      fillColor: 'black',
+      justification: 'center',
+      fontSize: 2
+    });
+    text.content = this.getLengthInSteps(segment);
+    text.point = textPoint;
+    segment.pathSegmentLength = text;
+  }
+
+  getLengthInSteps(segment) {
+    if (this.isOblique(segment)) {
+      return round(segment.curve.length / FieldDimensions.obliqueStepSize);
+    }
+    return round(segment.curve.length);
+  }
+
+  isOblique(segment) {
+    const angle = segment.curve.line.vector.angle + 90;
+    return angle % 90 !== 0;
+  }
+
+  isVertical(segment) {
+    const angle = segment.curve.line.vector.angle + 90;
+    return angle === 0 || angle === 180;
+  }
 
   highlightMarcher = (item) => {
     // highlight
@@ -79,7 +92,6 @@ export default class PathTool {
     }
 
     if (item && item._itemType === 'marcher') {
-      console.log('start path');
       this.path = new Path();
       this.path.strokeColor = 'gray';
       this.path.strokeWidth = 0.25;
@@ -87,6 +99,7 @@ export default class PathTool {
       this.path.strokeCap = 'round';
       this.path.add(this.marcher.position);
       this.path.add(this.marcher.position);
+      this.path.selected = true;
     }
   };
 
@@ -119,6 +132,7 @@ export default class PathTool {
   }
 
   snapToAngle(p1, p2) {
+    // TODO: find a way to do this mathematically
     const sectorMap = {
       0: 360,
       1: 45,
@@ -141,22 +155,10 @@ export default class PathTool {
     angle = this.normalizeAngle(angle);
     const sector = Math.floor(angle / 22.5);
     const snapAngle = this.degreesInRadians(sectorMap[sector]);
-    // console.log(angle, sector, snapAngle);
     return snapAngle;
   }
 
   snapToLine(p1, p2) {
-    // x' = x + (d * cos(a))
-    // y' = y + (d * sin(a))
-    // const a = this.snapToAngle(p1, p2);
-    // if (a % 90 === 0) return this.snapToOblique(p1, p2);
-
-    // const d = round(this.calculateDistance(p1, p2));
-    // return {
-    //   x: round(p1.x + d * Math.cos(a)),
-    //   y: round(p1.y + d * Math.sin(a)),
-    // };
-
     const v = p2.subtract(p1);
     const a = this.radiansInDegrees(this.snapToAngle(p1, p2)) + 180;
     if (a % 90 > 0) return this.snapToOblique(p1, p2);
@@ -166,23 +168,12 @@ export default class PathTool {
 }
 
   snapToOblique(p1, p2) {
-    // x' = x + (d * cos(a))
-    // y' = y + (d * sin(a))
-    // const a = this.snapToAngle(p1, p2);
-    // const d = Math.floor(
-    //   this.calculateDistance(p1, p2) / FieldDimensions.obliqueStepSize
-    // );
-    // return {
-    //   x: p1.x + d * Math.cos(a),
-    //   y: p1.y + d * Math.sin(a),
-    // };
-
     const v = p2.subtract(p1);
     const a = this.radiansInDegrees(this.snapToAngle(p1, p2)) + 180;
     v.angle = a; // snap angle
-    v.length = round(v.length / FieldDimensions.obliqueStepSize);
+    v.length = round(v.length / FieldDimensions.obliqueStepSize) * FieldDimensions.obliqueStepSize;
     const p = p1.add(v);
-    return new Point(round(p.x), round(p.y));
+    return new Point((p.x), (p.y));
   }
 
   calculateDistance(p1, p2) {
