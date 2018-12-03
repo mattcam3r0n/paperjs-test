@@ -13,6 +13,9 @@ export default class PathTool {
   onMouseMove = (event) => {
     const { item } = event;
 
+    // ignore mouse moves that originate from other than the canvas
+    if (event.event.target.nodeName !== "CANVAS") return;
+
     if (this.path) {
       const snapped = this.snapToLine(
         this.path.lastSegment.previous.point,
@@ -54,6 +57,7 @@ export default class PathTool {
   }
 
   getLengthInSteps(segment) {
+    console.log('getLenInSteps', this.isOblique(segment), segment.curve.line.vector.angle + 90);
     if (this.isOblique(segment)) {
       return round(segment.curve.length / FieldDimensions.obliqueStepSize);
     }
@@ -61,7 +65,7 @@ export default class PathTool {
   }
 
   isOblique(segment) {
-    const angle = segment.curve.line.vector.angle + 90;
+    const angle = round(segment.curve.line.vector.angle + 90);
     return angle % 90 !== 0;
   }
 
@@ -88,6 +92,7 @@ export default class PathTool {
 
     if (this.path) {
       this.path.add(event.point);
+      console.log('lastCurve', this.path.lastCurve);
       return;
     }
 
@@ -163,8 +168,9 @@ export default class PathTool {
     const a = this.radiansInDegrees(this.snapToAngle(p1, p2)) + 180;
     if (a % 90 > 0) return this.snapToOblique(p1, p2);
     v.angle = a; // snap angle
+    v.length = round(v.length);
     const p = p1.add(v);
-    return new Point(round(p.x), round(p.y));
+    return new Point((p.x), (p.y));
 }
 
   snapToOblique(p1, p2) {
