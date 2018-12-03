@@ -1,5 +1,4 @@
 import paper from 'paper';
-//import { throttle } from 'underscore';
 
 export default class PointerTool {
   constructor() {

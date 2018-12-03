@@ -1,5 +1,5 @@
 import paper from 'paper';
-import { throttle } from 'underscore';
+import { throttle } from 'lodash';
 
 export default class PanTool {
     constructor(onPan) {

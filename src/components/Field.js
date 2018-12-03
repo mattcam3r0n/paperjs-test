@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react';
 import { compose } from 'recompose';
 
 import FieldPainter from '../lib/FieldPainter';
+import PathPalette from './PathPalette';
 
 class Field extends Component {
   onResize = () => {
@@ -75,6 +76,7 @@ class Field extends Component {
           // style={{ width: '100%', height: '100%', border: 'solid 1px black' }}
           style={{ cursor: appState.activeTool && appState.activeTool.name === 'pan' ? 'grab' : 'default'}}
         />
+        <PathPalette />
       </div>
     );
   }
