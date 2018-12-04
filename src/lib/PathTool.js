@@ -47,7 +47,7 @@ export default class PathTool {
       point: textPoint,
       fontFamily: 'Courier New',
       fontWeight: 'bold',
-      fillColor: 'black',
+      fillColor: 'deepskyblue',
       justification: 'center',
       fontSize: 2
     });
@@ -57,7 +57,6 @@ export default class PathTool {
   }
 
   getLengthInSteps(segment) {
-    console.log('getLenInSteps', this.isOblique(segment), segment.curve.line.vector.angle + 90);
     if (this.isOblique(segment)) {
       return round(segment.curve.length / FieldDimensions.obliqueStepSize);
     }
