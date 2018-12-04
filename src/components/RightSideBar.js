@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { observer, inject } from 'mobx-react';
-import { compose } from 'recompose';
+// import { compose } from 'recompose';
 
 import Drawer from '@material-ui/core/Drawer';
 import ZoomIn from '@material-ui/icons/ZoomIn';
@@ -52,6 +52,8 @@ const styles = (theme) => {
   };
 };
 
+@inject("appState")
+@observer
 class RightSideBar extends Component {
   state = {
     showSlider: false,
@@ -219,10 +221,10 @@ class RightSideBar extends Component {
   }
 }
 
-//export default withStyles(styles)(RightSideBar);
+export default withStyles(styles)(RightSideBar);
 
-export default compose(
-  inject('appState'),
-  observer,
-  withStyles(styles)
-)(RightSideBar);
+// export default compose(
+//   inject('appState'),
+//   observer,
+//   withStyles(styles)
+// )(RightSideBar);

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { observer, inject } from 'mobx-react';
-import { compose } from 'recompose';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
@@ -49,8 +47,4 @@ class PathPalette extends Component {
   }
 }
 
-export default compose(
-  inject('appState'),
-  observer,
-  withStyles(styles)
-)(PathPalette);
+export default withStyles(styles)(PathPalette);

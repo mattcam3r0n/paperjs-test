@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { observer, inject } from 'mobx-react';
-import { compose } from 'recompose';
+// import { observer, inject } from 'mobx-react';
+// import { compose } from 'recompose';
 
 import Draggable from 'react-draggable';
 import Paper from '@material-ui/core/Paper';
@@ -59,8 +59,9 @@ class Palette extends Component {
 
 //export default withStyles(styles)(RightSideBar);
 
-export default compose(
-  inject('appState'),
-  observer,
-  withStyles(styles)
-)(Palette);
+export default withStyles(styles)(Palette);
+// export default compose(
+//   inject('appState'),
+//   observer,
+//   withStyles(styles)
+// )(Palette);

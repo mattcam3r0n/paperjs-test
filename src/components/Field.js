@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { compose } from 'recompose';
+//import { compose } from 'recompose';
 
 import FieldPainter from '../lib/FieldPainter';
 
+@inject('appState')
+@observer
 class Field extends Component {
   onResize = () => {
     if (!this.fieldPainter) return;
@@ -80,7 +82,8 @@ class Field extends Component {
   }
 }
 
-export default compose(
-  inject('appState'),
-  observer,
-)(Field);
+export default Field;
+// export default compose(
+//   inject('appState'),
+//   observer,
+// )(Field);

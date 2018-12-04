@@ -1,20 +1,18 @@
-import { observable, action, decorate } from 'mobx';
+import { observable, action } from 'mobx';
 import FieldDimensions from '../lib/FieldDimensions';
 import PanTool from '../lib/PanTool';
 import PointerTool from '../lib/PointerTool';
 import PathTool from '../lib/PathTool';
 
 export default class AppState {
-  authenticated;
-  authenticating;
-  //   @observable items;
-  //   @observable item;
-  //   @observable testval;
-  zoomFactor;
-  center;
-  fieldContainerSize;
+  @observable authenticated;
+  @observable authenticating;
+  @observable zoomFactor;
+  @observable center;
+  @observable fieldContainerSize;
+  @observable activeTool;
+
   lastDelta;
-  activeTool;
 
   constructor() {
     this.panTool = new PanTool(this.onPan);
@@ -52,14 +50,17 @@ export default class AppState {
     this.activeTool = this.pathTool;
   }
 
+  @action
   zoomIn() {
     this.zoomFactor *= 1.1;
   }
 
+  @action
   zoomOut() {
     this.zoomFactor *= 0.9;
   }
 
+  @action
   zoomToFit() {
     // TODO: need better algorithm that takes height into account
     this.zoomFactor =
@@ -67,6 +68,7 @@ export default class AppState {
     this.reCenter();
   }
 
+  @action
   reCenter() {
     this.center = {
       x: FieldDimensions.widthInSteps / 2,
@@ -74,14 +76,17 @@ export default class AppState {
     };
   }
 
+  @action
   setZoom(newFactor) {
     this.zoomFactor = newFactor;
   }
 
+  @action
   setCenter(newCenter) {
     this.center = newCenter;
   }
 
+  @action
   setCenterDelta(delta) {
     const speed = 2;
     const newDelta = this.dejitter(delta.multiply(speed));
@@ -104,6 +109,7 @@ export default class AppState {
     };
   }
 
+  @action
   setFieldContainerSize(newSize) {
     this.fieldContainerSize = newSize;
   }
@@ -140,21 +146,3 @@ export default class AppState {
   //     });
   //   }
 }
-
-decorate(AppState, {
-  authenticated: observable,
-  authenticating: observable,
-  zoomFactor: observable,
-  center: observable,
-  fieldContainerSize: observable,
-  activeTool: observable,
-
-  zoomIn: action,
-  zoomOut: action,
-  zoomToFit: action,
-  reCenter: action,
-  setZoom: action,
-  setCenter: action,
-  setCenterDelta: action,
-  setFieldContainerSize: action,
-});
