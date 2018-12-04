@@ -16,7 +16,7 @@ class PathPalette extends Component {
 
   render() {
     return (
-      <Palette title="Path">
+      <Palette title="Path Tool">
         <Tooltip title="New Path">
           <IconButton size="small" variant="outlined">
             <Timeline />

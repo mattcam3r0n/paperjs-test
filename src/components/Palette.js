@@ -19,7 +19,8 @@ const styles = (theme) => ({
   title: {
     flex: '1 1 auto',
     fontSize: 12,
-    marginTop: 5
+    marginTop: 5,
+    textAlign: 'center'
   },
   paper: {
     position: 'absolute',
