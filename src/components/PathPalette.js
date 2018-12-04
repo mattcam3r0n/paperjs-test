@@ -49,8 +49,6 @@ class PathPalette extends Component {
   }
 }
 
-//export default withStyles(styles)(RightSideBar);
-
 export default compose(
   inject('appState'),
   observer,

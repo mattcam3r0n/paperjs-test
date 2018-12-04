@@ -4,6 +4,7 @@ import SideBar from './Sidebar';
 import RightSideBar from './RightSideBar';
 import Field from './Field';
 import Timeline from './Timeline';
+import PathPalette from './PathPalette';
 
 const styles = (theme) => {
   return {
@@ -35,6 +36,7 @@ class DesignView extends Component {
           <Timeline />
         </div>
         <RightSideBar />
+        <PathPalette />
       </React.Fragment>
     );
   }
