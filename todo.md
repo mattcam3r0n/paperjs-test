@@ -9,6 +9,8 @@ General
         * active tool, etc
     * fieldState?
         * show logo, grid, etc
+* draw field on separate layer
+    * is hit detection per layer?
 
 Serverless
 * set up serverless framework

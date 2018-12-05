@@ -5,21 +5,21 @@ import { observer, inject } from 'mobx-react';
 
 import FieldPainter from '../lib/FieldPainter';
 
-@inject('appState')
+@inject('designViewState')
 @observer
 class Field extends Component {
   onResize = () => {
     if (!this.fieldPainter) return;
-    const { appState } = this.props;
+    const { designViewState } = this.props;
     const fieldContainer = document.getElementById('fieldContainer');
     const { clientWidth, clientHeight } = fieldContainer;
     this.fieldPainter.resize(clientWidth, clientHeight);
 
-    appState.setFieldContainerSize({
+    designViewState.setFieldContainerSize({
       width: clientWidth,
       height: clientHeight
     });
-    appState.zoomToFit();
+    designViewState.zoomToFit();
   };
 
   componentWillUnmount() {
@@ -31,14 +31,14 @@ class Field extends Component {
 
     // move these to init/wireup funcs?
     reaction(
-      () => this.props.appState.zoomFactor,
+      () => this.props.designViewState.zoomFactor,
       (zoomFactor, reaction) => {
         this.fieldPainter.zoom(zoomFactor);
       }
     );
 
     reaction(
-      () => this.props.appState.center,
+      () => this.props.designViewState.center,
       (center, reaction) => {
         this.fieldPainter.setCenter(center);
       }
@@ -59,7 +59,7 @@ class Field extends Component {
   }
 
   render() {
-    const { appState } = this.props;
+    const { designViewState } = this.props;
     return (
       <div
         id="fieldContainer"
@@ -75,7 +75,7 @@ class Field extends Component {
           id="fieldCanvas"
           //   data-paper-resize="true"
           // style={{ width: '100%', height: '100%', border: 'solid 1px black' }}
-          style={{ cursor: appState.activeTool && appState.activeTool.name === 'pan' ? 'grab' : 'default'}}
+          style={{ cursor: designViewState.activeTool && designViewState.activeTool.name === 'pan' ? 'grab' : 'default'}}
         />
       </div>
     );
@@ -84,6 +84,6 @@ class Field extends Component {
 
 export default Field;
 // export default compose(
-//   inject('appState'),
+//   inject('designViewState'),
 //   observer,
 // )(Field);

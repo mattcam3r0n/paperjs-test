@@ -52,7 +52,7 @@ const styles = (theme) => {
   };
 };
 
-@inject("appState")
+@inject("designViewState")
 @observer
 class RightSideBar extends Component {
   state = {
@@ -62,23 +62,23 @@ class RightSideBar extends Component {
   };
 
   handleZoomIn = () => {
-    this.props.appState.zoomIn();
+    this.props.designViewState.zoomIn();
   };
 
   handleZoomOut = () => {
-    this.props.appState.zoomOut();
+    this.props.designViewState.zoomOut();
   };
 
   handleZoomToFit = () => {
-    this.props.appState.zoomToFit();
+    this.props.designViewState.zoomToFit();
   };
 
   handlePathTool = () => {
-    this.props.appState.activatePointerTool();
+    this.props.designViewState.activatePointerTool();
   };
 
   handlePanTool = () => {
-    this.props.appState.activatePanTool();
+    this.props.designViewState.activatePanTool();
   };
 
   testSlider = (e) => {
@@ -224,7 +224,7 @@ class RightSideBar extends Component {
 export default withStyles(styles)(RightSideBar);
 
 // export default compose(
-//   inject('appState'),
+//   inject('designViewState'),
 //   observer,
 //   withStyles(styles)
 // )(RightSideBar);

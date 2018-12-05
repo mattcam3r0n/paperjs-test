@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Provider } from 'mobx-react';
+import {
+  withStyles,
+  MuiThemeProvider,
+  createMuiTheme,
+} from '@material-ui/core/styles';
 import Header from './components/Header';
 import DesignView from './components/DesignView';
+import DesignViewState from './stores/DesignViewState';
 import { CssBaseline } from '@material-ui/core';
 
 const theme = createMuiTheme({
@@ -15,8 +21,8 @@ const theme = createMuiTheme({
       //   marginRight: 8,
       //   color: 'red'
       // }
-    }
-  }
+    },
+  },
 });
 
 const styles = (theme) => ({
@@ -37,6 +43,7 @@ const styles = (theme) => ({
   },
 });
 
+const designViewState = new DesignViewState();
 function ClippedDrawer(props) {
   const { classes } = props;
 
@@ -46,7 +53,9 @@ function ClippedDrawer(props) {
       <CssBaseline />
       <div className={classes.root}>
         <Header />
-        <DesignView />
+        <Provider designViewState={designViewState}>
+          <DesignView />
+        </Provider>
       </div>
     </MuiThemeProvider>
   );
