@@ -16,7 +16,7 @@ function Header(props) {
   return (
     <AppBar position="absolute" className={classes.appBar}>
       <Toolbar variant="dense" >
-        <Typography variant="title" color="inherit" noWrap>
+        <Typography variant="subtitle1" color="inherit" noWrap>
           Precision
         </Typography>
       </Toolbar>
