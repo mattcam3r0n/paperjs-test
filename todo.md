@@ -2,7 +2,13 @@ TODO
 
 General
 * rename project, locally and on github.  precision-2?
-
+* refactor appState into separate, smaller stores
+    * appState
+        * logged in, user, etc.
+    * designState
+        * active tool, etc
+    * fieldState?
+        * show logo, grid, etc
 
 Serverless
 * set up serverless framework
