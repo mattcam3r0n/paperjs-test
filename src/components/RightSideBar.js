@@ -11,17 +11,15 @@ import PanTool from '@material-ui/icons/PanTool';
 import NearMe from '@material-ui/icons/NearMe';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import Divider from '@material-ui/core/Divider';
 
-import Paper from '@material-ui/core/Paper';
-import Slide from '@material-ui/core/Slide';
+import ButtonFlyOut from './ButtonFlyOut';
+import Palette from './Palette';
 
 const drawerWidth = 64;
 
 const styles = (theme) => {
-  console.log(theme);
   return {
     drawerPaper: {
       position: 'relative',
@@ -41,42 +39,30 @@ const styles = (theme) => {
     fab: {
       margin: 0,
     },
-    fabSlideOut: {
-      margin: 10,
-    },
-    paper: {
-      zIndex: 1,
-      position: 'absolute',
-      // margin: theme.spacing.unit,
-      margin: 0,
-      height: 62,
-      width: 200,
-    },
   };
 };
 
 @inject('designViewState')
 @observer
 class RightSideBar extends Component {
-  state = {
-    showSlider: false,
-    x: 0,
-    y: 0,
-  };
+  state = {};
 
-  handleZoomIn = () => {
+  handleZoomIn = (e) => {
+    e.preventDefault();
     this.props.designViewState.zoomIn();
   };
 
-  handleZoomOut = () => {
+  handleZoomOut = (e) => {
+    e.preventDefault();
     this.props.designViewState.zoomOut();
   };
 
-  handleZoomToFit = () => {
+  handleZoomToFit = (e) => {
+    e.preventDefault();
     this.props.designViewState.zoomToFit();
   };
 
-  handlePathTool = () => {
+  handlePathTool = (e) => {
     this.props.designViewState.activatePointerTool();
   };
 
@@ -84,17 +70,9 @@ class RightSideBar extends Component {
     this.props.designViewState.activatePanTool();
   };
 
-  testSlider = (e) => {
-    console.log(e.currentTarget.getBoundingClientRect());
-    this.setState({
-      showSlider: !this.state.showSlider,
-      x: e.currentTarget.getBoundingClientRect().x - 200,
-      y: e.currentTarget.getBoundingClientRect().y - 11,
-    });
-  };
-
   render() {
     const { classes } = this.props;
+    const { anchorEl } = this.state;
     return (
       <React.Fragment>
         <Drawer
@@ -116,108 +94,59 @@ class RightSideBar extends Component {
               </Fab>
             </ListItem>
             <ListItem button className={classes.listItem}>
-              <Fab
-                size="small"
-                className={classes.fab}
-                color="inherit"
-                onClick={this.handlePanTool}
-              >
-                <PanTool />
-              </Fab>
+              <ButtonFlyOut>
+                <Fab
+                  size="small"
+                  className={classes.fab}
+                  color="inherit"
+                  onClick={this.handlePanTool}
+                >
+                  <PanTool />
+                </Fab>
+                <Fab
+                  size="small"
+                  className={classes.fab}
+                  color="primary"
+                  onClick={this.handleZoomIn}
+                >
+                  <ZoomIn />
+                </Fab>
+                <Fab
+                  size="small"
+                  className={classes.fab}
+                  color="secondary"
+                  onClick={this.handleZoomOut}
+                >
+                  <ZoomOut />
+                </Fab>
+                <Fab
+                  size="small"
+                  className={classes.fab}
+                  color="inherit"
+                  onClick={this.handleZoomToFit}
+                >
+                  <Fullscreen />
+                </Fab>
+              </ButtonFlyOut>
             </ListItem>
             <ListItem button className={classes.listItem}>
-              <Fab
-                size="small"
-                className={classes.fab}
-                color="primary"
-                onClick={this.handleZoomIn}
-              >
-                <ZoomIn />
-              </Fab>
-            </ListItem>
-            <ListItem button className={classes.listItem}>
-              <Fab
-                size="small"
-                className={classes.fab}
-                color="secondary"
-                onClick={this.handleZoomOut}
-              >
-                <ZoomOut />
-              </Fab>
-            </ListItem>
-            <ListItem button className={classes.listItem}>
-              <Button
-                variant="fab"
-                mini
-                className={classes.fab}
-                color="inherit"
-                onClick={this.handleZoomToFit}
-              >
-                <Fullscreen />
-              </Button>
-            </ListItem>
-
-            <ListItem button className={classes.listItem}>
-              <Button
-                variant="fab"
-                mini
-                className={classes.fab}
-                color="inherit"
-                onClick={this.testSlider}
-              >
-                <Fullscreen />
-              </Button>
+              <ButtonFlyOut>
+                <Fab size="small" color="inherit">
+                  <Fullscreen />
+                </Fab>
+                <Fab size="small" color="inherit">
+                  <Fullscreen />
+                </Fab>
+                <Fab size="small" color="inherit">
+                  <Fullscreen />
+                </Fab>
+              </ButtonFlyOut>
             </ListItem>
           </List>
           <Divider />
           {/* <List>{otherMailFolderListItems}</List> */}
+          <Palette />
         </Drawer>
-        <Slide
-          direction="left"
-          in={this.state.showSlider}
-          mountOnEnter
-          unmountOnExit
-        >
-          <Paper
-            elevation={4}
-            className={classes.paper}
-            style={{ left: this.state.x, top: this.state.y }}
-          >
-            {/* <svg className={classes.svg}>
-              <polygon
-                points="0,100 50,00, 100,100"
-                className={classes.polygon}
-              />
-            </svg> */}
-            <Button
-              variant="fab"
-              mini
-              className={classes.fabSlideOut}
-              color="inherit"
-              onClick={this.testSlider}
-            >
-              <Fullscreen />
-            </Button>
-            <Button
-              variant="fab"
-              mini
-              className={classes.fabSlideOut}
-              color="inherit"
-              onClick={this.testSlider}
-            >
-              <Fullscreen />
-            </Button>
-            <Button
-              variant="fab"
-              mini
-              className={classes.fabSlideOut}
-              color="inherit"
-              onClick={this.testSlider}
-            >
-              <Fullscreen />
-            </Button>
-          </Paper>
-        </Slide>
       </React.Fragment>
     );
   }
