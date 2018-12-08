@@ -3,11 +3,10 @@ import { withStyles } from '@material-ui/core/styles';
 // import { observer, inject } from 'mobx-react';
 // import { compose } from 'recompose';
 
-import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
 import Fab from '@material-ui/core/Fab';
 import Popover from '@material-ui/core/Popover';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Fullscreen from '@material-ui/icons/Fullscreen';
 
 const styles = (theme) => ({
   flyoutButton: {
@@ -32,7 +31,7 @@ class ButtonFlyOut extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, tooltip } = this.props;
     const { anchorEl } = this.state;
 
     return (
@@ -41,14 +40,16 @@ class ButtonFlyOut extends Component {
         onClickAway={this.handleClickAway}
       >
         <React.Fragment>
-          <Fab
-            size="small"
-            className={classes.fab}
-            color="inherit"
-            onClick={this.handleClick}
-          >
-            <Fullscreen />
-          </Fab>
+          <Tooltip title={tooltip} disableFocusListener={true}>
+            <Fab
+              size="small"
+              className={classes.fab}
+              color="inherit"
+              onClick={this.handleClick}
+            >
+              {this.props.icon}
+            </Fab>
+          </Tooltip>
           <Popover
             open={Boolean(anchorEl)}
             anchorEl={anchorEl}

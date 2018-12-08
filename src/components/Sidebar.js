@@ -11,7 +11,6 @@ import { withStyles } from '@material-ui/core/styles';
 const drawerWidth = 160;
 
 const styles = (theme) => {
-  console.log(theme);
   return {
     drawerPaper: {
       position: 'relative',
