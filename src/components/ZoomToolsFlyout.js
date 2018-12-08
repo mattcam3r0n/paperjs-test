@@ -47,7 +47,7 @@ class ZoomToolsFlyout extends Component {
     const { classes } = this.props;
     return (
       <ButtonFlyOut icon={<Search />} tooltip="Zoom & Pan">
-        <Tooltip title="">
+        <Tooltip title="Pan">
           <Fab
             size="small"
             className={classes.fab}
@@ -57,7 +57,7 @@ class ZoomToolsFlyout extends Component {
             <PanTool />
           </Fab>
         </Tooltip>
-        <Tooltip title="">
+        <Tooltip title="Zoom In">
           <Fab
             size="small"
             className={classes.fab}
@@ -67,7 +67,7 @@ class ZoomToolsFlyout extends Component {
             <ZoomIn />
           </Fab>
         </Tooltip>
-        <Tooltip title="">
+        <Tooltip title="Zoom Out">
           <Fab
             size="small"
             className={classes.fab}
@@ -77,7 +77,7 @@ class ZoomToolsFlyout extends Component {
             <ZoomOut />
           </Fab>
         </Tooltip>
-        <Tooltip title="">
+        <Tooltip title="Zoom to Fit">
           <Fab
             size="small"
             className={classes.fab}
