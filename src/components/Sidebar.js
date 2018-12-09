@@ -1,14 +1,17 @@
 import React from 'react';
-import Drawer from '@material-ui/core/Drawer';
-import PlayArrow from '@material-ui/icons/PlayArrow';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 160;
+import Drawer from '@material-ui/core/Drawer';
+import PlayArrow from '@material-ui/icons/PlayArrow';
+import Stop from '@material-ui/icons/Stop';
+import Bookmarks from '@material-ui/icons/Bookmarks';
+import LibraryMusic from '@material-ui/icons/LibraryMusic';
+import Fab from '@material-ui/core/Fab';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
+
+const drawerWidth = 64;
 
 const styles = (theme) => {
   return {
@@ -19,13 +22,16 @@ const styles = (theme) => {
     toolbar: theme.mixins.toolbar,
     listItem: {
       paddingLeft: 12,
-      paddingRight: 12
+      paddingRight: 12,
     },
-    listItemIcon: {
-      marginRight: 8,
-    },
-    listItemText: {
-      paddingLeft: 8,
+    // listItemIcon: {
+    //   marginRight: 8,
+    // },
+    // listItemText: {
+    //   paddingLeft: 8,
+    // },
+    fab: {
+      margin: 0,
     },
   };
 };
@@ -43,22 +49,24 @@ function SideBar(props) {
       {/* <List>{mailFolderListItems}</List> */}
       <List>
         <ListItem button className={classes.listItem}>
-          <ListItemIcon className={classes.listItemIcon}>
+          <Fab size="small" className={classes.fab} color="inherit">
             <PlayArrow />
-          </ListItemIcon>
-          <ListItemText primary="Marchers" className={classes.listItemText} />
+          </Fab>
         </ListItem>
         <ListItem button className={classes.listItem}>
-          <ListItemIcon className={classes.listItemIcon}>
-            <PlayArrow />
-          </ListItemIcon>
-          <ListItemText primary="Marchers" className={classes.listItemText} />
+          <Fab size="small" className={classes.fab} color="inherit">
+            <Stop />
+          </Fab>
         </ListItem>
         <ListItem button className={classes.listItem}>
-          <ListItemIcon className={classes.listItemIcon}>
-            <PlayArrow />
-          </ListItemIcon>
-          <ListItemText primary="Marchers" className={classes.listItemText} />
+          <Fab size="small" className={classes.fab} color="inherit">
+            <Bookmarks />
+          </Fab>
+        </ListItem>
+        <ListItem button className={classes.listItem}>
+          <Fab size="small" className={classes.fab} color="inherit">
+            <LibraryMusic />
+          </Fab>
         </ListItem>
       </List>
       <Divider />
