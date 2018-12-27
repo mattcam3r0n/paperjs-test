@@ -3,11 +3,17 @@ import { round } from 'lodash';
 import FieldDimensions from './FieldDimensions';
 
 export default class PathTool {
-  constructor() {
+  constructor(paperScope) {
+    this.paperScope = paperScope;
+    paperScope.activate();
     this.name = 'path';
     this.tool = new paper.Tool();
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
+  }
+
+  get cursor() {
+    return 'crosshair';
   }
 
   onMouseMove = (event) => {
@@ -114,8 +120,9 @@ export default class PathTool {
   }
 
   dispose() {
-    this.onMouseDown = null;
-    this.onMouseDrag = null;
+    this.tool.off('mousedown');
+    this.tool.off('mousedrag');
+    this.tool.off('mousemove');
     this.tool.remove();
     this.tool = null;
   }

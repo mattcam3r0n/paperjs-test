@@ -6,9 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import ButtonFlyOut from './ButtonFlyOut';
 
 // icons
-import NearMe from '@material-ui/icons/NearMe';
 import TabUnselected from '@material-ui/icons/TabUnselected';
-import Timeline from '@material-ui/icons/Timeline';
 
 const styles = (theme) => ({
     fab: {
@@ -21,23 +19,9 @@ const styles = (theme) => ({
 class SelectionToolsFlyout extends Component {
   state = {};
 
-  handleZoomIn = (e) => {
-    e.preventDefault();
-    this.props.designViewState.zoomIn();
-  };
-
-  handleZoomOut = (e) => {
-    e.preventDefault();
-    this.props.designViewState.zoomOut();
-  };
-
-  handleZoomToFit = (e) => {
-    e.preventDefault();
-    this.props.designViewState.zoomToFit();
-  };
-
-  handlePanTool = () => {
-    this.props.designViewState.activatePanTool();
+  handlePointerTool = (e) => {
+    //e.preventDefault();
+    this.props.designViewState.activatePointerTool();
   };
 
   render() {
@@ -48,7 +32,7 @@ class SelectionToolsFlyout extends Component {
           size="small"
           className={classes.fab}
           color="inherit"
-          onClick={this.handlePanTool}
+          onClick={this.handlePointerTool}
         >
           <TabUnselected />
         </Fab>
@@ -56,7 +40,7 @@ class SelectionToolsFlyout extends Component {
           size="small"
           className={classes.fab}
           color="inherit"
-          onClick={this.handleZoomIn}
+          onClick={this.handlePointerTool}
         >
           <TabUnselected />
         </Fab>
@@ -64,7 +48,7 @@ class SelectionToolsFlyout extends Component {
           size="small"
           className={classes.fab}
           color="inherit"
-          onClick={this.handleZoomOut}
+          onClick={this.handlePointerTool}
         >
           <TabUnselected />
         </Fab>
@@ -72,7 +56,7 @@ class SelectionToolsFlyout extends Component {
           size="small"
           className={classes.fab}
           color="inherit"
-          onClick={this.handleZoomToFit}
+          onClick={this.handlePointerTool}
         >
           <TabUnselected />
         </Fab>

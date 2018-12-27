@@ -1,6 +1,10 @@
 TODO
 
 General
+* figure out multiple paperscopes...
+    * in particular, how to handle multiple tools
+    * may need to create and store paperscopes in appState or fieldState 
+    * so they can be passed to tools, field painter, etc
 * rename project, locally and on github.  precision-2?
 * refactor appState into separate, smaller stores
     * appState

@@ -1,7 +1,9 @@
 import paper from 'paper';
 
 export default class PointerTool {
-  constructor() {
+  constructor(paperScope) {
+    this.paperScope = paperScope;
+    paperScope.activate();
     this.name = 'pointer';
     // this.onPan = onPan;
     this.tool = new paper.Tool();
@@ -45,12 +47,13 @@ export default class PointerTool {
   };
 
   activate() {
+    this.paperScope.activate();
     this.tool.activate();
   }
 
   dispose() {
-    this.onMouseDown = null;
-    this.onMouseDrag = null;
+    this.tool.off('mousedown');
+    this.tool.off('mousedrag');
     this.tool.remove();
     this.tool = null;
   }

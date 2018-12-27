@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
+import paper from 'paper';
 //import { compose } from 'recompose';
 
 import FieldPainter from '../lib/FieldPainter';
@@ -46,19 +47,23 @@ class Field extends Component {
 
     this.drawField();
     this.onResize();
-
-    // where should this go?
-    // const panTool = new PanTool(this.onPan);
   }
 
   drawField() {
+    const { designViewState } = this.props;
     const canvas = document.getElementById('fieldCanvas');
-    this.fieldPainter = new FieldPainter(canvas);
+    // create paperscope
+    const paperScope = new paper.PaperScope();
+    paperScope.setup(canvas);
+    designViewState.setFieldPaperScope(paperScope);
+    // create field painter
+    this.fieldPainter = new FieldPainter(paperScope);
     this.fieldPainter.draw();
     this.onResize();
   }
 
   render() {
+    console.log('Field.render');
     const { designViewState } = this.props;
     return (
       <div
@@ -75,7 +80,7 @@ class Field extends Component {
           id="fieldCanvas"
           //   data-paper-resize="true"
           // style={{ width: '100%', height: '100%', border: 'solid 1px black' }}
-          style={{ cursor: designViewState.activeTool && designViewState.activeTool.name === 'pan' ? 'grab' : 'default'}}
+          style={{ cursor: designViewState.activeTool  ? designViewState.activeTool.cursor : 'default'}}
         />
       </div>
     );

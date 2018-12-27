@@ -18,21 +18,31 @@ const styles = (theme) => ({
 class ButtonFlyOut extends Component {
   state = {
     anchorEl: null,
+    isOpen: false,
   };
 
   handleClick = (e) => {
-    this.setState({ anchorEl: e.currentTarget });
+    this.setState({ anchorEl: e.currentTarget, isOpen: true });
     e.stopPropagation();
     e.preventDefault();
   };
 
   handleClickAway = (e) => {
-    this.setState({ anchorEl: null });
+    this.setState({ anchorEl: null, isOpen: false });
   };
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (!nextProps.isOpen) {
+  //     this.setState({
+  //       anchorEl: null,
+  //       isOpen: false
+  //     });  
+  //   }
+  // }
 
   render() {
     const { classes, tooltip } = this.props;
-    const { anchorEl } = this.state;
+    const { anchorEl, isOpen } = this.state;
 
     return (
       <ClickAwayListener
@@ -51,7 +61,7 @@ class ButtonFlyOut extends Component {
             </Fab>
           </Tooltip>
           <Popover
-            open={Boolean(anchorEl)}
+            open={isOpen}
             anchorEl={anchorEl}
             onClose={this.handleClose}
             anchorOrigin={{

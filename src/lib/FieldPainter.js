@@ -24,70 +24,77 @@ import Marcher from './Marcher';
 // ];
 
 export default class FieldPainter {
-  constructor(canvas) {
-    this.canvas = canvas;
-    paper.setup(canvas);
+  constructor(paperScope) {
+    this.paperScope = paperScope;
+    // this.canvas = canvas;
+    // this.paperScope = new paper.PaperScope();
+    // this.paperScope.setup(canvas);
+    this.paperScope.activate();
   }
 
   draw() {
+    this.paperScope.activate();
     this.drawFieldSurface();
     this.drawSidelines();
     this.drawYardlines();
 
     // test
     const m = [
-      new Marcher(paper, {
+      new Marcher(this.paperScope, {
         position: [18, 6],
         rotation: 90,
       }),
-      new Marcher(paper, {
+      new Marcher(this.paperScope, {
         position: [20, 6],
         rotation: 90,
       }),
-      new Marcher(paper, {
+      new Marcher(this.paperScope, {
         position: [22, 6],
         rotation: 90,
       }),
-      new Marcher(paper, {
+      new Marcher(this.paperScope, {
         position: [24, 6],
         rotation: 90,
       }),
-      new Marcher(paper, {
+      new Marcher(this.paperScope, {
         position: [18, 12],
         rotation: 90,
       }),
-      new Marcher(paper, {
+      new Marcher(this.paperScope, {
         position: [20, 12],
       }),
-      new Marcher(paper, {
+      new Marcher(this.paperScope, {
         position: [22, 12],
       }),
-      new Marcher(paper, {
+      new Marcher(this.paperScope, {
         position: [24, 12],
       }),
     ];
 
-    paper.view.draw();
+    this.paperScope.view.draw();
   }
 
   update() {
-    paper.view.update();
+    this.paperScope.view.update();
   }
 
   resize(width, height) {
-    paper.view.viewSize.width = width;
-    paper.view.viewSize.height = height;
+    this.paperScope.activate();
+    this.paperScope.view.viewSize.width = width;
+    this.paperScope.view.viewSize.height = height;
     //paper.view.update();
   }
 
   zoom(zoomFactor) {
-    paper.view.zoom = zoomFactor;
+    this.paperScope.activate();
+    this.paperScope.view.zoom = zoomFactor;
     //this.center();
   }
 
   zoomToFit(width, height) {
+    this.paperScope.activate();
     const zoom = this.calculateZoomToFitFactor(width, height);
-    paper.view.zoom = zoom;
+    this.paperScope.view.zoom = zoom;
     this.center();
   }
 
@@ -99,12 +106,12 @@ export default class FieldPainter {
   }
 
   setCenter(center) {
-    paper.view.center = [center.x, center.y];
+    this.paperScope.view.center = [center.x, center.y];
   }
 
   setCenterFromDelta(delta) {
-    const { center } = paper.view;
-    paper.view.center = [center.x - delta.x, center.y - delta.y];
+    const { center } = this.paperScope.view;
+    this.paperScope.view.center = [center.x - delta.x, center.y - delta.y];
   }
 
   calculateZoomToFitFactor(width, height) {

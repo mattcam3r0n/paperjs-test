@@ -19,36 +19,25 @@ const styles = (theme) => ({
 @inject('designViewState')
 @observer
 class EditToolsFlyout extends Component {
-  state = {};
-
-  handleZoomIn = (e) => {
-    e.preventDefault();
-    this.props.designViewState.zoomIn();
+  state = {
   };
 
-  handleZoomOut = (e) => {
-    e.preventDefault();
-    this.props.designViewState.zoomOut();
-  };
-
-  handleZoomToFit = (e) => {
-    e.preventDefault();
-    this.props.designViewState.zoomToFit();
-  };
-
-  handlePanTool = () => {
-    this.props.designViewState.activatePanTool();
+  handlePathTool = (e) => {
+//    e.preventDefault();
+    this.props.designViewState.activatePathTool();
   };
 
   render() {
     const { classes } = this.props;
+    const { isFlyoutOpen } = this.state;
+
     return (
-      <ButtonFlyOut icon={<Timeline />} tooltip="Editing Tools">
+      <ButtonFlyOut icon={<Timeline />} tooltip="Editing Tools" >
         <Fab
           size="small"
           className={classes.fab}
           color="inherit"
-          onClick={this.handlePanTool}
+          onClick={this.handlePathTool}
         >
           <Timeline />
         </Fab>

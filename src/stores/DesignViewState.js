@@ -11,13 +11,15 @@ export default class DesignViewState {
   @observable activeTool;
 
   lastDelta;
+  fieldPaperScope;
+  timelinePaperScope;
+  
 
   constructor() {
-    this.panTool = new PanTool(this.onPan);
-    this.pointerTool = new PointerTool();
-    this.pathTool = new PathTool();
-    this.pointerTool.activate();
-    this.activeTool = this.pointerTool;
+    // this.pointerTool = new PointerTool();
+    // this.pathTool = new PathTool();
+    // this.pointerTool.activate();
+    // this.activeTool = this.pointerTool;
     this.zoomFactor = 1;
     this.center = {
       x: FieldDimensions.widthInSteps / 2,
@@ -33,17 +35,28 @@ export default class DesignViewState {
     this.setCenterDelta(delta);
   };
 
-
-  activatePanTool() {
-    this.panTool.activate();
-    this.activeTool = this.panTool;
+  disposeActiveTool() {
+    if (this.activeTool) {
+      this.activeTool.dispose();
+    }
   }
 
+  @action
+  activatePanTool() {
+    this.disposeActiveTool();
+    this.activeTool = new PanTool(this.fieldPaperScope, this.onPan);
+  }
+
+  @action
   activatePointerTool() {
-    // this.pointerTool.activate();
-    // this.activeTool = this.pointerTool;
-    this.pathTool.activate();
-    this.activeTool = this.pathTool;
+    this.disposeActiveTool();
+    this.activeTool = new PointerTool(this.fieldPaperScope);
+  }
+
+  @action
+  activatePathTool() {
+    this.disposeActiveTool();
+    this.activeTool = new PathTool(this.fieldPaperScope);
   }
 
   @action
@@ -70,6 +83,14 @@ export default class DesignViewState {
       x: FieldDimensions.widthInSteps / 2,
       y: FieldDimensions.heightInSteps / 2,
     };
+  }
+
+  setFieldPaperScope(paperScope) {
+    this.fieldPaperScope = paperScope;
+  }
+
+  setTimelinePaperScope(paperScope) {
+    this.timelinePaperScope = paperScope;
   }
 
   @action
