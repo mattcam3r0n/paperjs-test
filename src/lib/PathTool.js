@@ -20,7 +20,11 @@ export default class PathTool {
     const { item } = event;
 
     // ignore mouse moves that originate from other than the canvas
-    if (event.event.target.nodeName !== "CANVAS") return;
+    const targetNodeName = event.event.target.nodeName;
+    if (targetNodeName !== "CANVAS") {
+      this.hideLastSegment();
+      return;
+    }
 
     if (this.path) {
       const snapped = this.snapToLine(
@@ -38,6 +42,14 @@ export default class PathTool {
 
     this.unhighlightMarcher();
   };
+
+  hideLastSegment() {
+    const lastSegment = this.path.lastSegment;
+    lastSegment.point = lastSegment.previous.point.clone();
+    if (lastSegment.pathSegmentLength) {
+      lastSegment.pathSegmentLength.visible = false;
+    }
+  }
 
   drawPathSegmentLength(segment) {
     const p1 = segment.point;
@@ -59,6 +71,7 @@ export default class PathTool {
     });
     text.content = this.getLengthInSteps(segment);
     text.point = textPoint;
+    text.visible = true;
     segment.pathSegmentLength = text;
   }
 
