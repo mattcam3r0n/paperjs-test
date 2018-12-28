@@ -36,14 +36,14 @@ export default class PathTool {
       return;
     }
 
-    if (item && item._itemType === 'marcher') {
+    if (this.itemIsMarcher(item)) {
       this.path = new Path({
         strokeColor: 'gray',
         strokeWidth: 0.25,
         strokeCap: 'round',
         dashArray: [0.5, 0.5],
         segments: [marcher.position, marcher.position],
-        selected: true
+        selected: true,
       });
     }
   };
@@ -55,22 +55,20 @@ export default class PathTool {
     const { path } = this;
 
     // ignore mouse moves that originate from other than the canvas
-    const targetNodeName = event.event.target.nodeName;
-    if (targetNodeName !== 'CANVAS') {
+    if (!this.isCanvasEvent(event)) {
       this.hideLastSegment();
       return;
     }
 
     if (path) {
-      const snapped = LineUtils.snapToLine(
+      path.lastSegment.point = LineUtils.snapToLine(
         path.lastSegment.previous.point,
         event.point
       );
-      path.lastSegment.point = snapped;
       this.drawPathSegmentLength(path.lastSegment);
     }
 
-    if (item && item._itemType === 'marcher') {
+    if (this.itemIsMarcher(item)) {
       this.highlightMarcher(item);
       return;
     }
@@ -78,8 +76,17 @@ export default class PathTool {
     this.unhighlightMarcher();
   };
 
+  itemIsMarcher(item) {
+    return item && item._itemType === 'marcher';
+  }
+
+  isCanvasEvent(event) {
+    const targetNodeName = event.event.target.nodeName;
+    return targetNodeName === 'CANVAS';
+  }
+
   hideLastSegment() {
-    const lastSegment = this.path.lastSegment;
+    const { lastSegment } = this.path;
     lastSegment.point = lastSegment.previous.point.clone();
     if (lastSegment.pathSegmentLength) {
       lastSegment.pathSegmentLength.visible = false;
