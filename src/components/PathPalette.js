@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { observer, inject } from 'mobx-react';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,14 +10,21 @@ import Palette from './Palette';
 
 const styles = (theme) => ({});
 
+@inject('designViewState')
+@observer
 class PathPalette extends Component {
   state = {};
 
+  handleNewPath = () => {
+    this.props.designViewState.newPath();
+  }
+
   render() {
+    const { designViewState } = this.props;
     return (
-      <Palette title="Path Tool">
+      <Palette title="Path Tool" visible={designViewState.isPathToolActive}>
         <Tooltip title="New Path">
-          <IconButton size="small" variant="outlined">
+          <IconButton size="small" variant="outlined" onClick={this.handleNewPath}>
             <Timeline />
           </IconButton>
         </Tooltip>

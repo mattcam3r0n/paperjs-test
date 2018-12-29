@@ -14,13 +14,13 @@ const styles = (theme) => ({
     // padding: 5,
     display: 'flex',
     borderTopLeftRadius: 4,
-    borderTopRightRadius: 4
+    borderTopRightRadius: 4,
   },
   title: {
     flex: '1 1 auto',
     fontSize: 12,
     marginTop: 5,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   paper: {
     position: 'absolute',
@@ -34,26 +34,25 @@ const styles = (theme) => ({
 });
 
 class Palette extends Component {
-  state = {
-  };
+  state = {};
 
   handlePathTool = () => {
     this.props.appState.activatePointerTool();
   };
 
   render() {
-    const { classes, title, children } = this.props;
-    return (
+    const { classes, title, children, visible } = this.props;
+    return visible ? (
       <Draggable handle="div[name='drag-handle']">
         <Paper elevation={4} className={classes.paper}>
           <div name="drag-handle" className={classes.dragHandle}>
-            <DragHandle/>
+            <DragHandle />
             <div className={classes.title}>{title}</div>
           </div>
-          { children }
+          {children}
         </Paper>
       </Draggable>
-    );
+    ) : null;
   }
 }
 

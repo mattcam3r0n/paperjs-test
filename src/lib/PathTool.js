@@ -1,5 +1,5 @@
-import paper, { Path, PointText } from 'paper';
-import LineUtils from './LineUtils';
+import paper from 'paper';
+import PathLine from './PathLine';
 
 export default class PathTool {
   constructor(paperScope) {
@@ -9,6 +9,8 @@ export default class PathTool {
     this.tool = new paper.Tool();
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
+    this.paths = [];
+    this.activePath = null;
   }
 
   activate() {
@@ -29,22 +31,14 @@ export default class PathTool {
 
   onMouseDown = (event) => {
     const { item } = event;
-    const { path, marcher } = this;
+    const { activePath } = this;
 
-    if (path) {
-      path.add(event.point);
-      return;
+    if (activePath) {
+      activePath.add(event.point);
     }
 
     if (this.itemIsMarcher(item)) {
-      this.path = new Path({
-        strokeColor: 'gray',
-        strokeWidth: 0.25,
-        strokeCap: 'round',
-        dashArray: [0.5, 0.5],
-        segments: [marcher.position, marcher.position],
-        selected: true,
-      });
+      this.startPath();
     }
   };
 
@@ -52,20 +46,16 @@ export default class PathTool {
 
   onMouseMove = (event) => {
     const { item } = event;
-    const { path } = this;
+    const { activePath } = this;
 
     // ignore mouse moves that originate from other than the canvas
-    if (!this.isCanvasEvent(event)) {
-      this.hideLastSegment();
+    if (!this.isCanvasEvent(event) && activePath) {
+      activePath.hideLastSegment();
       return;
     }
 
-    if (path) {
-      path.lastSegment.point = LineUtils.snapToLine(
-        path.lastSegment.previous.point,
-        event.point
-      );
-      this.drawPathSegmentLength(path.lastSegment);
+    if (activePath) {
+      activePath.setEndPoint(event.point);
     }
 
     if (this.itemIsMarcher(item)) {
@@ -76,6 +66,16 @@ export default class PathTool {
     this.unhighlightMarcher();
   };
 
+  newPath() {
+    this.activePath.hideLastSegment();
+    this.activePath = null;
+  }
+
+  startPath() {
+    this.activePath = new PathLine(this.marcher.position);
+    this.paths.push(this.activePath);
+  }
+
   itemIsMarcher(item) {
     return item && item._itemType === 'marcher';
   }
@@ -83,41 +83,6 @@ export default class PathTool {
   isCanvasEvent(event) {
     const targetNodeName = event.event.target.nodeName;
     return targetNodeName === 'CANVAS';
-  }
-
-  hideLastSegment() {
-    const { lastSegment } = this.path;
-    lastSegment.point = lastSegment.previous.point.clone();
-    if (lastSegment.pathSegmentLength) {
-      lastSegment.pathSegmentLength.visible = false;
-    }
-  }
-
-  drawPathSegmentLength(segment) {
-    const p1 = segment.point;
-    const p2 = segment.previous.point;
-    const v = p2.subtract(p1).divide(2);
-    let textPoint = p1.add(v);
-    if (LineUtils.isVertical(segment)) {
-      // place to left of vertical line
-      textPoint = textPoint.add({ x: -1.5, y: 0 });
-    } else {
-      textPoint = textPoint.add({ x: 0, y: -0.5 });
-    }
-    const text =
-      segment.pathSegmentLength ||
-      new PointText({
-        point: textPoint,
-        fontFamily: 'Courier New',
-        fontWeight: 'bold',
-        fillColor: 'deepskyblue',
-        justification: 'center',
-        fontSize: 2,
-      });
-    text.content = LineUtils.getLengthInSteps(segment);
-    text.point = textPoint;
-    text.visible = true;
-    segment.pathSegmentLength = text;
   }
 
   highlightMarcher = (item) => {

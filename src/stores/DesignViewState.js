@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import FieldDimensions from '../lib/FieldDimensions';
 import PanTool from '../lib/PanTool';
 import PointerTool from '../lib/PointerTool';
@@ -41,6 +41,11 @@ export default class DesignViewState {
     }
   }
 
+  @computed
+  get isPathToolActive() {
+    return this.activeTool && this.activeTool.name === 'path';
+  }
+
   @action
   activatePanTool() {
     this.disposeActiveTool();
@@ -57,6 +62,12 @@ export default class DesignViewState {
   activatePathTool() {
     this.disposeActiveTool();
     this.activeTool = new PathTool(this.fieldPaperScope);
+  }
+
+  @action
+  newPath() {
+    if (!this.activeTool.name === 'path') return;
+    this.activeTool.newPath();
   }
 
   @action
