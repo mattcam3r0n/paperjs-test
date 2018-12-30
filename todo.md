@@ -6,7 +6,7 @@ General
     * may need to create and store paperscopes in appState or fieldState 
     * so they can be passed to tools, field painter, etc
 * rename project, locally and on github.  precision-2?
-* refactor appState into separate, smaller stores
+* refactor appState into separate, smaller stores?
     * appState
         * logged in, user, etc.
     * designState
@@ -23,10 +23,9 @@ Serverless
 * set up drill and music buckets
 
 General UI
-* Menu bar
 * Routing
-* tool palette base component
-* flyout button menu component
+    * design
+    * admin
 * communication among tool windows, design surface
 * zoom tool
     * click to zoom in/out, try to keep click point in view
@@ -51,7 +50,16 @@ Selection
     * how to differentiate individual mode, files, ranks, blocks, etc.
 
 Editing
+* Highlight currently active tool
 * Path tool
+    * save 
+    * fade unselected members?
+* Selection tool
+    * select files
+    * individual mode
+    * select patterns
+    * clear selection
+    * select all
 * Follow line tool 
     * draw a line thru members, they will follow line
 * Turn editing 

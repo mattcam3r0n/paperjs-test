@@ -8,6 +8,7 @@ export default class PathLine {
     constructor(startPoint) {
 
         this.path = new Path({
+            _itemType: 'path',
             strokeColor: INACTIVE_COLOR,
             strokeWidth: 0.25,
             strokeCap: 'round',
@@ -35,6 +36,14 @@ export default class PathLine {
         const { path } = this;
         if (path.segments.length > 2)
             path.segments.pop();
+    }
+
+    activate() {
+        this.path.segments.forEach(s => {
+            if (s.pathSegmentLength)
+                s.pathSegmentLength.fillColor = ACTIVE_COLOR;
+        });
+        this.path.selected = true;
     }
 
     deactivate() {

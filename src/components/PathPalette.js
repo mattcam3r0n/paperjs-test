@@ -34,7 +34,9 @@ class PathPalette extends Component {
   }
 
   handleDeletePath = () => {
-
+    const pathTool = this.getPathTool();
+    if (pathTool)
+      pathTool.deleteCurrentPath();
   }
 
   handleCancel = () => {

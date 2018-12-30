@@ -48,6 +48,10 @@ export default class PathTool {
     if (this.itemIsMarcher(item)) {
       this.startPath();
     }
+
+    if (this.itemIsPath(item)) {
+      this.activatePath(item);
+    }
   };
 
   onMouseDrag = (event) => {};
@@ -74,6 +78,16 @@ export default class PathTool {
     this.unhighlightMarcher();
   };
 
+  activatePath(item) {
+    const path = this.paths.find(p => p.path === item);
+    if (path) {
+      if (this.activePath) 
+        this.activePath.deactivate();
+      this.activePath = path;
+      path.activate();
+    }
+  }
+
   newPath() {
     if (this.activePath)
       this.activePath.deactivate();
@@ -83,6 +97,13 @@ export default class PathTool {
   undoLastSegment() {
     if (this.activePath)
       this.activePath.undoLastSegment();
+  }
+
+  deleteCurrentPath() {
+    if (this.activePath) {
+      this.activePath.remove();
+    }
+    this.activePath = null;
   }
 
   startPath() {
@@ -98,6 +119,10 @@ export default class PathTool {
 
   itemIsMarcher(item) {
     return item && item._itemType === 'marcher';
+  }
+
+  itemIsPath(item) {
+    return item && item._itemType === 'path';
   }
 
   isCanvasEvent(event) {

@@ -63,7 +63,6 @@ class Field extends Component {
   }
 
   render() {
-    console.log('Field.render');
     const { designViewState } = this.props;
     return (
       <div
