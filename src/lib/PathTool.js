@@ -18,11 +18,19 @@ export default class PathTool {
   }
 
   dispose() {
+    this.disposePaths();
     this.tool.off('mousedown');
     this.tool.off('mousedrag');
     this.tool.off('mousemove');
     this.tool.remove();
     this.tool = null;
+  }
+
+  disposePaths() {
+    if (!this.paths) return;
+    this.paths.forEach(p => {
+      p.remove();
+    });  
   }
 
   get cursor() {
@@ -80,6 +88,12 @@ export default class PathTool {
   startPath() {
     this.activePath = new PathLine(this.marcher.position);
     this.paths.push(this.activePath);
+  }
+
+  cancel() {
+    this.disposePaths();
+    this.paths = [];
+    this.activePath = null;
   }
 
   itemIsMarcher(item) {

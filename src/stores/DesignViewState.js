@@ -65,6 +65,13 @@ export default class DesignViewState {
   }
 
   @action
+  cancelPathTool() {
+    if (this.isPathToolActive())
+      this.activeTool.cancel();
+    this.activatePointerTool();
+  }
+
+  @action
   newPath() {
     if (!this.activeTool.name === 'path') return;
     this.activeTool.newPath();

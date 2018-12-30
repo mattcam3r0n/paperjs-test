@@ -46,6 +46,15 @@ export default class PathLine {
         this.path.selected = false;
     }
 
+    remove() {
+        const { path } = this;
+        this.path.segments.forEach(s => {
+            if (s.pathSegmentLength)
+                s.pathSegmentLength.remove();
+        });
+        path.remove();
+    }
+
     hideLastSegment() {
         const { lastSegment } = this.path;
         lastSegment.point = lastSegment.previous.point.clone();

@@ -16,8 +16,9 @@ class PathPalette extends Component {
   state = {};
 
   getPathTool = () => {
-    if (!this.props.designViewState.isPathToolActive) return null;
-    return this.props.designViewState.activeTool;
+    const { designViewState } = this.props;
+    if (!designViewState.isPathToolActive) return null;
+    return designViewState.activeTool;
   }
 
   handleNewPath = () => {
@@ -30,6 +31,18 @@ class PathPalette extends Component {
     const pathTool = this.getPathTool();
     if (pathTool)
       pathTool.undoLastSegment();
+  }
+
+  handleDeletePath = () => {
+
+  }
+
+  handleCancel = () => {
+    const { designViewState } = this.props;
+    const pathTool = this.getPathTool();
+    if (pathTool)
+      pathTool.cancel();
+    designViewState.activatePointerTool();
   }
 
   render() {
@@ -47,7 +60,7 @@ class PathPalette extends Component {
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete Current Path">
-          <IconButton size="small" variant="outlined">
+          <IconButton size="small" variant="outlined" onClick={this.handleDeletePath}>
             <Delete />
           </IconButton>
         </Tooltip>
@@ -58,7 +71,7 @@ class PathPalette extends Component {
             </IconButton>
           </Tooltip>
           <Tooltip title="Cancel">
-            <IconButton size="small" variant="outlined">
+            <IconButton size="small" variant="outlined" onClick={this.handleCancel}>
               <Close style={{ color: 'red' }} />
             </IconButton>
           </Tooltip>
