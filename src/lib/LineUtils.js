@@ -89,7 +89,7 @@ export default class LineUtils {
   }
 
   static isVertical(segment) {
-    const angle = segment.curve.line.vector.angle + 90;
+    const angle = round(segment.curve.line.vector.angle + 90);
     return angle === 0 || angle === 180;
   }
 

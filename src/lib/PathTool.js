@@ -67,7 +67,8 @@ export default class PathTool {
   };
 
   newPath() {
-    this.activePath.hideLastSegment();
+    if (this.activePath)
+      this.activePath.deactivate();
     this.activePath = null;
   }
 

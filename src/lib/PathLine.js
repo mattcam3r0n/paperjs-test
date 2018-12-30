@@ -1,11 +1,14 @@
-import paper, { Path, PointText } from 'paper';
+import { Path, PointText } from 'paper';
 import LineUtils from './LineUtils';
+
+const ACTIVE_COLOR = "deepskyblue";
+const INACTIVE_COLOR = "gray";
 
 export default class PathLine {
     constructor(startPoint) {
 
         this.path = new Path({
-            strokeColor: 'gray',
+            strokeColor: INACTIVE_COLOR,
             strokeWidth: 0.25,
             strokeCap: 'round',
             dashArray: [0.5, 0.5],
@@ -26,6 +29,15 @@ export default class PathLine {
             endPoint
           );
         this.drawPathSegmentLength(path.lastSegment);    
+    }
+
+    deactivate() {
+        this.hideLastSegment();
+        this.path.segments.forEach(s => {
+            if (s.pathSegmentLength)
+                s.pathSegmentLength.fillColor = INACTIVE_COLOR;
+        });
+        this.path.selected = false;
     }
 
     hideLastSegment() {
@@ -53,7 +65,7 @@ export default class PathLine {
             point: textPoint,
             fontFamily: 'Courier New',
             fontWeight: 'bold',
-            fillColor: 'deepskyblue',
+            fillColor: ACTIVE_COLOR,
             justification: 'center',
             fontSize: 2,
           });

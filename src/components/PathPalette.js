@@ -15,8 +15,15 @@ const styles = (theme) => ({});
 class PathPalette extends Component {
   state = {};
 
+  getPathTool = () => {
+    if (!this.props.designViewState.isPathToolActive) return null;
+    return this.props.designViewState.activeTool;
+  }
+
   handleNewPath = () => {
-    this.props.designViewState.newPath();
+    const pathTool = this.getPathTool();
+    if (pathTool)
+      pathTool.newPath();
   }
 
   render() {
