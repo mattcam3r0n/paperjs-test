@@ -2,7 +2,7 @@ import { Path, PointText } from 'paper';
 import LineUtils from './LineUtils';
 
 const ACTIVE_COLOR = "deepskyblue";
-const INACTIVE_COLOR = "gray";
+const INACTIVE_COLOR = "lightslategray";
 
 export default class PathLine {
     constructor(startPoint) {
@@ -29,6 +29,12 @@ export default class PathLine {
             endPoint
           );
         this.drawPathSegmentLength(path.lastSegment);    
+    }
+
+    undoLastSegment() {
+        const { path } = this;
+        if (path.segments.length > 2)
+            path.segments.pop();
     }
 
     deactivate() {

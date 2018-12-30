@@ -72,6 +72,11 @@ export default class PathTool {
     this.activePath = null;
   }
 
+  undoLastSegment() {
+    if (this.activePath)
+      this.activePath.undoLastSegment();
+  }
+
   startPath() {
     this.activePath = new PathLine(this.marcher.position);
     this.paths.push(this.activePath);

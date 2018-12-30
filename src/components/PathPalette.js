@@ -26,6 +26,12 @@ class PathPalette extends Component {
       pathTool.newPath();
   }
 
+  handleUndo = () => {
+    const pathTool = this.getPathTool();
+    if (pathTool)
+      pathTool.undoLastSegment();
+  }
+
   render() {
     const { designViewState } = this.props;
     return (
@@ -36,7 +42,7 @@ class PathPalette extends Component {
           </IconButton>
         </Tooltip>
         <Tooltip title="Undo">
-          <IconButton size="small" variant="outlined">
+          <IconButton size="small" variant="outlined" onClick={this.handleUndo}>
             <Undo />
           </IconButton>
         </Tooltip>
