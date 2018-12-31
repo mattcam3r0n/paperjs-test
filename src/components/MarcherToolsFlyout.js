@@ -23,12 +23,17 @@ const styles = (theme) => ({
 class MarchToolsFlyout extends Component {
   state = {};
 
+  handleAddMarchers = () => {
+    this.props.designViewState.activateAddMarchersTool();
+  }
+
   render() {
     const { classes } = this.props;
     return (
       <ButtonFlyOut icon={<NearMe />} tooltip="Marcher Tools">
         <Tooltip title="Add Marchers">
-          <Fab size="small" className={classes.fab} color="inherit">
+          <Fab size="small" className={classes.fab} color="inherit"
+          onClick={this.handleAddMarchers}>
             <Add />
           </Fab>
         </Tooltip>

@@ -11,41 +11,13 @@ const styles = (theme) => ({});
 
 @inject('designViewState')
 @observer
-class PathPalette extends Component {
+class AddMarchersPalette extends Component {
   state = {};
 
-  getPathTool = () => {
-    const { designViewState } = this.props;
-    if (!designViewState.isPathToolActive) return null;
-    return designViewState.activeTool;
-  };
-
-  handleNewPath = () => {
-    const pathTool = this.getPathTool();
-    if (pathTool) pathTool.newPath();
-  };
-
-  handleUndo = () => {
-    const pathTool = this.getPathTool();
-    if (pathTool) pathTool.undoLastSegment();
-  };
-
-  handleDeletePath = () => {
-    const pathTool = this.getPathTool();
-    if (pathTool) pathTool.deleteCurrentPath();
-  };
-
-  handleCancel = () => {
-    const { designViewState } = this.props;
-    const pathTool = this.getPathTool();
-    if (pathTool) pathTool.cancel();
-    designViewState.activatePointerTool();
-  };
-
   render() {
-    const { designViewState } = this.props;
+    const { designViewState, left = 300, top = 100 } = this.props;
     return (
-      <Palette title="Path Tool" visible={designViewState.isPathToolActive}>
+      <Palette title="Add Marchers" visible={designViewState.isAddMarchersToolActive} left={left} top={top} >
         <PaletteButton title="New Path" onClick={this.handleNewPath}>
           <Timeline />
         </PaletteButton>
@@ -68,4 +40,4 @@ class PathPalette extends Component {
   }
 }
 
-export default withStyles(styles)(PathPalette);
+export default withStyles(styles)(AddMarchersPalette);

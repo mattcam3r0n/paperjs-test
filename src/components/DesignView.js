@@ -5,6 +5,8 @@ import RightSideBar from './RightSideBar';
 import Field from './Field';
 import Timeline from './Timeline';
 import PathPalette from './PathPalette';
+import SelectionPalette from './SelectionPalette';
+import AddMarchersPalette from './AddMarchersPalette';
 
 const styles = (theme) => {
   return {
@@ -37,6 +39,8 @@ class DesignView extends Component {
         </div>
         <RightSideBar />
         <PathPalette />
+        <SelectionPalette />
+        <AddMarchersPalette />
       </React.Fragment>
     );
   }

@@ -24,8 +24,8 @@ const styles = (theme) => ({
   },
   paper: {
     position: 'absolute',
-    top: 100,
-    left: 200,
+    // top: 100,
+    // left: 200,
     zIndex: 100,
     // border: 'solid 1px black',
     width: 100,
@@ -41,10 +41,10 @@ class Palette extends Component {
   };
 
   render() {
-    const { classes, title, children, visible } = this.props;
+    const { classes, title, children, visible, left = 200, top = 100 } = this.props;
     return visible ? (
       <Draggable handle="div[name='drag-handle']">
-        <Paper elevation={4} className={classes.paper}>
+        <Paper elevation={4} className={classes.paper} style={{ left: left, top: top }}>
           <div name="drag-handle" className={classes.dragHandle}>
             <DragHandle />
             <div className={classes.title}>{title}</div>

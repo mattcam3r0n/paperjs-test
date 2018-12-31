@@ -3,6 +3,7 @@ import FieldDimensions from '../lib/FieldDimensions';
 import PanTool from '../lib/PanTool';
 import PointerTool from '../lib/PointerTool';
 import PathTool from '../lib/PathTool';
+import AddMarchersTool from '../lib/AddMarchersTool';
 
 export default class DesignViewState {
   @observable zoomFactor;
@@ -16,10 +17,6 @@ export default class DesignViewState {
   
 
   constructor() {
-    // this.pointerTool = new PointerTool();
-    // this.pathTool = new PathTool();
-    // this.pointerTool.activate();
-    // this.activeTool = this.pointerTool;
     this.zoomFactor = 1;
     this.center = {
       x: FieldDimensions.widthInSteps / 2,
@@ -46,6 +43,16 @@ export default class DesignViewState {
     return this.activeTool && this.activeTool.name === 'path';
   }
 
+  @computed
+  get isSelectionToolActive() {
+    return this.activeTool && this.activeTool.name === 'pointer';
+  }
+
+  @computed
+  get isAddMarchersToolActive() {
+    return this.activeTool && this.activeTool.name === 'addMarchers';
+  }
+
   @action
   activatePanTool() {
     this.disposeActiveTool();
@@ -69,6 +76,12 @@ export default class DesignViewState {
     if (this.isPathToolActive())
       this.activeTool.cancel();
     this.activatePointerTool();
+  }
+
+  @action
+  activateAddMarchersTool() {
+    this.disposeActiveTool();
+    this.activeTool = new AddMarchersTool(this.fieldPaperScope);
   }
 
   @action
