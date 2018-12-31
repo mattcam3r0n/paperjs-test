@@ -3,10 +3,6 @@ import FieldTool from './FieldTool';
 
 export default class PathTool extends FieldTool {
   constructor(paperScope) {
-    // this.paperScope = paperScope;
-    // paperScope.activate();
-    // this.name = 'path';
-    // this.tool = new paper.Tool();
     super('path', paperScope);
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
@@ -14,17 +10,12 @@ export default class PathTool extends FieldTool {
     this.activePath = null;
   }
 
-  // activate() {
-  //   this.tool.activate();
-  // }
 
   dispose() {
     this.disposePaths();
     this.tool.off('mousedown');
     this.tool.off('mousedrag');
     this.tool.off('mousemove');
-    // this.tool.remove();
-    // this.tool = null;
     super.dispose();
   }
 
