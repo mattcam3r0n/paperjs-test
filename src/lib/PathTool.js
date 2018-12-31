@@ -1,29 +1,32 @@
 import paper from 'paper';
 import PathLine from './PathLine';
+import FieldTool from './FieldTool';
 
-export default class PathTool {
+export default class PathTool extends FieldTool {
   constructor(paperScope) {
-    this.paperScope = paperScope;
-    paperScope.activate();
-    this.name = 'path';
-    this.tool = new paper.Tool();
+    // this.paperScope = paperScope;
+    // paperScope.activate();
+    // this.name = 'path';
+    // this.tool = new paper.Tool();
+    super('path', paperScope);
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
     this.paths = [];
     this.activePath = null;
   }
 
-  activate() {
-    this.tool.activate();
-  }
+  // activate() {
+  //   this.tool.activate();
+  // }
 
   dispose() {
     this.disposePaths();
     this.tool.off('mousedown');
     this.tool.off('mousedrag');
     this.tool.off('mousemove');
-    this.tool.remove();
-    this.tool = null;
+    // this.tool.remove();
+    // this.tool = null;
+    super.dispose();
   }
 
   disposePaths() {
@@ -61,7 +64,7 @@ export default class PathTool {
     const { activePath } = this;
 
     // ignore mouse moves that originate from other than the canvas
-    if (!this.isCanvasEvent(event) && activePath) {
+    if (!super.isCanvasEvent(event) && activePath) {
       activePath.hideLastSegment();
       return;
     }
@@ -123,11 +126,6 @@ export default class PathTool {
 
   itemIsPath(item) {
     return item && item._itemType === 'path';
-  }
-
-  isCanvasEvent(event) {
-    const targetNodeName = event.event.target.nodeName;
-    return targetNodeName === 'CANVAS';
   }
 
   highlightMarcher = (item) => {
