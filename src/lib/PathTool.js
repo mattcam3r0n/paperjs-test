@@ -1,4 +1,3 @@
-import paper from 'paper';
 import PathLine from './PathLine';
 import FieldTool from './FieldTool';
 

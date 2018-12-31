@@ -34,8 +34,10 @@ export default class PathLine {
 
     undoLastSegment() {
         const { path } = this;
-        if (path.segments.length > 2)
+        if (path.segments.length > 2) {
             path.segments.pop();
+            this.hideLastSegment();
+        }
     }
 
     activate() {
