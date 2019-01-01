@@ -23,7 +23,7 @@ import Marcher from './Marcher';
 //   '',
 // ];
 
-export default class FieldPainter {
+class FieldPainter {
   constructor(paperScope) {
     this.paperScope = paperScope;
     // this.canvas = canvas;
@@ -39,39 +39,53 @@ export default class FieldPainter {
     this.drawYardlines();
 
     // test
-    const m = [
-      new Marcher(this.paperScope, {
-        position: [18, 6],
-        rotation: 90,
-      }),
-      new Marcher(this.paperScope, {
-        position: [20, 6],
-        rotation: 90,
-      }),
-      new Marcher(this.paperScope, {
-        position: [22, 6],
-        rotation: 90,
-      }),
-      new Marcher(this.paperScope, {
-        position: [24, 6],
-        rotation: 90,
-      }),
-      new Marcher(this.paperScope, {
-        position: [18, 12],
-        rotation: 90,
-      }),
-      new Marcher(this.paperScope, {
-        position: [20, 12],
-      }),
-      new Marcher(this.paperScope, {
-        position: [22, 12],
-      }),
-      new Marcher(this.paperScope, {
-        position: [24, 12],
-      }),
-    ];
+    // const m = [
+    //   new Marcher(this.paperScope, {
+    //     position: [18, 6],
+    //     rotation: 90,
+    //   }),
+    //   new Marcher(this.paperScope, {
+    //     position: [20, 6],
+    //     rotation: 90,
+    //   }),
+    //   new Marcher(this.paperScope, {
+    //     position: [22, 6],
+    //     rotation: 90,
+    //   }),
+    //   new Marcher(this.paperScope, {
+    //     position: [24, 6],
+    //     rotation: 90,
+    //   }),
+    //   new Marcher(this.paperScope, {
+    //     position: [18, 12],
+    //     rotation: 90,
+    //   }),
+    //   new Marcher(this.paperScope, {
+    //     position: [20, 12],
+    //   }),
+    //   new Marcher(this.paperScope, {
+    //     position: [22, 12],
+    //   }),
+    //   new Marcher(this.paperScope, {
+    //     position: [24, 12],
+    //   }),
+    // ];
 
     this.paperScope.view.draw();
+  }
+
+  syncMarchers(drill) {
+    // TODO: for now, just create. need more sophisticated syncing.
+    drill.marchers.forEach(m => {
+      new Marcher(this.paperScope, {
+        position: [m.initialState.x, m.initialState.y],
+        rotation: m.initialState.direction
+      });
+    });
+  }
+
+  syncMarcherPositions(drill) {
+
   }
 
   update() {
@@ -154,3 +168,5 @@ export default class FieldPainter {
     }
   }
 }
+
+export default FieldPainter;

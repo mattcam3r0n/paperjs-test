@@ -5,10 +5,13 @@ import paper from 'paper';
 //import { compose } from 'recompose';
 
 import FieldPainter from '../lib/FieldPainter';
+import FieldController from '../lib/FieldController';
 
 @inject('designViewState')
 @observer
 class Field extends Component {
+  controller;
+
   onResize = () => {
     if (!this.fieldPainter) return;
     const { designViewState } = this.props;
@@ -28,18 +31,25 @@ class Field extends Component {
   }
 
   componentDidMount() {
+    const { designViewState } = this.props;
+
     window.addEventListener('resize', this.onResize);
 
     // move these to init/wireup funcs?
+    reaction(() => designViewState.drill,
+    (drill, reaction) => {
+      this.fieldPainter.syncMarchers(drill);
+    });
+
     reaction(
-      () => this.props.designViewState.zoomFactor,
+      () => designViewState.zoomFactor,
       (zoomFactor, reaction) => {
         this.fieldPainter.zoom(zoomFactor);
       }
     );
 
     reaction(
-      () => this.props.designViewState.center,
+      () => designViewState.center,
       (center, reaction) => {
         this.fieldPainter.setCenter(center);
       }
@@ -47,6 +57,7 @@ class Field extends Component {
 
     this.drawField();
     this.onResize();
+    designViewState.fieldInitialized();
   }
 
   drawField() {
@@ -87,7 +98,3 @@ class Field extends Component {
 }
 
 export default Field;
-// export default compose(
-//   inject('designViewState'),
-//   observer,
-// )(Field);

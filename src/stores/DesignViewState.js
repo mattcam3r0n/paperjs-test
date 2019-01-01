@@ -10,6 +10,7 @@ export default class DesignViewState {
   @observable center;
   @observable fieldContainerSize;
   @observable activeTool;
+  @observable drill;
 
   lastDelta;
   fieldPaperScope;
@@ -158,8 +159,35 @@ export default class DesignViewState {
   }
 
   @action
+  fieldInitialized() {
+    // TODO: open last drill?
+    this.drill = this.createNewDrill();
+  }
+
+  @action
   setFieldContainerSize(newSize) {
     this.fieldContainerSize = newSize;
   }
 
+  // temporary helper
+  createNewDrill() {
+    const drill = {};
+    drill.marchers = [];
+    for(let i=0; i < 16; i++) {
+      const m = {
+        initialState: {
+          x: 12 + ((i % 4) * 2),
+          y: 6 + (Math.floor(i / 4) * 2),
+          direction: 90
+        },
+        currentState: {
+          x: 12 + ((i % 4) * 2),
+          y: 6 + ((i % 4) * 2),
+          direction: 90
+        }
+      };
+      drill.marchers.push(m);
+    }
+    return drill;
+  }
 }
