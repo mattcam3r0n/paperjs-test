@@ -4,7 +4,6 @@ import FieldPainter from '../lib/FieldPainter';
 
 export default class FieldController {
   constructor(canvas, designViewState) {
-    this.canvas = canvas; // do I need to keep this?
     this.viewState = designViewState;
     // init paper js
     this.initializePaperScope(canvas);
@@ -21,7 +20,20 @@ export default class FieldController {
     this.viewState.setFieldPaperScope(paperScope);
   }
 
+  resize(width, height) {
+    this.fieldPainter.resize(width, height);
+    this.viewState.setFieldContainerSize({
+      width: width,
+      height: height,
+    });
+    this.viewState.zoomToFit();
+  }
+
   configureReactions() {
+    // count changed
+
+    // marchers changed
+
     // drill changed
     reaction(
       () => this.viewState.drill,
@@ -47,12 +59,4 @@ export default class FieldController {
     );
   }
 
-  resize(width, height) {
-    this.fieldPainter.resize(width, height);
-    this.viewState.setFieldContainerSize({
-      width: width,
-      height: height,
-    });
-    this.viewState.zoomToFit();
-  }
 }

@@ -26,9 +26,6 @@ import Marcher from './Marcher';
 class FieldPainter {
   constructor(paperScope) {
     this.paperScope = paperScope;
-    // this.canvas = canvas;
-    // this.paperScope = new paper.PaperScope();
-    // this.paperScope.setup(canvas);
     this.paperScope.activate();
   }
 
@@ -37,40 +34,6 @@ class FieldPainter {
     this.drawFieldSurface();
     this.drawSidelines();
     this.drawYardlines();
-
-    // test
-    // const m = [
-    //   new Marcher(this.paperScope, {
-    //     position: [18, 6],
-    //     rotation: 90,
-    //   }),
-    //   new Marcher(this.paperScope, {
-    //     position: [20, 6],
-    //     rotation: 90,
-    //   }),
-    //   new Marcher(this.paperScope, {
-    //     position: [22, 6],
-    //     rotation: 90,
-    //   }),
-    //   new Marcher(this.paperScope, {
-    //     position: [24, 6],
-    //     rotation: 90,
-    //   }),
-    //   new Marcher(this.paperScope, {
-    //     position: [18, 12],
-    //     rotation: 90,
-    //   }),
-    //   new Marcher(this.paperScope, {
-    //     position: [20, 12],
-    //   }),
-    //   new Marcher(this.paperScope, {
-    //     position: [22, 12],
-    //   }),
-    //   new Marcher(this.paperScope, {
-    //     position: [24, 12],
-    //   }),
-    // ];
-
     this.paperScope.view.draw();
   }
 
