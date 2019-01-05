@@ -1,9 +1,11 @@
 import { observable, action, computed } from 'mobx';
+import paper from 'paper';
 import FieldDimensions from '../lib/FieldDimensions';
 import PanTool from '../lib/PanTool';
 import PointerTool from '../lib/PointerTool';
 import PathTool from '../lib/PathTool';
 import AddMarchersTool from '../lib/AddMarchersTool';
+import ZoomInTool from '../lib/ZoomInTool';
 
 export default class DesignViewState {
   @observable zoomFactor;
@@ -30,7 +32,10 @@ export default class DesignViewState {
   }
 
   onPan = (delta) => {
-    this.setCenterDelta(delta);
+    const speed = 2;
+    const newDelta = this.dejitter(delta.multiply(speed));
+    this.lastDelta = newDelta;
+    this.setCenterDelta(newDelta);
   };
 
   disposeActiveTool() {
@@ -86,14 +91,36 @@ export default class DesignViewState {
   }
 
   @action
+  activateZoomInTool() {
+    this.disposeActiveTool();
+    console.log('activateZoomInTool');
+    this.activeTool = new ZoomInTool(this.fieldPaperScope, (point) => this.zoomIn(point));
+  }
+
+  @action
   newPath() {
     if (!this.activeTool.name === 'path') return;
     this.activeTool.newPath();
   }
 
   @action
-  zoomIn() {
-    this.zoomFactor *= 1.1;
+  zoomIn(point) {
+    // based on https://matthiasberth.com/tech/stable-zoom-and-pan-in-paperjs 
+    const c = new paper.Point(this.center);
+    const oldZoom = this.zoomFactor;
+    const newZoom = this.zoomFactor * 1.1;
+    const beta = oldZoom / newZoom;
+    const pc = point.subtract(this.center);
+    const a = point.subtract(pc.multiply(beta)).subtract(c);
+    this.zoomFactor = newZoom;
+    this.setCenter(c.add(a));
+    // this.zoomFactor *= 1.1;
+    // console.log(this.center, delta);
+    // const point = {
+    //   x: this.center.x - delta.x,
+    //   y: this.center.y - delta.y
+    // };
+    // this.setCenter(point);
   }
 
   @action
@@ -137,13 +164,14 @@ export default class DesignViewState {
 
   @action
   setCenterDelta(delta) {
-    const speed = 2;
-    const newDelta = this.dejitter(delta.multiply(speed));
+    // const speed = 2;
+    // const newDelta = this.dejitter(delta.multiply(speed));
+    console.log('setCenterDelta', delta, this.center);
     this.center = {
-      x: this.center.x - newDelta.x,
-      y: this.center.y - newDelta.y,
+      x: this.center.x - delta.x,
+      y: this.center.y - delta.y,
     };
-    this.lastDelta = newDelta;
+    // this.lastDelta = newDelta;
   }
 
   dejitter(delta) {
