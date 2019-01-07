@@ -25,14 +25,11 @@ class ZoomToolsFlyout extends Component {
   state = {};
 
   handleZoomIn = (e) => {
-    //e.preventDefault(); // to leave flyout open
-    //this.props.designViewState.zoomIn();
     this.props.designViewState.activateZoomInTool();
   };
 
   handleZoomOut = (e) => {
-    e.preventDefault();
-    this.props.designViewState.zoomOut();
+    this.props.designViewState.activateZoomOutTool();
   };
 
   handleZoomToFit = (e) => {
