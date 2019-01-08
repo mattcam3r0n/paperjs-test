@@ -28,10 +28,8 @@ General UI
     * admin
 * communication among tool windows, design surface
 * zoom tool
-    * click to zoom in/out, try to keep click point in view
+    * keyboard shortcuts to quickly flip between zoom in, out, pan
     * zoom to band?
-    * zoom to fit
-    * pan tool
 * timeline component
     * custom? paper js? 
     * show counts and/or time (or show time on hover?)

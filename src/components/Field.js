@@ -42,7 +42,7 @@ class Field extends Component {
       >
         <canvas
           id="fieldCanvas"
-          style={{ cursor: designViewState.activeTool  ? designViewState.activeTool.cursor : 'default'}}
+          style={{ cursor: designViewState.cursor }}
         />
       </div>
     );

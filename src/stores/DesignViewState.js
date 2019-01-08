@@ -1,17 +1,17 @@
 import { observable, action, computed } from 'mobx';
 import paper from 'paper';
 import FieldDimensions from '../lib/FieldDimensions';
-import PanTool from '../lib/PanTool';
 import PointerTool from '../lib/PointerTool';
 import PathTool from '../lib/PathTool';
 import AddMarchersTool from '../lib/AddMarchersTool';
-import ZoomInTool from '../lib/ZoomAndPanTool';
+import ZoomAndPanTool from '../lib/ZoomAndPanTool';
 
 export default class DesignViewState {
   @observable zoomFactor;
   @observable center;
   @observable fieldContainerSize;
   @observable activeTool;
+  @observable cursor;
   @observable drill;
 
   lastDelta;
@@ -31,19 +31,6 @@ export default class DesignViewState {
     };
   }
 
-  onPan = (delta) => {
-    const speed = 2;
-    const newDelta = this.dejitter(delta.multiply(speed));
-    this.lastDelta = newDelta;
-    this.setCenterDelta(newDelta);
-  };
-
-  disposeActiveTool() {
-    if (this.activeTool) {
-      this.activeTool.dispose();
-    }
-  }
-
   @computed
   get isPathToolActive() {
     return this.activeTool && this.activeTool.name === 'path';
@@ -60,21 +47,8 @@ export default class DesignViewState {
   }
 
   @action
-  activatePanTool() {
-    this.disposeActiveTool();
-    this.activeTool = new PanTool(this.fieldPaperScope, this.onPan);
-  }
-
-  @action
-  activatePointerTool() {
-    this.disposeActiveTool();
-    this.activeTool = new PointerTool(this.fieldPaperScope);
-  }
-
-  @action
-  activatePathTool() {
-    this.disposeActiveTool();
-    this.activeTool = new PathTool(this.fieldPaperScope);
+  setCursor(cursor) {
+    this.cursor = cursor;
   }
 
   @action
@@ -86,20 +60,51 @@ export default class DesignViewState {
 
   @action
   activateAddMarchersTool() {
-    this.disposeActiveTool();
-    this.activeTool = new AddMarchersTool(this.fieldPaperScope);
+    this.disposeActiveTool(); // needs to come before constructing new tool
+    this.setActiveTool(new AddMarchersTool(this.fieldPaperScope));
   }
 
-  @action
+  //@action
   activateZoomInTool() {
-    this.disposeActiveTool();
-    this.activeTool = new ZoomInTool(this.fieldPaperScope, this, 'zoomIn');
+    this.disposeActiveTool(); // needs to come before constructing new tool
+    this.setActiveTool(new ZoomAndPanTool(this.fieldPaperScope, this, 'zoomIn'));
+  }
+
+  //@action
+  activateZoomOutTool() {
+    this.disposeActiveTool(); // needs to come before constructing new tool
+    this.setActiveTool(new ZoomAndPanTool(this.fieldPaperScope, this, 'zoomOut'));
   }
 
   @action
-  activateZoomOutTool() {
-    this.disposeActiveTool();
-    this.activeTool = new ZoomInTool(this.fieldPaperScope, this, 'zoomOut');
+  activatePanTool() {
+    this.disposeActiveTool(); // needs to come before constructing new tool
+    this.setActiveTool(new ZoomAndPanTool(this.fieldPaperScope, this, 'pan'));
+  }
+
+  @action
+  activatePointerTool() {
+    this.disposeActiveTool(); // needs to come before constructing new tool
+    this.setActiveTool(new PointerTool(this.fieldPaperScope));
+  }
+
+  @action
+  activatePathTool() {
+    this.disposeActiveTool(); // needs to come before constructing new tool
+    this.setActiveTool(new PathTool(this.fieldPaperScope));
+  }
+
+  @action
+  setActiveTool(tool) {
+    this.activeTool = tool;
+    this.setCursor(tool.cursor);
+  }
+
+  disposeActiveTool() {
+    if (this.activeTool) {
+      this.activeTool.dispose();
+      this.activeTool = null;
+    }
   }
 
   @action
@@ -117,7 +122,7 @@ export default class DesignViewState {
   zoomOut(point) {
     //this.zoomFactor *= 0.9;
     this.zoomAndCenter(point, this.center, this.zoomFactor, 0.9);
-  }
+  }  
 
   zoomAndCenter(point, currentCenter, currentZoom, zoomFactor) {
     // based on https://matthiasberth.com/tech/stable-zoom-and-pan-in-paperjs 
@@ -170,18 +175,6 @@ export default class DesignViewState {
     this.center = {
       x: this.center.x - delta.x,
       y: this.center.y - delta.y,
-    };
-  }
-
-  dejitter(delta) {
-    // sometimes the mouse delta jitters, eg. between -1.2 and 1.2
-    // try to detect and modify to smooth panning.
-    if (!this.lastDelta) return delta;
-
-    const min = 0.3;
-    return {
-      x: Math.abs(delta.x + this.lastDelta.x) < min ? 0 : delta.x,
-      y: Math.abs(delta.y + this.lastDelta.y) < min ? 0 : delta.y,
     };
   }
 
