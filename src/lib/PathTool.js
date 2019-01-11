@@ -76,12 +76,11 @@ export default class PathTool extends FieldTool {
 
   activatePath(item) {
     const path = this.paths.find(p => p.path === item);
-    if (path) {
-      if (this.activePath) 
-        this.activePath.deactivate();
-      this.activePath = path;
-      path.activate();
-    }
+    if (!path) return;
+    if (this.activePath) 
+      this.activePath.deactivate();
+    this.activePath = path;
+    path.activate();
   }
 
   newPath() {
