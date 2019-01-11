@@ -36,14 +36,17 @@ export default class PathTool extends FieldTool {
 
     if (activePath) {
       activePath.add(event.point);
+      return;
     }
 
     if (this.itemIsMarcher(item)) {
       this.startPath();
+      return;
     }
 
     if (this.itemIsPath(item)) {
       this.activatePath(item);
+      return;
     }
   };
 

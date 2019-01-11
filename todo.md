@@ -28,7 +28,6 @@ General UI
     * admin
 * communication among tool windows, design surface
 * zoom tool
-    * keyboard shortcuts to quickly flip between zoom in, out, pan
     * zoom to band?
 * timeline component
     * custom? paper js? 

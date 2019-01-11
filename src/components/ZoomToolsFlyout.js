@@ -33,7 +33,6 @@ class ZoomToolsFlyout extends Component {
   };
 
   handleZoomToFit = (e) => {
-    e.preventDefault();
     this.props.designViewState.zoomToFit();
   };
 
