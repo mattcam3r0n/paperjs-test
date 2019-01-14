@@ -67,7 +67,13 @@ export default class FileSelectorTool extends FieldTool {
   }
 
   startPath() {
-    this.activePath = new PathLine(this.marcher.position);
+    this.activePath = new PathLine(this.marcher.position, {
+        showSegmentLength: false,
+        dashArray: [0.25, 0.5],
+        selected: false,
+        activeColor: 'black',
+        inactiveColor: 'black'
+    });
     this.paths.push(this.activePath);
   }  
 }

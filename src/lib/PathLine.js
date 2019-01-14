@@ -1,20 +1,28 @@
 import { Path, PointText } from 'paper';
 import LineUtils from './LineUtils';
 
-const ACTIVE_COLOR = "deepskyblue";
-const INACTIVE_COLOR = "lightslategray";
+const defaultOptions = {
+    inactiveColor: "lightslategray",
+    activeColor: "deepskyblue",
+    strokeWidth: 0.25,
+    strokeCap: 'round',
+    dashArray: [0.5, 0.5],
+    selected: true,
+    showSegmentLength: true
+};
 
 export default class PathLine {
-    constructor(startPoint) {
-
+    constructor(startPoint, options) {
+        const mergedOptions = { ...defaultOptions, ...options };
+        this.options = mergedOptions;
         this.path = new Path({
             _itemType: 'path',
-            strokeColor: INACTIVE_COLOR,
-            strokeWidth: 0.25,
-            strokeCap: 'round',
-            dashArray: [0.5, 0.5],
+            strokeColor: mergedOptions.inactiveColor,
+            strokeWidth: mergedOptions.strokeWidth,
+            strokeCap: mergedOptions.strokeCap,
+            dashArray: mergedOptions.dashArray,
             segments: [startPoint, startPoint],
-            selected: true,
+            selected: mergedOptions.selected,
           });
     
     }
@@ -43,7 +51,7 @@ export default class PathLine {
     activate() {
         this.path.segments.forEach(s => {
             if (s.pathSegmentLength)
-                s.pathSegmentLength.fillColor = ACTIVE_COLOR;
+                s.pathSegmentLength.fillColor = this.options.activeColor;
         });
         this.path.selected = true;
     }
@@ -52,7 +60,7 @@ export default class PathLine {
         this.hideLastSegment();
         this.path.segments.forEach(s => {
             if (s.pathSegmentLength)
-                s.pathSegmentLength.fillColor = INACTIVE_COLOR;
+                s.pathSegmentLength.fillColor = this.options.inactiveColor;
         });
         this.path.selected = false;
     }
@@ -75,6 +83,7 @@ export default class PathLine {
     }
  
     drawPathSegmentLength(segment) {
+        if (!this.options.showSegmentLength) return;
         const p1 = segment.point;
         const p2 = segment.previous.point;
         const v = p2.subtract(p1).divide(2);
@@ -91,7 +100,7 @@ export default class PathLine {
             point: textPoint,
             fontFamily: 'Courier New',
             fontWeight: 'bold',
-            fillColor: ACTIVE_COLOR,
+            fillColor: this.options.activeColor,
             justification: 'center',
             fontSize: 2,
           });
