@@ -1,20 +1,18 @@
-import PathLine from './PathLine';
 import FieldTool from './FieldTool';
+import PathLine from './PathLine';
 
-export default class PathTool extends FieldTool {
+export default class FileSelectorTool extends FieldTool {
   constructor(paperScope) {
-    super('path', paperScope);
+    super('fileSelector', paperScope);
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
     this.paths = [];
     this.activePath = null;
   }
 
-
   dispose() {
     this.disposePaths();
     this.tool.off('mousedown');
-    this.tool.off('mousedrag');
     this.tool.off('mousemove');
     super.dispose();
   }
@@ -29,28 +27,24 @@ export default class PathTool extends FieldTool {
   get cursor() {
     return 'crosshair';
   }
-
+  
   onMouseDown = (event) => {
     const { item } = event;
     const { activePath } = this;
 
-    if (activePath) {
+    const marcherClicked = this.itemIsMarcher(item);
+
+    if (activePath && marcherClicked) {
       activePath.add(event.point);
       return;
     }
 
-    if (this.itemIsMarcher(item)) {
+    if (!activePath && marcherClicked) {
       this.startPath();
       return;
     }
 
-    if (this.itemIsPath(item)) {
-      this.activatePath(item);
-      return;
-    }
-  };
-
-  onMouseDrag = (event) => {};
+  }
 
   onMouseMove = (event) => {
     const { item } = event;
@@ -70,49 +64,10 @@ export default class PathTool extends FieldTool {
       this.highlightMarcher(item);
       return;
     }
-
-    this.unhighlightMarcher();
-  };
-
-  activatePath(item) {
-    const path = this.paths.find(p => p.path === item);
-    if (!path) return;
-    if (this.activePath) 
-      this.activePath.deactivate();
-    this.activePath = path;
-    path.activate();
-  }
-
-  newPath() {
-    if (this.activePath)
-      this.activePath.deactivate();
-    this.activePath = null;
-  }
-
-  undoLastSegment() {
-    if (this.activePath)
-      this.activePath.undoLastSegment();
-  }
-
-  deleteCurrentPath() {
-    if (this.activePath) {
-      this.activePath.remove();
-    }
-    this.activePath = null;
   }
 
   startPath() {
     this.activePath = new PathLine(this.marcher.position);
     this.paths.push(this.activePath);
-  }
-
-  cancel() {
-    this.disposePaths();
-    this.paths = [];
-    this.activePath = null;
-  }
-
-  itemIsPath(item) {
-    return item && item._itemType === 'path';
-  }
+  }  
 }

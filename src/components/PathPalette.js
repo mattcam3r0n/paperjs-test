@@ -25,6 +25,11 @@ class PathPalette extends Component {
     if (pathTool) pathTool.newPath();
   };
 
+  handleSelectFile = () => {
+    const { designViewState } = this.props;
+    designViewState.activateFileSelectorTool();
+  };
+
   handleUndo = () => {
     const pathTool = this.getPathTool();
     if (pathTool) pathTool.undoLastSegment();
@@ -47,6 +52,9 @@ class PathPalette extends Component {
     return (
       <Palette title="Path Tool" visible={designViewState.isPathToolActive}>
         <PaletteButton title="New Path" onClick={this.handleNewPath}>
+          <Timeline />
+        </PaletteButton>
+        <PaletteButton title="Select File" onClick={this.handleSelectFile}>
           <Timeline />
         </PaletteButton>
         <PaletteButton title="Undo" onClick={this.handleUndo}>

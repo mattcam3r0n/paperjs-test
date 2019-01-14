@@ -24,5 +24,23 @@ export default class FieldTool {
   isCanvasEvent(event) {
     const targetNodeName = event.event.target.nodeName;
     return targetNodeName === 'CANVAS';
-  }  
+  }
+
+  itemIsMarcher(item) {
+    return item && item._itemType === 'marcher';
+  }
+
+  highlightMarcher = (item) => {
+    // highlight
+    this.marcher = item;
+    item.strokeColor = 'yellow';
+  };
+
+  unhighlightMarcher = () => {
+    if (!this.marcher) return;
+
+    this.marcher.strokeColor = 'black';
+    this.marcher = null;
+  };
+
 }

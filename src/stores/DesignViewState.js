@@ -5,6 +5,7 @@ import PointerTool from '../lib/PointerTool';
 import PathTool from '../lib/PathTool';
 import AddMarchersTool from '../lib/AddMarchersTool';
 import ZoomAndPanTool from '../lib/ZoomAndPanTool';
+import FileSelectorTool from '../lib/FileSelectorTool';
 
 export default class DesignViewState {
   @observable zoomFactor;
@@ -92,6 +93,12 @@ export default class DesignViewState {
   activatePathTool() {
     this.disposeActiveTool(); // needs to come before constructing new tool
     this.setActiveTool(new PathTool(this.fieldPaperScope));
+  }
+
+  @action
+  activateFileSelectorTool() {
+    this.disposeActiveTool();
+    this.setActiveTool(new FileSelectorTool(this.fieldPaperScope));
   }
 
   @action
