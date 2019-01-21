@@ -14,11 +14,22 @@ const styles = (theme) => ({});
 class SelectionPalette extends Component {
   state = {};
 
+  handleRectangularSelection = () => {
+    this.props.designViewState.activateRectangularSelectionTool();
+  }
+
+  handleIrregularSelection = () => {
+    this.props.designViewState.activateIrregularSelectionTool();
+  }
+
   render() {
     const { designViewState, left = 400, top = 100 } = this.props;
     return (
       <Palette title="Selection" visible={designViewState.isSelectionToolActive} left={left} top={top} >
-        <PaletteButton title="New Path" onClick={this.handleNewPath}>
+        <PaletteButton title="Rectangular Selection" onClick={this.handleRectangularSelection} selected={designViewState.isRectangularSelectionToolActive}>
+          <Timeline />
+        </PaletteButton>
+        <PaletteButton title="Irregular Selection" onClick={this.handleIrregularSelection} selected={designViewState.isIrregularSelectionToolActive}>
           <Timeline />
         </PaletteButton>
         <PaletteButton title="Undo" onClick={this.handleUndo}>

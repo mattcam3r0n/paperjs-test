@@ -21,7 +21,7 @@ class SelectionToolsFlyout extends Component {
 
   handlePointerTool = (e) => {
     //e.preventDefault();
-    this.props.designViewState.activatePointerTool();
+    this.props.designViewState.activateRectangularSelectionTool();
   };
 
   render() {
@@ -31,7 +31,7 @@ class SelectionToolsFlyout extends Component {
         <Fab
           size="small"
           className={classes.fab}
-          color="inherit"
+          color="primary"
           onClick={this.handlePointerTool}
         >
           <TabUnselected />

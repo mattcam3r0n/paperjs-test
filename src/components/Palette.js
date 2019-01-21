@@ -37,7 +37,7 @@ class Palette extends Component {
   state = {};
 
   handlePathTool = () => {
-    this.props.appState.activatePointerTool();
+    this.props.appState.activateSelectionTool();
   };
 
   render() {

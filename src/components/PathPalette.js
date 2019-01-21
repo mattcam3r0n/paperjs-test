@@ -44,7 +44,7 @@ class PathPalette extends Component {
     const { designViewState } = this.props;
     const pathTool = this.getPathTool();
     if (pathTool) pathTool.cancel();
-    designViewState.activatePointerTool();
+    designViewState.activateSelectionTool();
   };
 
   render() {

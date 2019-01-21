@@ -47,6 +47,8 @@ const designViewState = new DesignViewState();
 function ClippedDrawer(props) {
   const { classes } = props;
 
+  //console.log('theme', theme);
+
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />

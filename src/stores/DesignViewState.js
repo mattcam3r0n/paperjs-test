@@ -1,11 +1,12 @@
 import { observable, action, computed } from 'mobx';
 import paper from 'paper';
 import FieldDimensions from '../lib/FieldDimensions';
-import PointerTool from '../lib/PointerTool';
 import PathTool from '../lib/PathTool';
 import AddMarchersTool from '../lib/AddMarchersTool';
 import ZoomAndPanTool from '../lib/ZoomAndPanTool';
 import FileSelectorTool from '../lib/FileSelectorTool';
+import RectangularSelectionTool from '../lib/RectangularSelectionTool';
+import IrregularSelectionTool from '../lib/IrregularSelectionTool';
 
 export default class DesignViewState {
   @observable zoomFactor;
@@ -18,7 +19,6 @@ export default class DesignViewState {
   lastDelta;
   fieldPaperScope;
   timelinePaperScope;
-  
 
   constructor() {
     this.zoomFactor = 1;
@@ -39,7 +39,21 @@ export default class DesignViewState {
 
   @computed
   get isSelectionToolActive() {
-    return this.activeTool && this.activeTool.name === 'pointer';
+    return (
+      this.activeTool &&
+      (this.activeTool.name === 'rectangularSelection' ||
+        this.activeTool.name === 'irregularSelection')
+    );
+  }
+
+  @computed
+  get isRectangularSelectionToolActive() {
+    return this.activeTool && this.activeTool.name === 'rectangularSelection';
+  }
+
+  @computed
+  get isIrregularSelectionToolActive() {
+    return this.activeTool && this.activeTool.name === 'irregularSelection';
   }
 
   @computed
@@ -54,9 +68,8 @@ export default class DesignViewState {
 
   @action
   cancelPathTool() {
-    if (this.isPathToolActive())
-      this.activeTool.cancel();
-    this.activatePointerTool();
+    if (this.isPathToolActive()) this.activeTool.cancel();
+    this.activateSelectionTool();
   }
 
   @action
@@ -68,13 +81,17 @@ export default class DesignViewState {
   //@action
   activateZoomInTool() {
     this.disposeActiveTool(); // needs to come before constructing new tool
-    this.setActiveTool(new ZoomAndPanTool(this.fieldPaperScope, this, 'zoomIn'));
+    this.setActiveTool(
+      new ZoomAndPanTool(this.fieldPaperScope, this, 'zoomIn')
+    );
   }
 
   //@action
   activateZoomOutTool() {
     this.disposeActiveTool(); // needs to come before constructing new tool
-    this.setActiveTool(new ZoomAndPanTool(this.fieldPaperScope, this, 'zoomOut'));
+    this.setActiveTool(
+      new ZoomAndPanTool(this.fieldPaperScope, this, 'zoomOut')
+    );
   }
 
   @action
@@ -84,9 +101,19 @@ export default class DesignViewState {
   }
 
   @action
-  activatePointerTool() {
+  activateRectangularSelectionTool() {
     this.disposeActiveTool(); // needs to come before constructing new tool
-    this.setActiveTool(new PointerTool(this.fieldPaperScope));
+    this.setActiveTool(new RectangularSelectionTool(this.fieldPaperScope));
+  }
+
+  activateSelectionTool() {
+    this.activateRectangularSelectionTool();
+  }
+
+  @action
+  activateIrregularSelectionTool() {
+    this.disposeActiveTool(); // needs to come before constructing new tool
+    this.setActiveTool(new IrregularSelectionTool(this.fieldPaperScope));
   }
 
   @action
@@ -129,10 +156,10 @@ export default class DesignViewState {
   zoomOut(point) {
     //this.zoomFactor *= 0.9;
     this.zoomAndCenter(point, this.center, this.zoomFactor, 0.9);
-  }  
+  }
 
   zoomAndCenter(point, currentCenter, currentZoom, zoomFactor) {
-    // based on https://matthiasberth.com/tech/stable-zoom-and-pan-in-paperjs 
+    // based on https://matthiasberth.com/tech/stable-zoom-and-pan-in-paperjs
     const c = new paper.Point(currentCenter);
     const oldZoom = currentZoom;
     const newZoom = currentZoom * zoomFactor;
@@ -200,18 +227,18 @@ export default class DesignViewState {
   createNewDrill() {
     const drill = {};
     drill.marchers = [];
-    for(let i=0; i < 16; i++) {
+    for (let i = 0; i < 16; i++) {
       const m = {
         initialState: {
-          x: 12 + ((i % 4) * 2),
-          y: 6 + (Math.floor(i / 4) * 2),
-          direction: 90
+          x: 12 + (i % 4) * 2,
+          y: 6 + Math.floor(i / 4) * 2,
+          direction: 90,
         },
         currentState: {
-          x: 12 + ((i % 4) * 2),
-          y: 6 + ((i % 4) * 2),
-          direction: 90
-        }
+          x: 12 + (i % 4) * 2,
+          y: 6 + (i % 4) * 2,
+          direction: 90,
+        },
       };
       drill.marchers.push(m);
     }

@@ -44,7 +44,7 @@ class RightSideBar extends Component {
   state = {};
 
   handlePathTool = (e) => {
-    this.props.designViewState.activatePointerTool();
+    this.props.designViewState.activateSelectionTool();
   };
 
   render() {
