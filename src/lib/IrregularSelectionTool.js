@@ -3,58 +3,69 @@ import FieldTool from './FieldTool';
 export default class IrregularSelectionTool extends FieldTool {
   constructor(paperScope) {
     super('irregularSelection', paperScope);
-    this.tool.onMouseDown = this.onMouseDown;
-    this.tool.onMouseUp = this.onMouseUp;
-    this.tool.onMouseMove = this.onMouseMove;
-    this.tool.onMouseDrag = this.onMouseDrag;
-    this.selectionRect = null;
+    this.paperScope.view.onDoubleClick = this.onDoubleClick;
+    this.paperScope.view.onClick = this.onClick;
+    this.paperScope.view.onMouseMove = this.onMouseMove;
+    this.selectionPath = null;
   }
 
   dispose() {
-    this.disposeRect();
-    this.tool.off('mousedown');
-    this.tool.off('mouseup');
-    this.tool.off('mousedrag');
-    this.tool.off('mousemove');
+    this.disposeSelection();
+    this.paperScope.view.off('doubleclick');
+    this.paperScope.view.off('click');
     super.dispose();
   }
 
-  disposeRect() {
-    if (!this.selectionRect) return;
-    this.selectionRect.remove();
+  disposeSelection() {
+    if (!this.selectionPath) return;
+    this.selectionPath.remove();
+    this.selectionPath = null;
   }
 
-  onMouseDown = (event) => {};
+  onDoubleClick = (event) => {
+    console.log('onDoubleClick', event);
 
-  onMouseUp = (event) => {
-    if (this.selectionRect)
-      this.selectionRect.remove();
+    if (this.selectionPath) {
+      this.finishSelection(event.point);
+    } else {
+      this.startSelection(event.point);
+    }    
   };
 
-  onMouseDrag = (event) => {
-    // if (!this.selectionRect) {
-    //   this.selectionRect = this.createRect(event.downPoint);
-    // }
-
-    // this.selectionRect.size = new this.paperScope.Size(
-    //   event.point.x - event.downPoint.x,
-    //   event.point.y - event.downPoint.y
-    // );
-    if (this.selectionRect)
-      this.selectionRect.remove();
-    this.selectionRect = this.createRect(event.downPoint, event.point);
+  onClick = (event) => {
+    console.log('onClick', event);
+    if (this.selectionPath) {
+      this.addPoint(event.point);
+    }
   };
 
-  onMouseMove = (event) => {};
+  onMouseMove = (event) => {
+    if (this.selectionPath) {
+      this.selectionPath.lastSegment.point = event.point;
+    }
+  };
 
-  createRect(from, to) {
-    return new this.paperScope.Path.Rectangle({
-      from: from,
-      to: to,
+  startSelection(point) {
+    this.selectionPath = this.createPath(point);
+  }
+
+  finishSelection(point) {
+    this.disposeSelection();
+  }
+
+  addPoint(point) {
+    this.selectionPath.add(point);
+  }
+
+  createPath(point) {
+    return new this.paperScope.Path({
+      segments: [point, point],
       strokeColor: 'deepskyblue',
       strokeWidth: 0.25,
       dashArray: [0.5, 0.5],
-      opacity: 1
+      opacity: 0.5,
+      fillColor: 'white',
+      closed: true
     });
   }
 

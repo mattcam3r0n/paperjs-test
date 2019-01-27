@@ -54,7 +54,8 @@ export default class RectangularSelectionTool extends FieldTool {
       strokeColor: 'deepskyblue',
       strokeWidth: 0.25,
       dashArray: [0.5, 0.5],
-      opacity: 1
+      opacity: .5,
+      fillColor: 'white'
     });
   }
 
