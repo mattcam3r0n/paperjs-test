@@ -27,40 +27,48 @@ class SelectionToolsFlyout extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <ButtonFlyOut icon={<TabUnselected />} tooltip="Selection Tools">
-        <Fab
-          size="small"
-          className={classes.fab}
-          color="primary"
-          onClick={this.handlePointerTool}
-        >
-          <TabUnselected />
-        </Fab>
-        <Fab
-          size="small"
-          className={classes.fab}
-          color="inherit"
-          onClick={this.handlePointerTool}
-        >
-          <TabUnselected />
-        </Fab>
-        <Fab
-          size="small"
-          className={classes.fab}
-          color="inherit"
-          onClick={this.handlePointerTool}
-        >
-          <TabUnselected />
-        </Fab>
-        <Fab
-          size="small"
-          className={classes.fab}
-          color="inherit"
-          onClick={this.handlePointerTool}
-        >
-          <TabUnselected />
-        </Fab>
-      </ButtonFlyOut>
+      <Fab
+      size="small"
+      className={classes.fab}
+      color="primary"
+      onClick={this.handlePointerTool}
+    >
+      <TabUnselected />
+    </Fab>
+  // <ButtonFlyOut icon={<TabUnselected />} tooltip="Selection Tools">
+      //   <Fab
+      //     size="small"
+      //     className={classes.fab}
+      //     color="primary"
+      //     onClick={this.handlePointerTool}
+      //   >
+      //     <TabUnselected />
+      //   </Fab>
+      //   <Fab
+      //     size="small"
+      //     className={classes.fab}
+      //     color="inherit"
+      //     onClick={this.handlePointerTool}
+      //   >
+      //     <TabUnselected />
+      //   </Fab>
+      //   <Fab
+      //     size="small"
+      //     className={classes.fab}
+      //     color="inherit"
+      //     onClick={this.handlePointerTool}
+      //   >
+      //     <TabUnselected />
+      //   </Fab>
+      //   <Fab
+      //     size="small"
+      //     className={classes.fab}
+      //     color="inherit"
+      //     onClick={this.handlePointerTool}
+      //   >
+      //     <TabUnselected />
+      //   </Fab>
+      // </ButtonFlyOut>
     );
   }
 }
