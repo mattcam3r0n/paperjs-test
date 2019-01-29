@@ -47,6 +47,10 @@ class RightSideBar extends Component {
     this.props.designViewState.activateSelectionTool();
   };
 
+  componentDidMount() {
+    this.props.designViewState.activateSelectionTool();
+  }
+
   render() {
     const { classes } = this.props;
     return (

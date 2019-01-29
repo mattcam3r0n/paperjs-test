@@ -23,8 +23,6 @@ export default class IrregularSelectionTool extends FieldTool {
   }
 
   onDoubleClick = (event) => {
-    console.log('onDoubleClick', event);
-
     if (this.selectionPath) {
       this.finishSelection(event.point);
     } else {
@@ -33,7 +31,6 @@ export default class IrregularSelectionTool extends FieldTool {
   };
 
   onClick = (event) => {
-    console.log('onClick', event);
     if (this.selectionPath) {
       this.addPoint(event.point);
     }

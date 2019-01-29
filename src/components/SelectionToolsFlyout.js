@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { observer, inject } from 'mobx-react';
 
 import Fab from '@material-ui/core/Fab';
-import ButtonFlyOut from './ButtonFlyOut';
+// import ButtonFlyOut from './ButtonFlyOut';
 
 // icons
 import TabUnselected from '@material-ui/icons/TabUnselected';
@@ -25,12 +25,12 @@ class SelectionToolsFlyout extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, designViewState } = this.props;
     return (
       <Fab
       size="small"
       className={classes.fab}
-      color="primary"
+      color={ designViewState.isSelectionToolActive ? 'primary' : 'default' }
       onClick={this.handlePointerTool}
     >
       <TabUnselected />
