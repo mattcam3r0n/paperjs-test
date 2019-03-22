@@ -1,12 +1,12 @@
-import RightFlank from './RightFlank';
+import LeftFlank from './LeftFlank';
 import StepDeltas from '../StepDeltas';
 import { createState } from '../../TestHelpers';
 
 // TODO: mock StepDeltas?  is it worth it?
 
-describe('RightFlank', () => {
+describe('LeftFlank', () => {
   describe('do', () => {
-    it('changes direction by +90', () => {
+    it('changes direction by -90', () => {
       const currentState = createState({
         count: 1,
         position: {
@@ -19,16 +19,16 @@ describe('RightFlank', () => {
       });
 
       const action = {
-        type: 'rightFlank',
+        type: 'leftFlank',
         strideType: 'sixToFive',
         stepType: 'full',
       };
 
-      const rightFlank = new RightFlank(StepDeltas);
-      const newState = rightFlank.do(currentState, action);
+      const leftFlank = new LeftFlank(StepDeltas);
+      const newState = leftFlank.do(currentState, action);
 
-      // direction of travel should be +90
-      expect(newState.step.direction).toBe(currentState.step.direction + 90);
+      // direction of travel should be -90
+      expect(newState.step.direction).toBe(currentState.step.direction - 90);
       // marcher facing direction (rotation) should equal travel direction
       expect(newState.position.rotation).toBe(newState.step.direction);
     });
@@ -49,13 +49,13 @@ describe('RightFlank', () => {
     });
 
     const action = {
-      type: 'rightFlank',
+      type: 'leftFlank',
       strideType: 'sixToFive',
       stepType: 'full',
     };
 
-    const rightFlank = new RightFlank(StepDeltas);
-    const newState = rightFlank.do(currentState, action);
+    const leftFlank = new LeftFlank(StepDeltas);
+    const newState = leftFlank.do(currentState, action);
 
     expect(newState.step.strideType).toBe(currentState.step.strideType);
     expect(newState.step.stepType).toBe(currentState.step.stepType);
