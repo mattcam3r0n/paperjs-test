@@ -14,8 +14,8 @@ export default class ActionHandler {
     return {
       count: state.count + 1,
       position: {
-        x: state.x + dX,
-        y: state.y + dY,
+        x: state.position.x + dX,
+        y: state.position.y + dY,
         rotation: state.position.rotation + dR,
       },
       step: {
