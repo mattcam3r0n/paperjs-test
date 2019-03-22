@@ -6,7 +6,7 @@ import { createState } from '../../TestHelpers';
 
 describe('RightFlank', () => {
   describe('do', () => {
-    it('rightFlank changes direction by +90', () => {
+    it('changes direction by +90', () => {
       const currentState = createState({
         count: 1,
         position: {
@@ -29,5 +29,9 @@ describe('RightFlank', () => {
 
       expect(newState.step.direction).toBe(currentState.step.direction + 90);
     });
+  });
+
+  it('preserves current stride and step type', () => {
+    throw new Error('Not implemented yet');
   });
 });
