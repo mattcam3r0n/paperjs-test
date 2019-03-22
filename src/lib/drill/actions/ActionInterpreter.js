@@ -1,14 +1,11 @@
-import StepDelta from '../StepDelta';
+import StepDeltas from '../StepDeltas';
 import RightFlank from './RightFlank';
 import Forward from './Forward';
 
-const backward = (currentState, action) => {};
-const leftFlank = (currentState, action) => {};
-
 const actionsMap = {
-    'forward': new Forward(StepDelta),
+    'forward': new Forward(StepDeltas),
     'backward': null,
-    'rightFlank': new RightFlank(StepDelta),
+    'rightFlank': new RightFlank(StepDeltas),
     'leftFlank': null,
 };
 
