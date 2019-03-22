@@ -1,7 +1,7 @@
 
 import ActionInterpreter from './ActionInterpreter';
 
-it('forward action maintains current direction', () => {
+it('should return currentState if not action provided', () => {
     const currentState = createState(0, 0, 0, 90, 'sixToFive', 'full', 90, 1);
     const action = {
         type: 'forward',
@@ -9,19 +9,10 @@ it('forward action maintains current direction', () => {
         stepType: 'full'
     };
     const newState = ActionInterpreter.doAction(currentState, action);
-    expect(newState.step.direction).toBe(currentState.step.direction);
+    expect(newState).toEqual(currentState);
 });
 
-it('rightFlank action changes direction by +90', () => {
-    const currentState = createState(1, 0, 0, 90, 'sixToFive', 'full', 90, 1);
-    const action = {
-        type: 'rightFlank',
-        strideType: 'sixToFive',
-        stepType: 'full'
-    };
-    const newState = ActionInterpreter.doAction(currentState, action);
-    expect(newState.step.direction).toBe(currentState.step.direction + 90);
-});
+
 
 function createState(count = 0, x = 0, y = 0, r = 0, strideType = 'sixToFive', stepType = 'full', direction = 0, dX = 0, dY = 0, dR = 0) {
     return {
@@ -29,7 +20,7 @@ function createState(count = 0, x = 0, y = 0, r = 0, strideType = 'sixToFive', s
         position: {
             x: x,
             y: y,
-            r: r 
+            rotation: r 
         },
         step: {
             strideType: strideType,

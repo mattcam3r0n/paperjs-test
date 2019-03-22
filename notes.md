@@ -7,6 +7,8 @@
 * can i make stride and step type mathematical, so that state can be changed with simple addition/subtraction, like position does?
     * add/subtract a delta necessary to get to right state?
     * use bit mask?
+* should actions update position and count?
+  * would need a Continue action that is the default when no action is present. It would continue current state.
 
 // action
 {
