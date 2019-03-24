@@ -4,7 +4,6 @@ export default class PositionCalculator {
 
   getNextState(currentState, script) {
     const action = script[currentState.count];
-    if (!action) return currentState;
     const newState = ActionInterpreter.doAction(currentState, action);
     return newState;
   }
@@ -13,19 +12,7 @@ export default class PositionCalculator {
   stepForward(currentState, script) {
     // apply action (if necessary)
     const state = this.getNextState(currentState, script);
-    const { dX, dY, dR } = state.step;
-    // apply step
-    return {
-        count: state.count + 1,
-        position: {
-            x: state.x + dX,
-            y: state.y + dY,
-            rotation: state.rotation + dR
-        },
-        step: {
-            ...state.step
-        }
-    }; 
+    return state;
   }
 
   stepBackward() {}
