@@ -24,6 +24,9 @@ const deltas = {
 
 export default class StepDelta {
     static getStepDelta(step) {
+        if (!deltas[step.direction]) {
+            console.log('unknown direction', step.direction);
+        }
         return deltas[step.direction];
     }
 }

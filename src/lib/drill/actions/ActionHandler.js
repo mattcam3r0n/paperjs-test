@@ -29,6 +29,7 @@ export default class ActionHandler {
         const step = this.ensureStepDeltas(state.step);
     // apply step
     return {
+//      type: action ? action.type : 'actionHandler',
       count: state.count + 1,
       position: {
         x: state.position.x + step.dX,

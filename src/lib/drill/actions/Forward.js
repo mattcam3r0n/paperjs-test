@@ -1,7 +1,13 @@
 import ActionHandler from './ActionHandler';
 
 export default class Forward extends ActionHandler {
-    do(currentState, action) {
+    constructor(stepDeltas) {
+        super(stepDeltas);
+        this.type = 'forward';
+        this.stepDeltas = stepDeltas;
+      }
+
+      do(currentState, action) {
         const { count, position, step } = currentState;
         // calc new step delta based on direction
         const stepDelta = this.stepDeltas.getStepDelta({
@@ -25,7 +31,7 @@ export default class Forward extends ActionHandler {
                 dY: stepDelta.dY,
                 dR: stepDelta.dR
             }
-        });    
+        }, action);
     }
 
     undo() {}

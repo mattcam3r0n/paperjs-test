@@ -1,7 +1,13 @@
 import ActionHandler from './ActionHandler';
 
 export default class LeftFlank extends ActionHandler {
-    do(currentState, action) {
+    constructor(stepDeltas) {
+        super(stepDeltas);
+        this.type = 'leftFlank';
+        this.stepDeltas = stepDeltas;
+      }
+
+      do(currentState, action) {
         const { count, position, step } = currentState;
         // calc new direction based on current
         const newDirection = step.direction - 90;
@@ -11,7 +17,7 @@ export default class LeftFlank extends ActionHandler {
             stepType: step.stepType,
             direction: newDirection
         });
-        return {
+        return super.do({
             count: count,
             position: {
                 x: position.x,
@@ -26,7 +32,7 @@ export default class LeftFlank extends ActionHandler {
                 dY: stepDelta.dY,
                 dR: stepDelta.dR
             }
-        };    
+        });    
     }
 
     undo() {}
