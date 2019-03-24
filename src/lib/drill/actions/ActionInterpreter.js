@@ -3,12 +3,14 @@ import Continue from './Continue';
 import RightFlank from './RightFlank';
 import Forward from './Forward';
 import LeftFlank from './LeftFlank';
+import ToTheRear from './ToTheRear';
 
 const actionsMap = {
     'forward': new Forward(StepDeltas),
     'backward': null,
     'rightFlank': new RightFlank(StepDeltas),
     'leftFlank': new LeftFlank(StepDeltas),
+    'toTheRear': new ToTheRear(StepDeltas),
     'default': new Continue(StepDeltas)
 };
 

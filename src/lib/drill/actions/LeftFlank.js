@@ -1,4 +1,5 @@
 import ActionHandler from './ActionHandler';
+import Directions from '../Directions';
 
 export default class LeftFlank extends ActionHandler {
     constructor(stepDeltas) {
@@ -10,7 +11,7 @@ export default class LeftFlank extends ActionHandler {
       do(currentState, action) {
         const { count, position, step } = currentState;
         // calc new direction based on current
-        const newDirection = step.direction - 90;
+        const newDirection = Directions.normalize(step.direction - 90);
         // calc new step delta based on direction
         const stepDelta = this.stepDeltas.getStepDelta({
             strideType: step.strideType,
