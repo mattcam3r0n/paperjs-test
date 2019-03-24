@@ -6,12 +6,20 @@ import LeftFlank from './LeftFlank';
 import ToTheRear from './ToTheRear';
 
 const actionsMap = {
+    'default': new Continue(StepDeltas),
+    'halt': null,
+    'markTime': null,
     'forward': new Forward(StepDeltas),
     'backward': null,
     'rightFlank': new RightFlank(StepDeltas),
     'leftFlank': new LeftFlank(StepDeltas),
+    'rightWrap': null,
+    'leftWrap': null,
     'toTheRear': new ToTheRear(StepDeltas),
-    'default': new Continue(StepDeltas)
+    'leftCountermarch': null,
+    'rightCountermarch': null,
+    'leftOblique': null,
+    'rightOblique': null,
 };
 
 export default class ActionInterpreter {
