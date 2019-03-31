@@ -1,18 +1,23 @@
-import ActionHandler from './ActionHandler';
-import StepDeltas from '../StepDeltas';
-import { createState } from '../../TestHelpers';
+import StepInterpreter from './StepInterpreter';
+import StepDeltas from './StepDeltas';
+import { createState, createStep } from '../TestHelpers';
 
 // TODO: mock StepDeltas?  is it worth it?
 
-describe('ActionHandler', () => {
+describe('StepInterpreter', () => {
   describe('do', () => {
     it('increments count', () => {
       const currentState = createState({
         count: 1,
       });
-
-      const actionHandler = new ActionHandler(StepDeltas);
-      const newState = actionHandler.do(currentState, null);
+      const step = createStep({
+        direction: 90,
+        dX: 1,
+        dY: 0,
+        dR: 0
+      });
+      const stepInterpreter = new StepInterpreter(StepDeltas);
+      const newState = stepInterpreter.do(currentState, step);
 
       expect(newState.count).toBe(currentState.count + 1);
     });
@@ -24,22 +29,22 @@ describe('ActionHandler', () => {
           x: 1,
           y: 1,
           rotation: 90,
-        },
-        step: {
-          direction: 90,
-          dX: 1,
-          dY: 0,
-          dR: 90,
-        },
+        }
+      });
+      const step = createStep({
+        direction: 90,
+        dX: 1,
+        dY: 0,
+        dR: 0
       });
 
-      const actionHandler = new ActionHandler(StepDeltas);
-      const newState = actionHandler.do(state, null);
+      const actionHandler = new StepInterpreter(StepDeltas);
+      const newState = actionHandler.do(state, step);
 
-      expect(newState.position.x).toBe(state.position.x + state.step.dX);
-      expect(newState.position.y).toBe(state.position.y + state.step.dY);
+      expect(newState.position.x).toBe(state.position.x + step.dX);
+      expect(newState.position.y).toBe(state.position.y + step.dY);
       expect(newState.position.rotation).toBe(
-        state.position.rotation + state.step.dR
+        state.position.rotation + step.dR
       );
     });
 
@@ -56,7 +61,7 @@ describe('ActionHandler', () => {
         }
       });
 
-      const actionHandler = new ActionHandler(StepDeltas);
+      const actionHandler = new StepInterpreter(StepDeltas);
             const newState = actionHandler.do(currentState, null);
       expect(newState.step.dX).toBe(1);
       expect(newState.step.dY).toBe(0);
@@ -72,7 +77,7 @@ describe('ActionHandler', () => {
         stepType: 'full',
         direction: 90
       };
-      const actionHandler = new ActionHandler(StepDeltas);
+      const actionHandler = new StepInterpreter(StepDeltas);
       const newStep = actionHandler.ensureStepDeltas(step);
 
       expect(newStep.dX).toBe(1);

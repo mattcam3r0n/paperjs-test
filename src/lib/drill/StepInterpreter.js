@@ -1,5 +1,7 @@
-export default class ActionHandler {
-  constructor(stepDeltas) {
+import StepDeltas from './StepDeltas';
+
+export default class StepInterpreter {
+  constructor(stepDeltas = StepDeltas) {
     this.stepDeltas = stepDeltas;
   }
 
@@ -25,16 +27,15 @@ export default class ActionHandler {
    * @param {object} state
    * @param {object} action
    */
-  do(state, action) {
-        const step = this.ensureStepDeltas(state.step);
-    // apply step
+  do(state, step) {
+    if (!step) return state; // or throw? counts could get out of sync
+    step = this.ensureStepDeltas(step);
     return {
-//      type: action ? action.type : 'actionHandler',
       count: state.count + 1,
       position: {
         x: state.position.x + step.dX,
         y: state.position.y + step.dY,
-        rotation: state.position.rotation + step.dR,
+        rotation: step.direction
       },
       step: {
         ...step,

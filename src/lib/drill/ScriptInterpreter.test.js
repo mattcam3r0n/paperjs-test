@@ -1,6 +1,6 @@
-import PositionCalculator from './PositionCalculator';
+import ScriptInterpreter from './ScriptInterpreter';
 
-describe('PositionCalculator', () => {
+describe('ScriptInterpreter', () => {
   describe('stepForward', () => {
     test('forward 1 count', () => {
       const initialState = {
@@ -14,9 +14,6 @@ describe('PositionCalculator', () => {
           strideType: 'sixToFive',
           stepType: 'full',
           direction: 90,
-          // dX: 1,
-          // dY: 0,
-          // dR: 0
         },
       };
       const script = {
@@ -24,9 +21,10 @@ describe('PositionCalculator', () => {
           type: 'forward',
           strideType: 'sixToFive',
           stepType: 'full',
+          direction: 90
         },
       };
-      const calc = new PositionCalculator();
+      const calc = new ScriptInterpreter();
       const newState = calc.stepForward(initialState, script);
 
       // should change by 1 unit of x
@@ -50,9 +48,6 @@ describe('PositionCalculator', () => {
           strideType: 'sixToFive',
           stepType: 'full',
           direction: 90,
-          // dX: 1,
-          // dY: 0,
-          // dR: 0
         },
       };
       const script = {
@@ -60,25 +55,29 @@ describe('PositionCalculator', () => {
           type: 'forward',
           strideType: 'sixToFive',
           stepType: 'full',
+          direction: 90,
+          dX: 1,
+          dY: 0,
+          dR: 0
         },
         6: {
           type: 'leftFlank',
           strideType: 'sixToFive',
           stepType: 'full',
+          direction: 0,
+          dX: 0,
+          dY: -1,
+          dR: 0
         },
       };
-      const calc = new PositionCalculator();
+      const calc = new ScriptInterpreter();
 
       const states = [];
       let currentState = initialState;
       for (let i = 0; i < 12; i++) {
-        // const { x, y } = currentState.position;
-        // const { dX, dY } = currentState.step;
-        // console.log('i', i, 'x', x, 'y', y, 'dX', dX, 'dY', dY);
         currentState = calc.stepForward(currentState, script);
         states.push(currentState);
       }
-
       const stateAtCount6 = states[5];
       expect(stateAtCount6.position.x).toBe(6);
       expect(stateAtCount6.position.y).toBe(0);

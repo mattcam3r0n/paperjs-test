@@ -1,12 +1,15 @@
-import ActionInterpreter from './actions/ActionInterpreter';
+import StepInterpreter from './StepInterpreter';
 
-export default class PositionCalculator {
+export default class ScriptInterpreter {
+
+  constructor(stepInterpreter = new StepInterpreter()) {
+    this.stepInterpreter = stepInterpreter;
+  }
 
   // calculate new state and position
   stepForward(currentState, script) {
-    const action = script[currentState.count];
-    const newState = ActionInterpreter.doAction(currentState, action);
-    return newState;
+    const step = script[currentState.count] || currentState.step;
+    return this.stepInterpreter.do(currentState, step);
   }
 
   stepBackward() {}
