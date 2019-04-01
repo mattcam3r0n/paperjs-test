@@ -102,7 +102,7 @@ describe('ScriptInterpreter', () => {
   });
 
   describe('stepBackward', () => {
-    test('forward EENN, backward 4 counts', () => {
+    test('forward EENN, then backward 4 counts', () => {
       const script = {
         initialState: {
           count: 0,
@@ -118,11 +118,11 @@ describe('ScriptInterpreter', () => {
           },
         },
         currentState: {
-          count: 4,
+          count: 0,
           position: {
-            x: 2,
-            y: -2,
-            rotation: 0,
+            x: 0,
+            y: 0,
+            rotation: 90,
           },
           step: {
             strideType: 'sixToFive',
@@ -141,7 +141,7 @@ describe('ScriptInterpreter', () => {
 
       const calc = new ScriptInterpreter();
 
-      for (let i = 0; i++; i < 4) {
+      for (let i = 0; i < 4; i++) {
         script.currentState = calc.stepForward(script);
       }
 
@@ -150,11 +150,81 @@ describe('ScriptInterpreter', () => {
       expect(script.currentState.position.y).toBe(-2);
       expect(script.currentState.position.rotation).toBe(0);
 
-      script.currentState = calc.stepBackward(script);
-      script.currentState = calc.stepBackward(script);
-      script.currentState = calc.stepBackward(script);
-      script.currentState = calc.stepBackward(script);
+      for (let i = 0; i < 4; i++) {
+        script.currentState = calc.stepBackward(script);
+      }
 
+      // should be back at beginnin
+      expect(script.currentState.count).toBe(0);
+      expect(script.currentState.position.x).toBe(0);
+      expect(script.currentState.position.y).toBe(0);
+      expect(script.currentState.position.rotation).toBe(90);
+    });
+
+    test('forward ENWS, then backward 4 counts', () => {
+      const script = {
+        initialState: {
+          count: 0,
+          position: {
+            x: 0,
+            y: 0,
+            rotation: 90,
+          },
+          step: {
+            strideType: 'sixToFive',
+            stepType: 'full',
+            direction: 90,
+          },
+        },
+        currentState: {
+          count: 0,
+          position: {
+            x: 0,
+            y: 0,
+            rotation: 90,
+          },
+          step: {
+            strideType: 'sixToFive',
+            stepType: 'full',
+            direction: 90,
+          },
+        },
+        steps: {
+          1: {
+            strideType: 'sixToFive',
+            stepType: 'full',
+            direction: 0,
+          },
+          2: {
+            strideType: 'sixToFive',
+            stepType: 'full',
+            direction: 270,
+          },
+          3: {
+            strideType: 'sixToFive',
+            stepType: 'full',
+            direction: 180,
+          },
+        },
+      };
+
+      const calc = new ScriptInterpreter();
+
+      for (let i = 0; i < 4; i++) {
+        script.currentState = calc.stepForward(script);
+      }
+
+      // should be back at beginning location, but facing S
+      expect(script.currentState.count).toBe(4);
+      expect(script.currentState.position.x).toBe(0);
+      expect(script.currentState.position.y).toBe(0);
+      expect(script.currentState.position.rotation).toBe(180);
+
+      for (let i = 0; i < 4; i++) {
+        script.currentState = calc.stepBackward(script);
+      }
+
+      // should be back at beginning, but facing E
       expect(script.currentState.count).toBe(0);
       expect(script.currentState.position.x).toBe(0);
       expect(script.currentState.position.y).toBe(0);

@@ -20,13 +20,12 @@ export default class ScriptInterpreter {
 
   seekPreviousStep(script) {
     const { steps, currentState, initialState } = script;
-    // look for action at fromCount - 1
-    let i = currentState.count - 1;
+    // look for action at fromCount - 2
+    let i = currentState.count - 2;
     while (!steps[i] && i > 0) {
       i--;
     }
-    if (i === 0) return initialState.step;
-    return steps[i];
+    return steps[i] || initialState.step;
   }
 
   seekNextStep(fromCount) {
