@@ -13,7 +13,27 @@
 * ScriptBuilder is a wrapper that provides methods for manipulating a script
 * ScriptInterpreter takes a "script" and modifies state
 * StepInterpreter applies changes to state for a given step
+* new marcher structure
+    * script
+        * initialState
+        * currentState
+        * steps
 
+{
+    script: {
+        initialState: {
+
+        },
+        currentState: {
+
+        },
+        steps: {
+            "1": {
+                
+            }
+        }
+    }
+}
 
 
 

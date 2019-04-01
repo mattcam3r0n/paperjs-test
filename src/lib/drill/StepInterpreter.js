@@ -43,5 +43,18 @@ export default class StepInterpreter {
     };
   }
 
-  undo(currentState, action, previousState) {}
+  undo(currentState, previousStep) {
+    const step = this.ensureStepDeltas(currentState.step);
+    return {
+      count: currentState.count - 1,
+      position: {
+        x: currentState.position.x - step.dX,
+        y: currentState.position.y - step.dY,
+        rotation: previousStep.direction
+      },
+      step: {
+        ...previousStep
+      }
+    }
+  }
 }
