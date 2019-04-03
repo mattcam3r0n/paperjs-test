@@ -38,12 +38,23 @@ class FieldPainter {
   }
 
   syncMarchers(drill) {
-    // TODO: for now, just create. need more sophisticated syncing.
-    drill.marchers.forEach(m => {
-      new Marcher(this.paperScope, {
+    this.deleteMarchers();
+    this.createMarchers(drill);
+  }
+
+  createMarchers(drill) {
+    this.marchers = drill.marchers.map(m => {
+      return new Marcher(this.paperScope, {
         position: [m.initialState.x, m.initialState.y],
         rotation: m.initialState.direction
       });
+    });
+  }
+
+  deleteMarchers() {
+    if (!this.marchers) return;
+    this.marchers.forEach(m => {
+      m.remove();
     });
   }
 

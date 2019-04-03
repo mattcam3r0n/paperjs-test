@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,12 +18,14 @@ const styles = (theme) => ({
   },
 });
 
+@inject('designViewState')
+@observer
 class Header extends React.Component {
   state = {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, designViewState } = this.props;
     const { anchorEl } = this.state;
     return (
       <AppBar position="absolute" className={classes.appBar}>
@@ -31,7 +34,7 @@ class Header extends React.Component {
             Precision
           </Typography>
           <DropDownMenu menuText="File">
-            <DropDownMenuItem>New Drill</DropDownMenuItem>
+            <DropDownMenuItem onClick={designViewState.newDrill}>New Drill</DropDownMenuItem>
             <DropDownMenuItem>Open...</DropDownMenuItem>
           </DropDownMenu>
           <DropDownMenu menuText="Edit">

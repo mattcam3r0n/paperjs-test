@@ -58,4 +58,9 @@ export default class Marcher {
         // marcher.position = this.options.position;
         //marcher.scale(2, 1)
     }
+
+    remove() {
+        this.paperScope.activate();
+        this._marcher.remove();
+    }
 }

@@ -223,20 +223,27 @@ export default class DesignViewState {
     this.fieldContainerSize = newSize;
   }
 
+  @action.bound
+  newDrill() {
+    const x = Math.floor(Math.random() * 100);
+    const y = Math.floor(Math.random() * 100);
+    this.drill = this.createNewDrill({ x: x, y: y});
+  }
+
   // temporary helper
-  createNewDrill() {
+  createNewDrill(options = { x: 12, y: 6 }) {
     const drill = {};
     drill.marchers = [];
     for (let i = 0; i < 16; i++) {
       const m = {
         initialState: {
-          x: 12 + (i % 4) * 2,
-          y: 6 + Math.floor(i / 4) * 2,
+          x: options.x + (i % 4) * 2,
+          y: options.y + Math.floor(i / 4) * 2,
           direction: 90,
         },
         currentState: {
-          x: 12 + (i % 4) * 2,
-          y: 6 + (i % 4) * 2,
+          x: options.x + (i % 4) * 2,
+          y: options.y + (i % 4) * 2,
           direction: 90,
         },
       };

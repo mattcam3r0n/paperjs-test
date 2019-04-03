@@ -52,12 +52,12 @@ function ClippedDrawer(props) {
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <div className={classes.root}>
-        <Header />
-        <Provider designViewState={designViewState}>
+      <Provider designViewState={designViewState}>
+        <div className={classes.root}>
+          <Header />
           <DesignView />
-        </Provider>
-      </div>
+        </div>
+      </Provider>
     </MuiThemeProvider>
   );
 }
