@@ -1,6 +1,6 @@
 Next Steps
 * animation loop
-  * 
+  * set view.onFrame
 * amplify setup
 
 
