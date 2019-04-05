@@ -4,6 +4,13 @@ Next Steps
 * amplify setup
 
 
+Stores / Services
+* userStore - user info, profile, etc
+* drillStore - user's drills
+* designService (drillEditorService) - logic related to drill editing
+* uiStore - ui info?
+* fieldStore - field related info? field dimensions, sizing, etc
+
 * Step - describes a step to take
     * strideType
     * stepType

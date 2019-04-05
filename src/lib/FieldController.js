@@ -57,6 +57,13 @@ export default class FieldController {
         this.fieldPainter.setCenter(center);
       }
     );
+
+    reaction(
+      () => this.viewState.isPlaying,
+      (isPlaying, reaction) => {
+        console.log('isPlaying', isPlaying);
+      }
+    )
   }
 
 }

@@ -15,6 +15,7 @@ export default class DesignViewState {
   @observable activeTool;
   @observable cursor;
   @observable drill;
+  @observable isPlaying;
 
   lastDelta;
   fieldPaperScope;
@@ -221,6 +222,16 @@ export default class DesignViewState {
   @action
   setFieldContainerSize(newSize) {
     this.fieldContainerSize = newSize;
+  }
+
+  @action
+  play() {
+    this.isPlaying = true;
+  }
+
+  @action
+  stop() {
+    this.isPlaying = false;
   }
 
   @action.bound

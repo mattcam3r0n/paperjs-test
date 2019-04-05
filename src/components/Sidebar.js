@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
 
 import Drawer from '@material-ui/core/Drawer';
@@ -36,43 +37,61 @@ const styles = (theme) => {
   };
 };
 
-function SideBar(props) {
-  const { classes } = props;
-  return (
-    <Drawer
-      variant="permanent"
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <div className={classes.toolbar} />
-      {/* <List>{mailFolderListItems}</List> */}
-      <List>
-        <ListItem button className={classes.listItem}>
-          <Fab size="small" className={classes.fab} color="inherit">
-            <PlayArrow />
-          </Fab>
-        </ListItem>
-        <ListItem button className={classes.listItem}>
-          <Fab size="small" className={classes.fab} color="inherit">
-            <Stop />
-          </Fab>
-        </ListItem>
-        <ListItem button className={classes.listItem}>
-          <Fab size="small" className={classes.fab} color="inherit">
-            <Bookmarks />
-          </Fab>
-        </ListItem>
-        <ListItem button className={classes.listItem}>
-          <Fab size="small" className={classes.fab} color="inherit">
-            <LibraryMusic />
-          </Fab>
-        </ListItem>
-      </List>
-      <Divider />
-      {/* <List>{otherMailFolderListItems}</List> */}
-    </Drawer>
-  );
+@inject('designViewState')
+@observer
+class SideBar extends Component {
+  handlePlay = () => {
+    const { designViewState } = this.props;
+    if (designViewState.isPlaying) {
+      designViewState.stop();
+    } else {
+      designViewState.play();
+    }
+  };
+
+  render() {
+    const { classes, designViewState } = this.props;
+    return (
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.toolbar} />
+        {/* <List>{mailFolderListItems}</List> */}
+        <List>
+          <ListItem button className={classes.listItem}>
+            <Fab
+              size="small"
+              className={classes.fab}
+              color="inherit"
+              onClick={this.handlePlay}
+            >
+              {designViewState.isPlaying ? <Stop /> : <PlayArrow />}
+            </Fab>
+          </ListItem>
+          <ListItem button className={classes.listItem}>
+            <Fab size="small" className={classes.fab} color="inherit">
+              <Stop />
+            </Fab>
+          </ListItem>
+          <ListItem button className={classes.listItem}>
+            <Fab size="small" className={classes.fab} color="inherit">
+              <Bookmarks />
+            </Fab>
+          </ListItem>
+          <ListItem button className={classes.listItem}>
+            <Fab size="small" className={classes.fab} color="inherit">
+              <LibraryMusic />
+            </Fab>
+          </ListItem>
+        </List>
+        <Divider />
+        {/* <List>{otherMailFolderListItems}</List> */}
+      </Drawer>
+    );
+  }
 }
 
 export default withStyles(styles)(SideBar);
