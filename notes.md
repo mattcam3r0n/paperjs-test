@@ -5,7 +5,7 @@ Next Steps
 
 
 Stores / Services
-* userStore - user info, profile, etc
+* appState - app wide state, like authenticated, etc
 * drillStore - user's drills
 * designService (drillEditorService) - logic related to drill editing
 * uiStore - ui info?

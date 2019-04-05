@@ -3,12 +3,13 @@ import paper from 'paper';
 import FieldPainter from '../lib/FieldPainter';
 
 export default class FieldController {
-  constructor(canvas, designViewState) {
-    this.viewState = designViewState;
+  constructor(canvas, designViewState, fieldState) {
+    this.designViewState = designViewState;
+    this.fieldState = fieldState;
     // init paper js
     this.initializePaperScope(canvas);
     // initial draw
-    this.fieldPainter = new FieldPainter(this.viewState.fieldPaperScope);
+    this.fieldPainter = new FieldPainter(this.fieldState.fieldPaperScope);
     this.fieldPainter.draw();
     // wire up reactions to respond to state changes
     this.configureReactions();
@@ -17,16 +18,16 @@ export default class FieldController {
   initializePaperScope(canvas) {
     const paperScope = new paper.PaperScope();
     paperScope.setup(canvas);
-    this.viewState.setFieldPaperScope(paperScope);
+    this.fieldState.setFieldPaperScope(paperScope);
   }
 
   resize(width, height) {
     this.fieldPainter.resize(width, height);
-    this.viewState.setFieldContainerSize({
+    this.fieldState.setFieldContainerSize({
       width: width,
       height: height,
     });
-    this.viewState.zoomToFit();
+    this.fieldState.zoomToFit();
   }
 
   configureReactions() {
@@ -36,7 +37,7 @@ export default class FieldController {
 
     // drill changed
     reaction(
-      () => this.viewState.drill,
+      () => this.designViewState.drill,
       (drill, reaction) => {
         this.fieldPainter.syncMarchers(drill);
       }
@@ -44,7 +45,7 @@ export default class FieldController {
 
     // change zoom
     reaction(
-      () => this.viewState.zoomFactor,
+      () => this.fieldState.zoomFactor,
       (zoomFactor, reaction) => {
         this.fieldPainter.zoom(zoomFactor);
       }
@@ -52,14 +53,14 @@ export default class FieldController {
 
     // change center
     reaction(
-      () => this.viewState.center,
+      () => this.fieldState.center,
       (center, reaction) => {
         this.fieldPainter.setCenter(center);
       }
     );
 
     reaction(
-      () => this.viewState.isPlaying,
+      () => this.designViewState.isPlaying,
       (isPlaying, reaction) => {
         console.log('isPlaying', isPlaying);
       }

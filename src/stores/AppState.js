@@ -5,7 +5,8 @@ export default class AppState {
   @observable authenticating;
 
 
-  constructor() {
+  constructor(root) {
+    this.rootState = root;
     this.authenticated = false;
     this.authenticating = false;
   }

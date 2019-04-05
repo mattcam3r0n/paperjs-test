@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'mobx-react';
-import AppState from './stores/AppState';
+// import AppState from './stores/AppState';
+import RootState from './stores/RootState';
 
-const appState = new AppState();
 ReactDOM.render(
-  <Provider appState={appState}>
+  <Provider {...new RootState()} >
     <App />
   </Provider>,
   document.getElementById('root')

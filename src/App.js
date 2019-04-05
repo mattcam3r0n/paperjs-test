@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Provider } from 'mobx-react';
 import {
   withStyles,
   MuiThemeProvider,
@@ -8,7 +7,6 @@ import {
 } from '@material-ui/core/styles';
 import Header from './components/Header';
 import DesignView from './components/DesignView';
-import DesignViewState from './stores/DesignViewState';
 import { CssBaseline } from '@material-ui/core';
 
 const theme = createMuiTheme({
@@ -43,8 +41,7 @@ const styles = (theme) => ({
   },
 });
 
-const designViewState = new DesignViewState();
-function ClippedDrawer(props) {
+function App(props) {
   const { classes } = props;
 
   //console.log('theme', theme);
@@ -52,18 +49,16 @@ function ClippedDrawer(props) {
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <Provider designViewState={designViewState}>
-        <div className={classes.root}>
-          <Header />
-          <DesignView />
-        </div>
-      </Provider>
+      <div className={classes.root}>
+        <Header />
+        <DesignView />
+      </div>
     </MuiThemeProvider>
   );
 }
 
-ClippedDrawer.propTypes = {
+App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ClippedDrawer);
+export default withStyles(styles)(App);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import FieldController from '../lib/FieldController';
 
-@inject('designViewState')
+@inject('designViewState', 'fieldState')
 @observer
 class Field extends Component {
 
@@ -13,12 +13,12 @@ class Field extends Component {
   }
 
   componentDidMount() {
-    const { designViewState } = this.props;
+    const { designViewState, fieldState } = this.props;
 
     window.addEventListener('resize', this.onResize);
 
     const canvas = document.getElementById('fieldCanvas');
-    this.controller = new FieldController(canvas, designViewState);
+    this.controller = new FieldController(canvas, designViewState, fieldState);
 
     this.onResize();
     designViewState.fieldInitialized();
