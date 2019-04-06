@@ -1,10 +1,10 @@
 import { observable, action, computed } from 'mobx';
-import PathTool from '../lib/PathTool';
-import AddMarchersTool from '../lib/AddMarchersTool';
-import ZoomAndPanTool from '../lib/ZoomAndPanTool';
-import FileSelectorTool from '../lib/FileSelectorTool';
-import RectangularSelectionTool from '../lib/RectangularSelectionTool';
-import IrregularSelectionTool from '../lib/IrregularSelectionTool';
+import PathTool from '../lib/tools/PathTool';
+import AddMarchersTool from '../lib/tools/AddMarchersTool';
+import ZoomAndPanTool from '../lib/tools/ZoomAndPanTool';
+import FileSelectorTool from '../lib/tools/FileSelectorTool';
+import RectangularSelectionTool from '../lib/tools/RectangularSelectionTool';
+import IrregularSelectionTool from '../lib/tools/IrregularSelectionTool';
 import ToolNames from '../lib/tools/ToolNames';
 
 export default class DesignViewState {
@@ -46,12 +46,10 @@ export default class DesignViewState {
 
   //@computed
   isToolActive(toolName) {
-    console.log('isToolActive', toolName);
     return this.activeTool && this.activeTool.name === toolName;
   }
 
   activateTool(toolName) {
-    console.log('activateTool', toolName);
     this.disposeActiveTool();
     const createTool = this.toolMap[toolName];
     this.setActiveTool(createTool());
@@ -72,7 +70,6 @@ export default class DesignViewState {
   setActiveTool(tool) {
     this.activeTool = tool;
     this.setCursor(tool.cursor);
-    console.log('active tool', tool.name);
   }
 
   disposeActiveTool() {

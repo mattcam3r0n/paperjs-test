@@ -1,5 +1,5 @@
 import FieldTool from './FieldTool';
-import ToolNames from '../lib/tools/ToolNames';
+import ToolNames from './ToolNames';
 
 export default class IrregularSelectionTool extends FieldTool {
   constructor(paperScope) {

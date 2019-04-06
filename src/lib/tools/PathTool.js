@@ -1,18 +1,21 @@
+import PathLine from '../PathLine';
 import FieldTool from './FieldTool';
-import PathLine from './PathLine';
+import ToolNames from './ToolNames';
 
-export default class FileSelectorTool extends FieldTool {
+export default class PathTool extends FieldTool {
   constructor(paperScope) {
-    super('fileSelector', paperScope);
+    super(ToolNames.PATH, paperScope);
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
     this.paths = [];
     this.activePath = null;
   }
 
+
   dispose() {
     this.disposePaths();
     this.tool.off('mousedown');
+    this.tool.off('mousedrag');
     this.tool.off('mousemove');
     super.dispose();
   }
@@ -27,24 +30,28 @@ export default class FileSelectorTool extends FieldTool {
   get cursor() {
     return 'crosshair';
   }
-  
+
   onMouseDown = (event) => {
     const { item } = event;
     const { activePath } = this;
 
-    const marcherClicked = this.itemIsMarcher(item);
-
-    if (activePath && marcherClicked) {
+    if (activePath) {
       activePath.add(event.point);
       return;
     }
 
-    if (!activePath && marcherClicked) {
+    if (this.itemIsMarcher(item)) {
       this.startPath();
       return;
     }
 
-  }
+    if (this.itemIsPath(item)) {
+      this.activatePath(item);
+      return;
+    }
+  };
+
+  onMouseDrag = (event) => {};
 
   onMouseMove = (event) => {
     const { item } = event;
@@ -64,16 +71,49 @@ export default class FileSelectorTool extends FieldTool {
       this.highlightMarcher(item);
       return;
     }
+
+    this.unhighlightMarcher();
+  };
+
+  activatePath(item) {
+    const path = this.paths.find(p => p.path === item);
+    if (!path) return;
+    if (this.activePath) 
+      this.activePath.deactivate();
+    this.activePath = path;
+    path.activate();
+  }
+
+  newPath() {
+    if (this.activePath)
+      this.activePath.deactivate();
+    this.activePath = null;
+  }
+
+  undoLastSegment() {
+    if (this.activePath)
+      this.activePath.undoLastSegment();
+  }
+
+  deleteCurrentPath() {
+    if (this.activePath) {
+      this.activePath.remove();
+    }
+    this.activePath = null;
   }
 
   startPath() {
-    this.activePath = new PathLine(this.marcher.position, {
-        showSegmentLength: false,
-        dashArray: [0.25, 0.5],
-        selected: false,
-        activeColor: 'black',
-        inactiveColor: 'black'
-    });
+    this.activePath = new PathLine(this.marcher.position);
     this.paths.push(this.activePath);
-  }  
+  }
+
+  cancel() {
+    this.disposePaths();
+    this.paths = [];
+    this.activePath = null;
+  }
+
+  itemIsPath(item) {
+    return item && item._itemType === 'path';
+  }
 }

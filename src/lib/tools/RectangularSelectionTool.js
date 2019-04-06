@@ -1,5 +1,5 @@
 import FieldTool from './FieldTool';
-import ToolNames from './tools/ToolNames';
+import ToolNames from './ToolNames';
 
 export default class RectangularSelectionTool extends FieldTool {
   constructor(paperScope) {
