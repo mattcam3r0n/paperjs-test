@@ -5,6 +5,7 @@ import { observer, inject } from 'mobx-react';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fab from '@material-ui/core/Fab';
 import ButtonFlyOut from './ButtonFlyOut';
+import ToolNames from '../lib/tools/ToolNames';
 
 // icons
 import Search from '@material-ui/icons/Search';
@@ -19,25 +20,25 @@ const styles = (theme) => ({
   },
 });
 
-@inject('designViewState')
+@inject('designViewState', 'fieldState')
 @observer
 class ZoomToolsFlyout extends Component {
   state = {};
 
   handleZoomIn = (e) => {
-    this.props.designViewState.activateZoomInTool();
+    this.props.designViewState.activateTool(ToolNames.ZOOM_IN);
   };
 
   handleZoomOut = (e) => {
-    this.props.designViewState.activateZoomOutTool();
+    this.props.designViewState.activateTool(ToolNames.ZOOM_OUT);
   };
 
   handleZoomToFit = (e) => {
-    this.props.designViewState.zoomToFit();
+    this.props.fieldState.zoomToFit();
   };
 
   handlePanTool = () => {
-    this.props.designViewState.activatePanTool();
+    this.props.designViewState.activateTool(ToolNames.PAN);
   };
 
   render() {

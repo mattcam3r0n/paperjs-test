@@ -11,6 +11,7 @@ import NearMe from '@material-ui/icons/NearMe';
 import Add from '@material-ui/icons/Add';
 import Delete from '@material-ui/icons/Delete';
 import ColorLens from '@material-ui/icons/ColorLens';
+import ToolNames from '../lib/tools/ToolNames';
 
 const styles = (theme) => ({
   fab: {
@@ -24,7 +25,7 @@ class MarchToolsFlyout extends Component {
   state = {};
 
   handleAddMarchers = () => {
-    this.props.designViewState.activateAddMarchersTool();
+    this.props.designViewState.activateTool(ToolNames.ADD_MARCHERS);
   }
 
   render() {

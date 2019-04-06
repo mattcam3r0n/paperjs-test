@@ -8,6 +8,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 
+import ToolNames from '../lib/tools/ToolNames';
 import MarcherToolsFlyout from './MarcherToolsFlyout';
 import ZoomToolsFlyout from './ZoomToolsFlyout';
 import SelectionToolsFlyout from './SelectionToolsFlyout';
@@ -44,11 +45,11 @@ class RightSideBar extends Component {
   state = {};
 
   handlePathTool = (e) => {
-    this.props.designViewState.activateSelectionTool();
+    this.props.designViewState.activateTool(ToolNames.RECTANGULAR_SELECTION);
   };
 
   componentDidMount() {
-    this.props.designViewState.activateSelectionTool();
+    this.props.designViewState.activateTool(ToolNames.RECTANGULAR_SELECTION);
   }
 
   render() {

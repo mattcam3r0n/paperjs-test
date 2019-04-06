@@ -1,8 +1,9 @@
 import FieldTool from './FieldTool';
+import ToolNames from '../lib/tools/ToolNames';
 
 export default class AddMarchersTool extends FieldTool {
   constructor(paperScope) {
-    super('addMarchers', paperScope);
+    super(ToolNames.ADD_MARCHERS, paperScope);
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
   }

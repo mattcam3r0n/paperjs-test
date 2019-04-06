@@ -6,18 +6,18 @@ import PaletteButton from './PaletteButton';
 import { Done, Close, Timeline, Undo, Delete } from '@material-ui/icons';
 
 import Palette from './Palette';
+import ToolNames from '../lib/tools/ToolNames';
 
 const styles = (theme) => ({});
 
 @inject('designViewState')
 @observer
 class AddMarchersPalette extends Component {
-  state = {};
 
   render() {
     const { designViewState, left = 300, top = 100 } = this.props;
     return (
-      <Palette title="Add Marchers" visible={designViewState.isAddMarchersToolActive} left={left} top={top} >
+      <Palette title="Add Marchers" visible={designViewState.isToolActive(ToolNames.ADD_MARCHERS)} left={left} top={top} >
         <PaletteButton title="New Path" onClick={this.handleNewPath}>
           <Timeline />
         </PaletteButton>

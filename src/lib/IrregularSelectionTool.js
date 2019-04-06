@@ -1,8 +1,9 @@
 import FieldTool from './FieldTool';
+import ToolNames from '../lib/tools/ToolNames';
 
 export default class IrregularSelectionTool extends FieldTool {
   constructor(paperScope) {
-    super('irregularSelection', paperScope);
+    super(ToolNames.IRREGULAR_SELECTION, paperScope);
     this.paperScope.view.onDoubleClick = this.onDoubleClick;
     this.paperScope.view.onClick = this.onClick;
     this.paperScope.view.onMouseMove = this.onMouseMove;

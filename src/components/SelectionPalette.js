@@ -16,12 +16,11 @@ class SelectionPalette extends Component {
   state = {};
 
   handleRectangularSelection = () => {
-    //this.props.designViewState.activateRectangularSelectionTool();
     this.props.designViewState.activateTool(ToolNames.RECTANGULAR_SELECTION);
   };
 
   handleIrregularSelection = () => {
-    this.props.designViewState.activateIrregularSelectionTool();
+    this.props.designViewState.activateTool(ToolNames.IRREGULAR_SELECTION);
   };
 
   render() {

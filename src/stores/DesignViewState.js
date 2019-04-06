@@ -69,62 +69,6 @@ export default class DesignViewState {
   }
 
   @action
-  activateAddMarchersTool() {
-    this.disposeActiveTool(); // needs to come before constructing new tool
-    this.setActiveTool(new AddMarchersTool(this.fieldPaperScope));
-  }
-
-  //@action
-  activateZoomInTool() {
-    this.disposeActiveTool(); // needs to come before constructing new tool
-    this.setActiveTool(
-      new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'zoomIn')
-    );
-  }
-
-  //@action
-  activateZoomOutTool() {
-    this.disposeActiveTool(); // needs to come before constructing new tool
-    this.setActiveTool(
-      new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'zoomOut')
-    );
-  }
-
-  @action
-  activatePanTool() {
-    this.disposeActiveTool(); // needs to come before constructing new tool
-    this.setActiveTool(new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'pan'));
-  }
-
-  @action
-  activateRectangularSelectionTool() {
-    this.disposeActiveTool(); // needs to come before constructing new tool
-    this.setActiveTool(new RectangularSelectionTool(this.fieldPaperScope));
-  }
-
-  activateSelectionTool() {
-    this.activateRectangularSelectionTool();
-  }
-
-  @action
-  activateIrregularSelectionTool() {
-    this.disposeActiveTool(); // needs to come before constructing new tool
-    this.setActiveTool(new IrregularSelectionTool(this.fieldPaperScope));
-  }
-
-  @action
-  activatePathTool() {
-    this.disposeActiveTool(); // needs to come before constructing new tool
-    this.setActiveTool(new PathTool(this.fieldPaperScope));
-  }
-
-  @action
-  activateFileSelectorTool() {
-    this.disposeActiveTool();
-    this.setActiveTool(new FileSelectorTool(this.fieldPaperScope));
-  }
-
-  @action
   setActiveTool(tool) {
     this.activeTool = tool;
     this.setCursor(tool.cursor);
