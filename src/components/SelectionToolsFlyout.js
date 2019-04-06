@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react';
 
 import Fab from '@material-ui/core/Fab';
 // import ButtonFlyOut from './ButtonFlyOut';
+import ToolNames from '../lib/tools/ToolNames';
 
 // icons
 import TabUnselected from '@material-ui/icons/TabUnselected';
@@ -21,7 +22,8 @@ class SelectionToolsFlyout extends Component {
 
   handlePointerTool = (e) => {
     //e.preventDefault();
-    this.props.designViewState.activateRectangularSelectionTool();
+    //this.props.designViewState.activateRectangularSelectionTool();
+    this.props.designViewState.activateTool(ToolNames.RECTANGULAR_SELECTION);
   };
 
   render() {

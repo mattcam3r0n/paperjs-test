@@ -5,12 +5,23 @@ import ZoomAndPanTool from '../lib/ZoomAndPanTool';
 import FileSelectorTool from '../lib/FileSelectorTool';
 import RectangularSelectionTool from '../lib/RectangularSelectionTool';
 import IrregularSelectionTool from '../lib/IrregularSelectionTool';
+import ToolNames from '../lib/tools/ToolNames';
 
 export default class DesignViewState {
   @observable activeTool;
   @observable cursor;
   @observable drill;
   @observable isPlaying;
+
+  toolMap = {
+    [ToolNames.ADD_MARCHERS]: () => new AddMarchersTool(this.fieldPaperScope),
+    [ToolNames.ZOOM_IN]: () => new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'zoomIn'),
+    [ToolNames.ZOOM_OUT]: () => new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'zoomOut'),
+    [ToolNames.PAN]: () => new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'pan'),
+    [ToolNames.PATH]: () => new PathTool(this.fieldPaperScope),
+    [ToolNames.IRREGULAR_SELECTION]: () => new IrregularSelectionTool(this.fieldPaperScope),
+    [ToolNames.RECTANGULAR_SELECTION]: () => new RectangularSelectionTool(this.fieldPaperScope)
+  };
 
   constructor(root) {
     this.rootState = root;
@@ -25,32 +36,25 @@ export default class DesignViewState {
   }
 
   @computed
-  get isPathToolActive() {
-    return this.activeTool && this.activeTool.name === 'path';
-  }
-
-  @computed
   get isSelectionToolActive() {
     return (
       this.activeTool &&
-      (this.activeTool.name === 'rectangularSelection' ||
-        this.activeTool.name === 'irregularSelection')
+      (this.activeTool.name === ToolNames.RECTANGULAR_SELECTION ||
+        this.activeTool.name === ToolNames.IRREGULAR_SELECTION)
     );
   }
 
-  @computed
-  get isRectangularSelectionToolActive() {
-    return this.activeTool && this.activeTool.name === 'rectangularSelection';
+  //@computed
+  isToolActive(toolName) {
+    console.log('isToolActive', toolName);
+    return this.activeTool && this.activeTool.name === toolName;
   }
 
-  @computed
-  get isIrregularSelectionToolActive() {
-    return this.activeTool && this.activeTool.name === 'irregularSelection';
-  }
-
-  @computed
-  get isAddMarchersToolActive() {
-    return this.activeTool && this.activeTool.name === 'addMarchers';
+  activateTool(toolName) {
+    console.log('activateTool', toolName);
+    this.disposeActiveTool();
+    const createTool = this.toolMap[toolName];
+    this.setActiveTool(createTool());
   }
 
   @action
@@ -124,6 +128,7 @@ export default class DesignViewState {
   setActiveTool(tool) {
     this.activeTool = tool;
     this.setCursor(tool.cursor);
+    console.log('active tool', tool.name);
   }
 
   disposeActiveTool() {
@@ -135,7 +140,7 @@ export default class DesignViewState {
 
   @action
   newPath() {
-    if (!this.activeTool.name === 'path') return;
+    if (!this.isToolActive(ToolNames.PATH)) return;
     this.activeTool.newPath();
   }
 

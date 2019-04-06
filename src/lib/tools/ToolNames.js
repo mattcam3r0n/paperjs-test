@@ -1,0 +1,18 @@
+const ADD_MARCHERS = 'ADD_MARCHERS';
+const RECTANGULAR_SELECTION = 'RECTANGULAR_SELECTION';
+const IRREGULAR_SELECTION = 'IRREGULAR_SELECTION';
+const PATH = 'PATH';
+// TODO: change to a single ZOOM tool?
+const ZOOM_IN = 'ZOOM_IN';
+const ZOOM_OUT = 'ZOOM_OUT';
+const PAN = 'PAN';
+
+export default {
+    ADD_MARCHERS,
+    IRREGULAR_SELECTION,
+    RECTANGULAR_SELECTION,
+    PAN,
+    ZOOM_IN,
+    ZOOM_OUT,
+    PATH
+}

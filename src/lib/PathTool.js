@@ -1,9 +1,10 @@
 import PathLine from './PathLine';
 import FieldTool from './FieldTool';
+import ToolNames from '../lib/tools/ToolNames';
 
 export default class PathTool extends FieldTool {
   constructor(paperScope) {
-    super('path', paperScope);
+    super(ToolNames.PATH, paperScope);
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
     this.paths = [];

@@ -1,8 +1,9 @@
 import FieldTool from './FieldTool';
+import ToolNames from './tools/ToolNames';
 
 export default class RectangularSelectionTool extends FieldTool {
   constructor(paperScope) {
-    super('rectangularSelection', paperScope);
+    super(ToolNames.RECTANGULAR_SELECTION, paperScope);
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseUp = this.onMouseUp;
     this.tool.onMouseMove = this.onMouseMove;

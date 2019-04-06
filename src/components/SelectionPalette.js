@@ -6,6 +6,7 @@ import PaletteButton from './PaletteButton';
 import { Done, Close, Timeline, Undo, Delete } from '@material-ui/icons';
 
 import Palette from './Palette';
+import ToolNames from '../lib/tools/ToolNames';
 
 const styles = (theme) => ({});
 
@@ -15,27 +16,44 @@ class SelectionPalette extends Component {
   state = {};
 
   handleRectangularSelection = () => {
-    this.props.designViewState.activateRectangularSelectionTool();
-  }
+    //this.props.designViewState.activateRectangularSelectionTool();
+    this.props.designViewState.activateTool(ToolNames.RECTANGULAR_SELECTION);
+  };
 
   handleIrregularSelection = () => {
     this.props.designViewState.activateIrregularSelectionTool();
-  }
+  };
 
   render() {
     const { designViewState, left = 400, top = 100 } = this.props;
     return (
-      <Palette title="Selection" visible={designViewState.isSelectionToolActive} left={left} top={top} >
-        <PaletteButton title="Rectangular Selection" onClick={this.handleRectangularSelection} selected={designViewState.isRectangularSelectionToolActive}>
+      <Palette
+        title="Selection"
+        visible={designViewState.isSelectionToolActive}
+        left={left}
+        top={top}
+      >
+        <PaletteButton
+          title="Rectangular Selection"
+          onClick={this.handleRectangularSelection}
+          selected={designViewState.isToolActive(ToolNames.RECTANGULAR_SELECTION)}
+        >
           <Timeline />
         </PaletteButton>
-        <PaletteButton title="Irregular Selection" onClick={this.handleIrregularSelection} selected={designViewState.isIrregularSelectionToolActive}>
+        <PaletteButton
+          title="Irregular Selection"
+          onClick={this.handleIrregularSelection}
+          selected={designViewState.isToolActive(ToolNames.IRREGULAR_SELECTION)}
+        >
           <Timeline />
         </PaletteButton>
         <PaletteButton title="Undo" onClick={this.handleUndo}>
           <Undo />
         </PaletteButton>
-        <PaletteButton title="Delete Current Path" onClick={this.handleDeletePath}>
+        <PaletteButton
+          title="Delete Current Path"
+          onClick={this.handleDeletePath}
+        >
           <Delete />
         </PaletteButton>
         <div>

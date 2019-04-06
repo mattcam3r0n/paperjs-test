@@ -6,6 +6,7 @@ import PaletteButton from './PaletteButton';
 import { Done, Close, Timeline, Undo, Delete } from '@material-ui/icons';
 
 import Palette from './Palette';
+import ToolNames from '../lib/tools/ToolNames';
 
 const styles = (theme) => ({});
 
@@ -14,9 +15,14 @@ const styles = (theme) => ({});
 class PathPalette extends Component {
   state = {};
 
+  get isPathToolActive() {
+    const { designViewState } = this.props;
+    return designViewState.isToolActive(ToolNames.PATH);
+  }
+
   getPathTool = () => {
     const { designViewState } = this.props;
-    if (!designViewState.isPathToolActive) return null;
+    if (!this.isPathToolActive) return null;
     return designViewState.activeTool;
   };
 
@@ -48,9 +54,8 @@ class PathPalette extends Component {
   };
 
   render() {
-    const { designViewState } = this.props;
     return (
-      <Palette title="Path Tool" visible={designViewState.isPathToolActive}>
+      <Palette title="Path Tool" visible={this.isPathToolActive}>
         <PaletteButton title="New Path" onClick={this.handleNewPath}>
           <Timeline />
         </PaletteButton>
