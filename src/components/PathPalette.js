@@ -33,7 +33,7 @@ class PathPalette extends Component {
 
   handleSelectFile = () => {
     const { designViewState } = this.props;
-    designViewState.activateFileSelectorTool();
+    designViewState.activateTool(ToolNames.FILE_SELECTOR);
   };
 
   handleUndo = () => {
@@ -50,7 +50,7 @@ class PathPalette extends Component {
     const { designViewState } = this.props;
     const pathTool = this.getPathTool();
     if (pathTool) pathTool.cancel();
-    designViewState.activateSelectionTool();
+    designViewState.activateTool(ToolNames.RECTANGULAR_SELECTION);
   };
 
   render() {

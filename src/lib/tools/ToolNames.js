@@ -6,6 +6,7 @@ const PATH = 'PATH';
 const ZOOM_IN = 'ZOOM_IN';
 const ZOOM_OUT = 'ZOOM_OUT';
 const PAN = 'PAN';
+const FILE_SELECTOR = 'FILE_SELECTOR';
 
 export default {
     ADD_MARCHERS,
@@ -14,5 +15,6 @@ export default {
     PAN,
     ZOOM_IN,
     ZOOM_OUT,
-    PATH
+    PATH,
+    FILE_SELECTOR
 }

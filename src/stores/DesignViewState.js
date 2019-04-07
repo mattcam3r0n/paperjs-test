@@ -20,7 +20,8 @@ export default class DesignViewState {
     [ToolNames.PAN]: () => new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'pan'),
     [ToolNames.PATH]: () => new PathTool(this.fieldPaperScope),
     [ToolNames.IRREGULAR_SELECTION]: () => new IrregularSelectionTool(this.fieldPaperScope),
-    [ToolNames.RECTANGULAR_SELECTION]: () => new RectangularSelectionTool(this.fieldPaperScope)
+    [ToolNames.RECTANGULAR_SELECTION]: () => new RectangularSelectionTool(this.fieldPaperScope),
+    [ToolNames.FILE_SELECTOR]: () => new FileSelectorTool(this.fieldPaperScope)
   };
 
   constructor(root) {
@@ -61,17 +62,12 @@ export default class DesignViewState {
   }
 
   @action
-  cancelPathTool() {
-    if (this.isPathToolActive()) this.activeTool.cancel();
-    this.activateSelectionTool();
-  }
-
-  @action
   setActiveTool(tool) {
     this.activeTool = tool;
     this.setCursor(tool.cursor);
   }
 
+  @action
   disposeActiveTool() {
     if (this.activeTool) {
       this.activeTool.dispose();

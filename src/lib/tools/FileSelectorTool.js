@@ -1,9 +1,10 @@
 import FieldTool from './FieldTool';
 import PathLine from '../PathLine';
+import ToolNames from './ToolNames';
 
 export default class FileSelectorTool extends FieldTool {
   constructor(paperScope) {
-    super('fileSelector', paperScope);
+    super(ToolNames.FILE_SELECTOR, paperScope);
     this.tool.onMouseDown = this.onMouseDown;
     this.tool.onMouseMove = this.onMouseMove;
     this.paths = [];

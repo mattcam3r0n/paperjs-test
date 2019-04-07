@@ -1,9 +1,10 @@
 import FieldTool from './FieldTool';
 import { throttle } from 'lodash';
+import ToolNames from './ToolNames';
 
 export default class ZoomAndPanTool extends FieldTool {
   constructor(paperScope, viewState, mode) {
-    super('zoomIn', paperScope);
+    super(ToolNames.ZOOM_IN, paperScope);
     this.viewState = viewState;
     this.mode = mode || 'zoomIn';
     this.tool.onMouseDown = this.onMouseDown;
