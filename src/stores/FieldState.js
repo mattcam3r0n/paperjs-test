@@ -1,6 +1,6 @@
 import paper from 'paper';
 import FieldDimensions from '../lib/FieldDimensions';
-import { observable, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 
 export default class FieldState {
   @observable zoomFactor;

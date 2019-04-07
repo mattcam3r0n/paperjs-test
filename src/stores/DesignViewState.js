@@ -1,11 +1,6 @@
 import { observable, action, computed } from 'mobx';
-import PathTool from '../lib/tools/PathTool';
-import AddMarchersTool from '../lib/tools/AddMarchersTool';
-import ZoomAndPanTool from '../lib/tools/ZoomAndPanTool';
-import FileSelectorTool from '../lib/tools/FileSelectorTool';
-import RectangularSelectionTool from '../lib/tools/RectangularSelectionTool';
-import IrregularSelectionTool from '../lib/tools/IrregularSelectionTool';
 import ToolNames from '../lib/tools/ToolNames';
+import ToolFactory from '../lib/tools/ToolFactory';
 
 export default class DesignViewState {
   @observable activeTool;
@@ -13,19 +8,9 @@ export default class DesignViewState {
   @observable drill;
   @observable isPlaying;
 
-  toolMap = {
-    [ToolNames.ADD_MARCHERS]: () => new AddMarchersTool(this.fieldPaperScope),
-    [ToolNames.ZOOM_IN]: () => new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'zoomIn'),
-    [ToolNames.ZOOM_OUT]: () => new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'zoomOut'),
-    [ToolNames.PAN]: () => new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'pan'),
-    [ToolNames.PATH]: () => new PathTool(this.fieldPaperScope),
-    [ToolNames.IRREGULAR_SELECTION]: () => new IrregularSelectionTool(this.fieldPaperScope),
-    [ToolNames.RECTANGULAR_SELECTION]: () => new RectangularSelectionTool(this.fieldPaperScope),
-    [ToolNames.FILE_SELECTOR]: () => new FileSelectorTool(this.fieldPaperScope)
-  };
-
   constructor(root) {
     this.rootState = root;
+    this.toolFactory = new ToolFactory(this.rootState);
   }
 
   get fieldState() {
@@ -52,8 +37,8 @@ export default class DesignViewState {
 
   activateTool(toolName) {
     this.disposeActiveTool();
-    const createTool = this.toolMap[toolName];
-    this.setActiveTool(createTool());
+    const tool = this.toolFactory.create(toolName);
+    this.setActiveTool(tool);
   }
 
   @action
