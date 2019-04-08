@@ -1,6 +1,6 @@
 import { reaction } from 'mobx';
 import paper from 'paper';
-import FieldPainter from '../lib/FieldPainter';
+import FieldPainter from './FieldPainter';
 
 export default class FieldController {
   constructor(canvas, designViewState, fieldState) {

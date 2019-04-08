@@ -1,4 +1,4 @@
-import PathLine from '../PathLine';
+import PathLine from '../field/PathLine';
 import FieldTool from './FieldTool';
 import ToolNames from './ToolNames';
 

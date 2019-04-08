@@ -1,5 +1,5 @@
 import FieldTool from './FieldTool';
-import PathLine from '../PathLine';
+import PathLine from '../field/PathLine';
 import ToolNames from './ToolNames';
 
 export default class FileSelectorTool extends FieldTool {

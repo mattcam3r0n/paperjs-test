@@ -1,5 +1,5 @@
 import paper from 'paper';
-import FieldDimensions from '../lib/FieldDimensions';
+import FieldDimensions from '../lib/field/FieldDimensions';
 import { observable, action } from 'mobx';
 
 export default class FieldState {
