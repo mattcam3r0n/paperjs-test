@@ -7,10 +7,9 @@ describe('BlockBuilder', () => {
       expect(builder.createBlock({})).toBe(builder);
     });
 
-    test('build 2 x 2 block', () => {
+    test('build default 2 x 2 block', () => {
       const builder = new BlockBuilder();
       const block = builder.createBlock({}).build();
-      block.forEach((m) => console.log(m.script.initialState.position));
       expect(block.length).toBe(4);
       const actual = block.map((m) => {
         const { x, y } = m.script.initialState.position;
@@ -23,7 +22,6 @@ describe('BlockBuilder', () => {
     test('build 4 x 4 block', () => {
       const builder = new BlockBuilder();
       const block = builder.createBlock({ files: 4, ranks: 4 }).build();
-      block.forEach((m) => console.log(m.script.initialState.position));
       expect(block.length).toBe(16);
       const actual = block.map((m) => {
         const { x, y } = m.script.initialState.position;
