@@ -1,6 +1,7 @@
 import { observable, action, computed } from 'mobx';
 import ToolNames from '../lib/tools/ToolNames';
 import ToolFactory from '../lib/tools/ToolFactory';
+import DrillPlayer from '../lib/drill/DrillPlayer';
 
 export default class DesignViewState {
   @observable activeTool;
@@ -75,11 +76,15 @@ export default class DesignViewState {
   @action
   play() {
     this.isPlaying = true;
+    this.drillPlayer = new DrillPlayer(this.fieldPaperScope);
+    this.drillPlayer.play();
   }
 
   @action
   stop() {
     this.isPlaying = false;
+    this.drillPlayer.stop();
+    this.drillPlayer = null;
   }
 
   @action.bound
