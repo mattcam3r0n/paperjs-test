@@ -1,5 +1,17 @@
 
 export default class Directions {
+    static nameAngle = {
+        'N': 0,
+        'E': 90,
+        'S': 180,
+        'W': 270
+    };
+    static angleName = {
+        '0': 'N',
+        '90': 'E',
+        '180': 'S',
+        '270': 'W'
+    };
     static get N() {
         return 0;
     }
