@@ -8,14 +8,20 @@ export default class DrillInterpreter {
   }
 
   stepForward() {
-    const { marchers } = this.drill;
-    marchers.forEach(m => {
+    // TODO: guard against end of drill
+    this.drill.marchers.forEach(m => {
       m.script.currentState = this.scriptInterpreter.stepForward(m.script);
-      this.count++;
     });
+    this.count++;
   }
 
-  stepBackward() {}
+  stepBackward() {
+    // TODO: guard against beginning of drill
+    this.drill.marchers.forEach(m => {
+      m.script.currentState = this.scriptInterpreter.stepBackward(m.script);
+    });
+    this.count--;
+  }
 
   goToBeginning() {}
 
