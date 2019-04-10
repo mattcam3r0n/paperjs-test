@@ -1,37 +1,10 @@
 import ScriptInterpreter from './ScriptInterpreter';
+import ScriptBuilder from './ScriptBuilder';
 
 describe('ScriptInterpreter', () => {
   describe('stepForward', () => {
     test('forward 1 count', () => {
-      const script = {
-        initialState: {
-          count: 0,
-          position: {
-            x: 0,
-            y: 0,
-            rotation: 90,
-          },
-          step: {
-            strideType: 'sixToFive',
-            stepType: 'full',
-            direction: 90,
-          },
-        },
-        currentState: {
-          count: 0,
-          position: {
-            x: 0,
-            y: 0,
-            rotation: 90,
-          },
-          step: {
-            strideType: 'sixToFive',
-            stepType: 'full',
-            direction: 90,
-          },
-        },
-        steps: {},
-      };
+      const script = new ScriptBuilder().createScript().build();
       const calc = new ScriptInterpreter();
       const newState = calc.stepForward(script);
 
@@ -43,45 +16,18 @@ describe('ScriptInterpreter', () => {
     });
 
     test('E 6 counts, N 6 counts', () => {
-      const script = {
-        initialState: {
-          count: 0,
-          position: {
-            x: 0,
-            y: 0,
-            rotation: 90,
-          },
-          step: {
-            strideType: 'sixToFive',
-            stepType: 'full',
-            direction: 90,
-          },
-        },
-        currentState: {
-          count: 0,
-          position: {
-            x: 0,
-            y: 0,
-            rotation: 90,
-          },
-          step: {
-            strideType: 'sixToFive',
-            stepType: 'full',
-            direction: 90,
-          },
-        },
-        steps: {
-          6: {
-            type: 'leftFlank',
-            strideType: 'sixToFive',
-            stepType: 'full',
-            direction: 0,
-            dX: 0,
-            dY: -1,
-            dR: 0,
-          },
-        },
-      };
+      const script = new ScriptBuilder()
+        .createScript()
+        .addStep(6, {
+          type: 'leftFlank',
+          strideType: 'sixToFive',
+          stepType: 'full',
+          direction: 0,
+          dX: 0,
+          dY: -1,
+          dR: 0,
+        })
+        .build();
       const calc = new ScriptInterpreter();
 
       const states = [];
@@ -103,41 +49,14 @@ describe('ScriptInterpreter', () => {
 
   describe('stepBackward', () => {
     test('forward EENN, then backward 4 counts', () => {
-      const script = {
-        initialState: {
-          count: 0,
-          position: {
-            x: 0,
-            y: 0,
-            rotation: 90,
-          },
-          step: {
-            strideType: 'sixToFive',
-            stepType: 'full',
-            direction: 90,
-          },
-        },
-        currentState: {
-          count: 0,
-          position: {
-            x: 0,
-            y: 0,
-            rotation: 90,
-          },
-          step: {
-            strideType: 'sixToFive',
-            stepType: 'full',
-            direction: 90,
-          },
-        },
-        steps: {
-          2: {
-            strideType: 'sixToFive',
-            stepType: 'full',
-            direction: 0,
-          },
-        },
-      };
+      const script = new ScriptBuilder()
+        .createScript()
+        .addStep(2, {
+          strideType: 'sixToFive',
+          stepType: 'full',
+          direction: 0,
+        })
+        .build();
 
       const calc = new ScriptInterpreter();
 
@@ -259,8 +178,7 @@ describe('ScriptInterpreter', () => {
             direction: 90,
           },
         },
-        steps: {
-        },
+        steps: {},
       };
 
       const calc = new ScriptInterpreter();

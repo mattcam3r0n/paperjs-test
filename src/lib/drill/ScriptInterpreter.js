@@ -1,3 +1,4 @@
+import FieldDimensions from '../field/FieldDimensions';
 import StepInterpreter from './StepInterpreter';
 
 export default class ScriptInterpreter {
@@ -31,5 +32,37 @@ export default class ScriptInterpreter {
   seekNextStep(fromCount) {
     // look for action at fromCount + 1
     // keep looking until next action is found
+  }
+
+  lastActionCount(script) {
+    const counts = Object.keys(script).map(k => Number(k)).sort((a,b) => a - b);
+    if (counts.length === 0) return 0;
+    return counts[counts.length - 1];
+  }
+
+  isEndOfScript(script) {
+    return (
+      this.isAtFieldEdge(script) ||
+      (script.currentState.count >= this.lastActionCount(script) &&
+        this.isNonMovingState(script))
+    );
+  }
+
+  isBeginningOfScript(script) {
+    return script.currentState.count === 0;
+  }
+
+  isNonMovingState({ currentState }) {
+    return currentState.deltaX === 0 && currentState.deltaY === 0;
+  }
+
+  isAtFieldEdge(script) {
+    const { x, y } = script.currentState;
+    return (
+      x >= FieldDimensions.widthInSteps ||
+      y >= FieldDimensions.heightInSteps ||
+      x <= 0 ||
+      y <= 0
+    );
   }
 }

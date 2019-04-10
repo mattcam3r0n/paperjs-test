@@ -8,7 +8,7 @@ export default class DrillInterpreter {
   }
 
   stepForward() {
-    // TODO: guard against end of drill
+    if (this.isEndOfDrill()) return;
     this.drill.marchers.forEach(m => {
       m.script.currentState = this.scriptInterpreter.stepForward(m.script);
     });
@@ -16,7 +16,7 @@ export default class DrillInterpreter {
   }
 
   stepBackward() {
-    // TODO: guard against beginning of drill
+    if (this.isBeginningOfDrill()) return;
     this.drill.marchers.forEach(m => {
       m.script.currentState = this.scriptInterpreter.stepBackward(m.script);
     });
@@ -29,7 +29,11 @@ export default class DrillInterpreter {
 
   goToCount() {}
 
-  isBeginningOfDrill() {}
+  isBeginningOfDrill() {
+    return this.drill.marchers.every(m => this.scriptInterpreter.isBeginningOfScript(m.script));
+  }
 
-  isEndOfDrill() {}
+  isEndOfDrill() {
+    return this.drill.marchers.every(m => this.scriptInterpreter.isEndOfScript(m.script));
+  }
 }
