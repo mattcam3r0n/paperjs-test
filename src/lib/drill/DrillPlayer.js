@@ -20,7 +20,6 @@ export default class DrillPlayer {
     }
 
     stop() {
-        console.log('stop');
         this.isPlaying = false;
         this.view.onFrame = null;
     }
@@ -33,7 +32,6 @@ export default class DrillPlayer {
         if (!step) return this.stop();
 
         if (event.time >= this.lastStepTime + step.delta) {
-            console.log('count ', count, step.time, this.lastStepTime);
             this.count++;
             this.lastStepTime = event.time;
         }

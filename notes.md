@@ -1,11 +1,14 @@
 Next Steps
-* animation loop
-  * set view.onFrame
+* tests for end of drill, etc
+* Step class?
+* Do I create Drill, Marcher, Script classes?
+    * would need to serialize/deserialize drill to pure json on save/load
+    * 
 * amplify setup
 
 
 Stores / Services
-* appState - app wide state, like authenticated, etc
+* appState - app-wide state, like authenticated, etc
 * drillStore - user's drills
 * designService (drillEditorService) - logic related to drill editing
 * uiStore - ui info?
