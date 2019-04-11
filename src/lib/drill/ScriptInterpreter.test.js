@@ -1,5 +1,6 @@
 import ScriptInterpreter from './ScriptInterpreter';
 import ScriptBuilder from './ScriptBuilder';
+import FieldDimensions from '../field/FieldDimensions';
 
 describe('ScriptInterpreter', () => {
   describe('stepForward', () => {
@@ -191,4 +192,67 @@ describe('ScriptInterpreter', () => {
       expect(newState.position.rotation).toBe(90);
     });
   });
+
+  describe('isEndOfScript', () => {
+    test('detects end of script when outside field', () => {
+      const script = {
+        currentState: {
+          count: 0,
+          position: {
+            x: FieldDimensions.widthInSteps + 1,
+            y: 6
+          }
+        },
+        steps: []
+      };
+      const scriptInterpreter = new ScriptInterpreter();
+      expect(scriptInterpreter.isEndOfScript(script)).toBe(true);
+    });
+
+    test('detects end of script when last action is non-moving state', () => {
+      const script = new ScriptBuilder()
+        .createScript()
+        .addStep(2, {
+          strideType: 'sixToFive',
+          stepType: 'halt',
+          direction: 90,
+          deltaX: 0,
+          deltaY: 0
+        })
+        .build();
+      script.currentState.count = 2; // move to end of script
+      const scriptInterpreter = new ScriptInterpreter();
+
+      expect(scriptInterpreter.isEndOfScript(script)).toBe(true);
+    });
+  });
+
+  describe('isAtFieldEdge', () => {
+    test('detects position outside of field', () => {
+      const script = {
+        currentState: {
+          position: {
+            x: -2,
+            y: 0
+          }
+        }
+      };
+      const scriptInterpreter = new ScriptInterpreter();
+      expect(scriptInterpreter.isAtFieldEdge(script)).toBe(true);
+    });
+
+    test('detects position inside of field', () => {
+      const script = {
+        currentState: {
+          position: {
+            x: 2,
+            y: 0
+          }
+        }
+      };
+      const scriptInterpreter = new ScriptInterpreter();
+      expect(scriptInterpreter.isAtFieldEdge(script)).toBe(false);
+    });
+  });
+
 });

@@ -35,16 +35,18 @@ export default class ScriptInterpreter {
   }
 
   lastActionCount(script) {
-    const counts = Object.keys(script).map(k => Number(k)).sort((a,b) => a - b);
+    const counts = Object.keys(script.steps).map(k => Number(k)).sort((a,b) => a - b);
     if (counts.length === 0) return 0;
     return counts[counts.length - 1];
   }
 
   isEndOfScript(script) {
+    const lastActionCount = this.lastActionCount(script);
+    const lastAction = script.steps[lastActionCount];
     return (
       this.isAtFieldEdge(script) ||
-      (script.currentState.count >= this.lastActionCount(script) &&
-        this.isNonMovingState(script))
+      (script.currentState.count >= lastActionCount &&
+        this.isNonMovingState(lastAction))
     );
   }
 
@@ -52,17 +54,18 @@ export default class ScriptInterpreter {
     return script.currentState.count === 0;
   }
 
-  isNonMovingState({ currentState }) {
-    return currentState.deltaX === 0 && currentState.deltaY === 0;
+  isNonMovingState(step) {
+    const { deltaX, deltaY } = step;
+    return deltaX === 0 && deltaY === 0;
   }
 
   isAtFieldEdge(script) {
-    const { x, y } = script.currentState;
+    const { x, y } = script.currentState.position;
     return (
-      x >= FieldDimensions.widthInSteps ||
-      y >= FieldDimensions.heightInSteps ||
-      x <= 0 ||
-      y <= 0
+      x > FieldDimensions.widthInSteps ||
+      y > FieldDimensions.heightInSteps ||
+      x < 0 ||
+      y < 0
     );
   }
 }
