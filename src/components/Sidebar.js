@@ -73,11 +73,6 @@ class SideBar extends Component {
           </ListItem>
           <ListItem button className={classes.listItem}>
             <Fab size="small" className={classes.fab} color="inherit">
-              <Stop />
-            </Fab>
-          </ListItem>
-          <ListItem button className={classes.listItem}>
-            <Fab size="small" className={classes.fab} color="inherit">
               <Bookmarks />
             </Fab>
           </ListItem>

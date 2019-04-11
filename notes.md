@@ -1,9 +1,16 @@
 Next Steps
-* tests for end of drill, etc
 * Do I create Drill, Marcher, Script, Step classes?
     * would need to serialize/deserialize drill to pure json on save/load
     * 
 * amplify setup
+* finish field markings
+* alternate color schemes for field
+* timeline
+* marcher colors
+* music
+* zoom palette?
+* marchers palette? or go with flyout?
+* remove stop button
 
 
 Stores / Services
