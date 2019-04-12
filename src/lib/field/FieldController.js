@@ -65,6 +65,15 @@ export default class FieldController {
         console.log('isPlaying', isPlaying);
       }
     )
+
+    // TODO: make this update directly, rather than thru mobx?
+    // for sake of efficiency?
+    reaction(
+      () => this.fieldState.count,
+      (count, reaction) => {
+        this.fieldPainter.syncMarcherPositions(this.designViewState.drill)
+      }
+    )
   }
 
 }

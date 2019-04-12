@@ -44,9 +44,11 @@ class FieldPainter {
 
   createMarchers(drill) {
     this.marchers = drill.marchers.map(m => {
+      const { position } = m.script.currentState;
       return new Marcher(this.paperScope, {
-        position: [m.initialState.x, m.initialState.y],
-        rotation: m.initialState.direction
+        position: [position.x, position.y],
+        rotation: position.rotation,
+        marcher: m
       });
     });
   }
@@ -59,7 +61,11 @@ class FieldPainter {
   }
 
   syncMarcherPositions(drill) {
-
+    this.marchers.forEach(m => {
+      // TODO: need a better way to map paper marchers to drill marchers
+      m._marcher.position.x = m.options.marcher.script.currentState.position.x;
+      m._marcher.position.y = m.options.marcher.script.currentState.position.y;
+    });
   }
 
   update() {
@@ -109,7 +115,7 @@ class FieldPainter {
 
   drawFieldSurface() {
     const { left, top, width, height } = FieldDimensions.fieldRect;
-    const fieldSurface = new paper.Path.Rectangle({
+    this.fieldSurface = new paper.Path.Rectangle({
       point: [left, top],
       size: [width, height],
       fillColor: '#40703B',
@@ -118,7 +124,7 @@ class FieldPainter {
 
   drawSidelines() {
     const { left, top, width, height } = FieldDimensions.sidelineRect;
-    const sidelines = new paper.Path.Rectangle({
+    this.sidelines = new paper.Path.Rectangle({
       point: [left, top],
       size: [width, height],
       strokeColor: 'white',

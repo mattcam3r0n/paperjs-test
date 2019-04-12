@@ -6,6 +6,7 @@ export default class FieldState {
   @observable zoomFactor;
   @observable center;
   @observable fieldContainerSize;
+  @observable count;
 
   lastDelta;
   fieldPaperScope;
@@ -13,6 +14,7 @@ export default class FieldState {
   constructor(root) {
     this.rootState = root;
     this.zoomFactor = 1;
+    this.count = 0;
     this.center = {
       x: FieldDimensions.widthInSteps / 2,
       y: FieldDimensions.heightInSteps / 2,
@@ -92,6 +94,11 @@ export default class FieldState {
   // passes thru to design view state.  not sure about this.
   setCursor(cursor) {
       this.rootState.designViewState.setCursor(cursor);
+  }
+
+  @action
+  setCount(newCount) {
+    this.count = newCount;
   }
 
 }

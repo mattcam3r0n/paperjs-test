@@ -4,18 +4,33 @@ export default class PlaybackScheduler {
             // don't include count 0
             {
                 count: 1,
-                delta: 0.5,
-                time: 2
+                delta: 0.1,
+                time: 0.3
             },
             {
                 count: 2,
-                delta: 0.5,
-                time: 4
+                delta: 0.1,
+                time: 0.6
             },
             {
                 count: 3,
-                delta: 0.5,
-                time: 6
+                delta: 0.1,
+                time: 0.9
+            },
+            {
+                count: 4,
+                delta: 0.1,
+                time: 0.9
+            },
+            {
+                count: 5,
+                delta: 0.1,
+                time: 0.9
+            },
+            {
+                count: 6,
+                delta: 0.1,
+                time: 0.9
             },
         ];
     }

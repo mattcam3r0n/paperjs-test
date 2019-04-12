@@ -12,6 +12,9 @@ export const defaultOptions = {
       strideType: 'sixToFive',
       stepType: 'full',
       direction: 90,
+      dX: 1,
+      dY: 0,
+      dR: 0
     },
   },
 };

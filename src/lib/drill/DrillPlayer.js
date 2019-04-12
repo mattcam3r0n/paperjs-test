@@ -1,16 +1,21 @@
 import PlaybackScheduler from "./PlaybackScheduler";
+import DrillInterpreter from "./DrillInterpreter";
 
 export default class DrillPlayer {
-    constructor(fieldPaperScope, drill) {
-        this.fieldPaperScope = fieldPaperScope;
-        this.view = fieldPaperScope.view;
-        this.drill = drill;
+    constructor(rootState) {
+        const { designViewState } = rootState;
+        this.rootState = rootState;
+        //this.
+        // this.fieldPaperScope = designViewState.fieldPaperScope;
+        this.view = designViewState.fieldPaperScope.view;
+        this.drill = designViewState.drill;
     }
 
     play() {
         const scheduler = new PlaybackScheduler();
         this.schedule = scheduler.createSchedule();
 
+        this.drillInterpreter = new DrillInterpreter(this.drill);
         this.count = 0;
         this.isPlaying = true;
         this.lastStepTime = 0;
@@ -32,8 +37,11 @@ export default class DrillPlayer {
         if (!step) return this.stop();
 
         if (event.time >= this.lastStepTime + step.delta) {
+            console.log(event.time, this.lastStepTime, step.delta);
             this.count++;
             this.lastStepTime = event.time;
+            this.drillInterpreter.stepForward();
+            this.rootState.fieldState.setCount(this.count); // update count so field can sync
         }
 
 

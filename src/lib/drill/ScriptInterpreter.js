@@ -42,7 +42,7 @@ export default class ScriptInterpreter {
 
   isEndOfScript(script) {
     const lastActionCount = this.lastActionCount(script);
-    const lastAction = script.steps[lastActionCount];
+    const lastAction = script.steps[lastActionCount] || script.initialState.step;
     return (
       this.isAtFieldEdge(script) ||
       (script.currentState.count >= lastActionCount &&
@@ -55,8 +55,8 @@ export default class ScriptInterpreter {
   }
 
   isNonMovingState(step) {
-    const { deltaX, deltaY } = step;
-    return deltaX === 0 && deltaY === 0;
+    const { dX, dY } = step;
+    return dX === 0 && dY === 0;
   }
 
   isAtFieldEdge(script) {

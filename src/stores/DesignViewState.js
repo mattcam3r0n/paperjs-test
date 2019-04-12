@@ -2,6 +2,7 @@ import { observable, action, computed } from 'mobx';
 import ToolNames from '../lib/tools/ToolNames';
 import ToolFactory from '../lib/tools/ToolFactory';
 import DrillPlayer from '../lib/drill/DrillPlayer';
+import BlockBuilder from '../lib/drill/BlockBuilder';
 
 export default class DesignViewState {
   @observable activeTool;
@@ -76,7 +77,7 @@ export default class DesignViewState {
   @action
   play() {
     this.isPlaying = true;
-    this.drillPlayer = new DrillPlayer(this.fieldPaperScope);
+    this.drillPlayer = new DrillPlayer(this.rootState);
     this.drillPlayer.play();
   }
 
@@ -97,22 +98,34 @@ export default class DesignViewState {
   // temporary helper
   createNewDrill(options = { x: 12, y: 6 }) {
     const drill = {};
-    drill.marchers = [];
-    for (let i = 0; i < 16; i++) {
-      const m = {
+    const block = new BlockBuilder()
+      .createBlock({
+        files: 4,
+        ranks: 4,
         initialState: {
-          x: options.x + (i % 4) * 2,
-          y: options.y + Math.floor(i / 4) * 2,
-          direction: 90,
-        },
-        currentState: {
-          x: options.x + (i % 4) * 2,
-          y: options.y + (i % 4) * 2,
-          direction: 90,
-        },
-      };
-      drill.marchers.push(m);
-    }
+          position: {
+            x: 12,
+            y: 6
+          }
+        }
+      })
+      .build();
+    drill.marchers = block;
+    // for (let i = 0; i < 16; i++) {
+    //   const m = {
+    //     initialState: {
+    //       x: options.x + (i % 4) * 2,
+    //       y: options.y + Math.floor(i / 4) * 2,
+    //       direction: 90,
+    //     },
+    //     currentState: {
+    //       x: options.x + (i % 4) * 2,
+    //       y: options.y + (i % 4) * 2,
+    //       direction: 90,
+    //     },
+    //   };
+    //   drill.marchers.push(m);
+    // }
     return drill;
   }
 }
