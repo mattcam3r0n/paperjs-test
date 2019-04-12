@@ -1,6 +1,16 @@
 import PlaybackScheduler from "./PlaybackScheduler";
 import DrillInterpreter from "./DrillInterpreter";
 
+/*
+    Who should be in charge of tracking current count?
+    How should I communicate with FieldController to update marcher position?
+    Right now, DrillPlayer is tracking count, as well as DesignViewState.  Mobx
+    is facilitating the communication.
+    Is there a place for a DrillState store?
+      * Hold current drill, count, etc?  FieldController observes?
+    Or, should FieldController be stored in state, so we can directly
+    communicate without mobx observing?  (May be faster for animation purposes)
+*/
 export default class DrillPlayer {
     constructor(rootState) {
         const { designViewState } = rootState;

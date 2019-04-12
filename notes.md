@@ -1,5 +1,4 @@
 Next Steps
-* get a basic animation working
 * amplify setup
 * Do I create Drill, Marcher, Script, Step classes?
     * would need to serialize/deserialize drill to pure json on save/load
