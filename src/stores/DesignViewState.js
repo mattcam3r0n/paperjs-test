@@ -8,7 +8,7 @@ export default class DesignViewState {
   @observable activeTool;
   @observable cursor;
   @observable drill;
-  @observable isPlaying;
+  @observable drillPlayer;
 
   constructor(root) {
     this.rootState = root;
@@ -76,16 +76,19 @@ export default class DesignViewState {
 
   @action
   play() {
-    this.isPlaying = true;
     this.drillPlayer = new DrillPlayer(this.rootState);
     this.drillPlayer.play();
   }
 
   @action
   stop() {
-    this.isPlaying = false;
     this.drillPlayer.stop();
     this.drillPlayer = null;
+  }
+
+  @computed
+  get isPlaying() {
+    return this.drillPlayer && this.drillPlayer.isPlaying;
   }
 
   @action.bound
@@ -100,8 +103,8 @@ export default class DesignViewState {
     const drill = {};
     const block = new BlockBuilder()
       .createBlock({
-        files: 4,
-        ranks: 4,
+        files: 20,
+        ranks: 20,
         initialState: {
           position: {
             x: 12,

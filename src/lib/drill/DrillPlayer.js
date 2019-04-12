@@ -25,8 +25,10 @@ export default class DrillPlayer {
     }
 
     stop() {
+        if (!this.isPlaying) return;
         this.isPlaying = false;
-        this.view.onFrame = null;
+        this.view.onFrame = null; // stops playback
+        this.rootState.designViewState.stop();
     }
 
     onFrame(event) {
