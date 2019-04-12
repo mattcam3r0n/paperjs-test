@@ -1,0 +1,14 @@
+{
+    "master": {
+        "awscloudformation": {
+            "AuthRoleName": "precision-2-20190412122932-authRole",
+            "UnauthRoleArn": "arn:aws:iam::509093440717:role/precision-2-20190412122932-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::509093440717:role/precision-2-20190412122932-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "precision-2-20190412122932-deployment",
+            "UnauthRoleName": "precision-2-20190412122932-unauthRole",
+            "StackName": "precision-2-20190412122932",
+            "StackId": "arn:aws:cloudformation:us-east-1:509093440717:stack/precision-2-20190412122932/89529530-5d48-11e9-94e0-12967e4454e6"
+        }
+    }
+}
