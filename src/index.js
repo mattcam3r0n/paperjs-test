@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'mobx-react';
-// import AppState from './stores/AppState';
 import RootState from './stores/RootState';
 
 ReactDOM.render(

@@ -2,7 +2,9 @@ Next Steps
 * where should playback controls go?  eg, step forward, back, beginning etc.
   * flyout?  seems awkward
   * button bar below or above field?
-* amplify setup
+* add auth
+* add storage
+* add hosting
 * Do I create Drill, Marcher, Script, Step classes?
     * would need to serialize/deserialize drill to pure json on save/load
     * 
