@@ -1,17 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import {
   withStyles,
   MuiThemeProvider,
   createMuiTheme,
 } from '@material-ui/core/styles';
-import Header from './components/Header';
-import DesignView from './components/DesignView';
 import { CssBaseline } from '@material-ui/core';
 
 import Amplify, { Auth, Hub } from 'aws-amplify';
 import awsmobile from './aws-exports';
 import { Authenticator, Greetings } from 'aws-amplify-react';
+
+import PrivateRoute from './PrivateRoute';
+import Header from './components/Header';
+import DesignView from './components/DesignView';
 
 //import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';
 
@@ -70,10 +74,22 @@ class App extends React.Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
+        <Router>
         <div className={classes.root}>
           <Header />
-          <DesignView />
+          <Route exact path="/" component={DesignView} />
+          <Route path="/design" component={DesignView} />
+          {/* 
+          <Route exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <PrivateRoute
+            path="/about"
+            user={user}
+            component={About}
+          /> 
+          */}
         </div>
+        </Router>
       </MuiThemeProvider>
     );
   }
