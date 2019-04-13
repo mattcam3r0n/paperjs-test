@@ -53,4 +53,24 @@ export default class FieldDimensions {
         // 6 steps buffer + 12 steps in endzone
         return 18;
     }
+
+    static get fiveYardsX() {
+        return 6;
+    }
+
+    static get farHashY() {
+        return 6 + 24;
+    }
+
+    static get nearHashY() {
+        return 6 + 24 + 16;
+    }
+
+    static get nearSidelineY() {
+        return 6 + 24 + 16 + 24;
+    }
+
+    static get farSidelineY() {
+        return 6;
+    }
 }
