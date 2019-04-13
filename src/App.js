@@ -53,6 +53,9 @@ const styles = (theme) => ({
   },
 });
 
+const Home = () => <h1>Home</h1>;
+const Login = () => <h1>Login</h1>;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -77,11 +80,10 @@ class App extends React.Component {
         <Router>
         <div className={classes.root}>
           <Header />
-          <Route exact path="/" component={DesignView} />
-          <Route path="/design" component={DesignView} />
-          {/* 
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
+          <Route path="/design" component={DesignView} />
+          {/* 
           <PrivateRoute
             path="/about"
             user={user}
