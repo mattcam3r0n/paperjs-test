@@ -16,6 +16,10 @@ class DropDownMenu extends Component {
   };
 
   handleMenu = event => {
+    if (this.props.onClick) {
+      this.props.onClick(event);
+    }
+    if (!this.props.openOnClick) return;
     this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -43,7 +47,7 @@ class DropDownMenu extends Component {
             vertical: 'top',
             horizontal: 'left',
           }}
-          marginThreshold={48}
+          marginThreshold={40}
           open={open}
           onClose={this.handleClose}
         >

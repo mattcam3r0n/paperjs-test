@@ -3,6 +3,13 @@ Next Steps
   * flyout?  seems awkward
   * button bar below or above field?
 * add auth
+    * Login / User button in header
+        * SignIn component.
+            * show sign in when not authenticated
+            * show user name when authenticated
+            * drop down for account options, sign out
+    * redirect to Login if not authenticated
+    * redirect back once authenticated?
 * add storage
 * add analytics
 * routing

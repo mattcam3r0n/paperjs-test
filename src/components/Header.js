@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import DropDownMenu from './DropDownMenu';
 import DropDownMenuItem from './DropDownMenuItem';
+import AccountMenu from './AccountMenu';
 
 const styles = (theme) => ({
   appBar: {
@@ -17,6 +18,9 @@ const styles = (theme) => ({
   appName: {
     marginRight: 32,
   },
+  grow: {
+    flexGrow: 1
+  }
 });
 
 @inject('designViewState')
@@ -53,6 +57,8 @@ class Header extends React.Component {
           <Button color="inherit" component={Link} to="/about">
             About
           </Button>
+          <div className={classes.grow} />
+          <AccountMenu />
         </Toolbar>
       </AppBar>
     );
