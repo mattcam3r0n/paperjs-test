@@ -156,7 +156,7 @@ class FieldPainter {
       strokeWidth: options.strokeWidth || 0.25,
       opacity: options.strokeWidth || 0.75,
     };
-    for (let i = 0; i < 21; i++) {
+    for (let i = 1; i < 20; i++) {
       let x = FieldDimensions.goalLineX + i * FieldDimensions.fiveYardsX;
       let farHashCoords = {
         start: [x - 1, FieldDimensions.farHashY],
