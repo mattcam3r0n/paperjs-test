@@ -210,8 +210,8 @@ class FieldPainter {
     const leftOf50 = index < yardlineMarkers.length / 2;
 
     const y = isNear
-      ? FieldDimensions.nearSidelineY -  11
-      : FieldDimensions.farSidelineY +  11;
+      ? FieldDimensions.nearSidelineY -  9
+      : FieldDimensions.farSidelineY +  11.5;
     const firstX =
       FieldDimensions.goalLineX + index * FieldDimensions.fiveYardsX * 2 - 2;
     const secondX =

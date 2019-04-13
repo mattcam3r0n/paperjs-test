@@ -103,8 +103,8 @@ export default class DesignViewState {
     const drill = {};
     const block = new BlockBuilder()
       .createBlock({
-        files: 20,
-        ranks: 20,
+        files: 10,
+        ranks: 33,
         initialState: {
           position: {
             x: 12,
