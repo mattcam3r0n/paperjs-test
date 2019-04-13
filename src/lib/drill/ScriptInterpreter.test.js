@@ -195,16 +195,24 @@ describe('ScriptInterpreter', () => {
 
   describe('isEndOfScript', () => {
     test('detects end of script when outside field', () => {
-      const script = {
-        currentState: {
-          count: 0,
-          position: {
-            x: FieldDimensions.widthInSteps + 1,
-            y: 6
-          }
-        },
-        steps: []
-      };
+      const script = new ScriptBuilder()
+        .createScript({
+          initialState: {
+            position: {
+              x: 6,
+              y: 6
+            },
+          },
+          currentState: {
+            count: 100,
+            position: {
+              x: FieldDimensions.widthInSteps + 1,
+              y: 6
+            } ,
+          },
+          steps: []
+        })
+        .build();
       const scriptInterpreter = new ScriptInterpreter();
       expect(scriptInterpreter.isEndOfScript(script)).toBe(true);
     });
@@ -216,8 +224,9 @@ describe('ScriptInterpreter', () => {
           strideType: 'sixToFive',
           stepType: 'halt',
           direction: 90,
-          deltaX: 0,
-          deltaY: 0
+          dX: 0,
+          dY: 0,
+          dR: 0
         })
         .build();
       script.currentState.count = 2; // move to end of script

@@ -32,6 +32,25 @@ describe('ScriptBuilder', () => {
       );
     });
 
+    test('createScript merges currentState', () => {
+      const builder = new ScriptBuilder();
+      const script = builder
+        .createScript({
+          currentState: {
+            position: {
+              x: 2,
+              y: 4,
+            },
+          },
+        })
+        .build();
+      expect(script.currentState.position.x).toEqual(2);
+      expect(script.currentState.position.y).toEqual(4);
+      expect(script.currentState.position.rotation).toEqual(
+        defaultOptions.initialState.position.rotation
+      );
+    });
+
     test('createScript.addStepsFromString', () => {
       const builder = new ScriptBuilder();
       const script = builder

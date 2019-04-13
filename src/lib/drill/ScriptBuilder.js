@@ -24,7 +24,7 @@ export default class ScriptBuilder {
     options = merge({}, defaultOptions, options);
     this.script = {
         initialState: merge({}, options.initialState),
-        currentState: merge({ count: 0 }, options.initialState),
+        currentState: merge({ count: 0 }, options.initialState, options.currentState),
         steps: {},
     };
     this.nextInsertCount = 1;
