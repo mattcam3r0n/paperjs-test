@@ -49,20 +49,34 @@ const styles = (theme) => ({
   },
 });
 
-function App(props) {
-  const { classes } = props;
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    Hub.listen('auth', (data) => {
+      const { payload } = data;
+      this.onAuthEvent(payload);
+    });
+  }
 
-  //console.log('theme', theme);
+  onAuthEvent(payload) {
+    console.log('A new auth event has happened: ', payload.data.username + ' has ' + payload.event);
+  }
 
-  return (
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className={classes.root}>
-        <Header />
-        <DesignView />
-      </div>
-    </MuiThemeProvider>
-  );
+  render() {
+    const { classes } = this.props;
+
+    //console.log('theme', theme);
+
+    return (
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className={classes.root}>
+          <Header />
+          <DesignView />
+        </div>
+      </MuiThemeProvider>
+    );
+  }
 }
 
 App.propTypes = {
