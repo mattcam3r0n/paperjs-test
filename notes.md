@@ -4,6 +4,8 @@ Next Steps
   * button bar below or above field?
 * add auth
 * add storage
+* add analytics
+* routing
 * Do I create Drill, Marcher, Script, Step classes?
     * would need to serialize/deserialize drill to pure json on save/load
     * 
@@ -14,6 +16,10 @@ Next Steps
 * zoom palette?
 * marchers palette? or go with flyout?
 * settings
+    * field customization
+        * color scheme
+        * line/number intensity
+        * graph paper mode
 * admin dashboard
 
 
