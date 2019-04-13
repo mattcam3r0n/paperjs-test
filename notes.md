@@ -4,11 +4,9 @@ Next Steps
   * button bar below or above field?
 * add auth
 * add storage
-* add hosting
 * Do I create Drill, Marcher, Script, Step classes?
     * would need to serialize/deserialize drill to pure json on save/load
     * 
-* finish field markings
 * alternate color schemes for field
 * timeline
 * marcher colors
