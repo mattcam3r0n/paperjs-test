@@ -9,6 +9,14 @@ import Header from './components/Header';
 import DesignView from './components/DesignView';
 import { CssBaseline } from '@material-ui/core';
 
+import Amplify, { Auth, Hub } from 'aws-amplify';
+import awsmobile from './aws-exports';
+import { Authenticator, Greetings } from 'aws-amplify-react';
+
+//import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';
+
+Amplify.configure(awsmobile);
+
 const theme = createMuiTheme({
   palette: {
     type: 'light',
