@@ -74,7 +74,6 @@ export default class FieldState {
   @action
   setFieldSettings(settings) {
     this.fieldSettings = merge({}, this.fieldSettings, settings);
-    console.log(this.fieldSettings);
   }
 
   @action
