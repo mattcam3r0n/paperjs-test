@@ -1,14 +1,39 @@
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
+import { Auth, Hub } from 'aws-amplify';
 
 export default class AppState {
   @observable authenticated;
   @observable authenticating;
-
+  @observable currentUser;
 
   constructor(root) {
     this.rootState = root;
     this.authenticated = false;
     this.authenticating = false;
+    this.currentUser = null;
+    Hub.listen('auth', (data) => {
+      this.onAuthEvent(data.payload);
+    });
+    this.getCurrentUser();
+  }
+
+  onAuthEvent(payload) {
+    console.log(
+      'A new auth event has happened: ',
+      payload.data.username + ' has ' + payload.event
+    );
+    this.getCurrentUser();
+  }
+
+  @action
+  getCurrentUser() {
+    Auth.currentAuthenticatedUser()
+      .then((user) => {
+        this.currentUser = user;
+      })
+      .catch(() => {
+        this.currentUser = null;
+      });
   }
 
   //   async fetchData(pathname, id) {

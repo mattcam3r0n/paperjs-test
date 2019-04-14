@@ -6,6 +6,10 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'mobx-react';
 import RootState from './stores/RootState';
 
+import Amplify from 'aws-amplify';
+import awsmobile from './aws-exports';
+Amplify.configure(awsmobile);
+
 ReactDOM.render(
   <Provider {...new RootState()} >
     <App />
