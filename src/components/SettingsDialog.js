@@ -7,10 +7,15 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import FieldSettings from './FieldSettings';
 
 const styles = (theme) => ({
   root: {
     backgroundColor: 'transparent',
+  },
+  dialogPaper: {
+    minHeight: '80vh',
+    maxHeight: '80vh',
   },
 });
 
@@ -50,6 +55,7 @@ class SettingsDialog extends React.Component {
             root: classes.root,
           },
         }}
+        classes={{ paper: classes.dialogPaper }}
       >
         <DialogTitle id="settings-dialog">Settings</DialogTitle>
         <Paper square>
@@ -58,12 +64,17 @@ class SettingsDialog extends React.Component {
             indicatorColor="primary"
             textColor="primary"
             onChange={this.handleTabChange}
-          >
+            style={{ minHeight: 100 }}
+            >
             <Tab label="Field" />
             {/* <Tab label="Disabled" disabled />
             <Tab label="Active" /> */}
           </Tabs>
-          {tabValue === 0 && <TabContainer>Field Settings</TabContainer>}
+          {tabValue === 0 && (
+            <TabContainer>
+              <FieldSettings />
+            </TabContainer>
+          )}
           {tabValue === 'two' && <TabContainer>Item Two</TabContainer>}
           {tabValue === 'three' && <TabContainer>Item Three</TabContainer>}
         </Paper>
