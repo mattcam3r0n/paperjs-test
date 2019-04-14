@@ -13,7 +13,6 @@ class AccountMenu extends React.Component {
 
   handleClick = () => {
     const { authenticated } = this.props.appState;
-    console.log(authenticated);
     if (authenticated) return;
     // history.push('/login');
     this.props.history.push('/login');
