@@ -1,13 +1,11 @@
 /*
     Field component uses FieldPainter
     * FieldPainter uses Paper to draw field, holds paper context
-    * uses layers to separate field markings, band, various tools
-    * all tools are activated via FieldPainter?
-    * 
 */
 import paper from 'paper';
 import FieldDimensions from './FieldDimensions';
 import Marcher from './Marcher';
+import { merge } from 'lodash';
 
 const yardlineMarkers = [
   '',
@@ -23,9 +21,19 @@ const yardlineMarkers = [
   '',
 ];
 
+const defaultOptions = {
+  fieldColor: '#40703B',
+  fieldOpacity: 1,
+  yardlineColor: 'white',
+  yardlineOpacity: 0.75,
+  yardlineNumberColor: 'white',
+  yardlineNumberOpacity: 0.75,
+};
+
 class FieldPainter {
-  constructor(paperScope) {
+  constructor(paperScope, options) {
     this.paperScope = paperScope;
+    this.options = merge({}, defaultOptions, options);
     this.paperScope.activate();
   }
 
@@ -120,7 +128,7 @@ class FieldPainter {
     this.fieldSurface = new paper.Path.Rectangle({
       point: [left, top],
       size: [width, height],
-      fillColor: '#40703B',
+      fillColor: this.options.fieldColor,
     });
   }
 
@@ -129,9 +137,9 @@ class FieldPainter {
     this.sidelines = new paper.Path.Rectangle({
       point: [left, top],
       size: [width, height],
-      strokeColor: 'white',
+      strokeColor: this.options.yardlineColor,
       strokeWidth: 0.25,
-      opacity: 0.75,
+      opacity: this.options.yardlineOpacity,
     });
   }
 
@@ -139,9 +147,9 @@ class FieldPainter {
     for (let i = 0; i < 21; i++) {
       let x = FieldDimensions.goalLineX + i * 6;
       const yardline = new paper.Path({
-        strokeColor: 'white',
+        strokeColor: this.options.yardlineColor,
         strokeWidth: 0.25,
-        opacity: 0.75,
+        opacity: this.options.yardlineOpacity,
       });
       yardline.add(
         [x, FieldDimensions.sidelineRect.top],
@@ -150,11 +158,11 @@ class FieldPainter {
     }
   }
 
-  drawHashmarks(options = {}) {
+  drawHashmarks() {
     let lineOptions = {
-      strokeColor: options.stroke || 'white',
-      strokeWidth: options.strokeWidth || 0.25,
-      opacity: options.strokeWidth || 0.75,
+      strokeColor: this.options.yardlineColor,
+      strokeWidth: 0.25,
+      opacity: this.options.yardlineOpacity,
     };
     for (let i = 1; i < 20; i++) {
       let x = FieldDimensions.goalLineX + i * FieldDimensions.fiveYardsX;
@@ -173,18 +181,18 @@ class FieldPainter {
     }
   }
 
-  drawYardlineNumbers(options = {}) {
+  drawYardlineNumbers() {
     let textOptions = {
       fontFamily: 'Palatino',
       fontWeight: 'normal',
-      fontSize: options.fontSize || 3.5,
+      fontSize: 3.5,
       // lineHeight: 1,
       // originX: 'center',
       // originY: 'center',
       // scaleX: 0.8,
       // stroke: options.stroke || 'white',
-      fillColor: options.fill || 'white',
-      opacity: options.opacity || 0.75,
+      fillColor: this.options.yardlineNumberColor,
+      opacity: this.options.yardlineNumberOpacity,
     };
 
     // add near
@@ -210,8 +218,8 @@ class FieldPainter {
     const leftOf50 = index < yardlineMarkers.length / 2;
 
     const y = isNear
-      ? FieldDimensions.nearSidelineY -  9
-      : FieldDimensions.farSidelineY +  11.5;
+      ? FieldDimensions.nearSidelineY - 9
+      : FieldDimensions.farSidelineY + 11.5;
     const firstX =
       FieldDimensions.goalLineX + index * FieldDimensions.fiveYardsX * 2 - 2;
     const secondX =
@@ -236,7 +244,10 @@ class FieldPainter {
   }
 
   drawDigit(digit, point, options) {
-    const textOptions = Object.assign({}, options, { point: point, content: digit.toString() });
+    const textOptions = Object.assign({}, options, {
+      point: point,
+      content: digit.toString(),
+    });
     const text = new paper.PointText(textOptions);
     // let text = new fabric.Text(digit, Object.assign(position, options));
     // canvas.add(text);
@@ -248,8 +259,8 @@ class FieldPainter {
       center: [position.left, position.top],
       radius: 0.75,
       sides: 3,
-      fillColor: 'white',
-      opacity: 0.75,
+      fillColor: this.options.yardlineNumberColor,
+      opacity: this.options.yardlineNumberOpacity,
       rotation: leftOf50 ? 270 : 90,
     });
   }

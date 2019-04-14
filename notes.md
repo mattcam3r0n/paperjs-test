@@ -19,6 +19,7 @@ Next Steps
         * color scheme
         * line/number intensity
         * graph paper mode
+        * logo
 * admin dashboard
 
 

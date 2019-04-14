@@ -13,6 +13,7 @@ import MarcherToolsFlyout from './MarcherToolsFlyout';
 import ZoomToolsFlyout from './ZoomToolsFlyout';
 import SelectionToolsFlyout from './SelectionToolsFlyout';
 import EditToolsFlyout from './EditToolsFlyout';
+import SettingsButton from './SettingsButton';
 
 const drawerWidth = 64;
 
@@ -76,6 +77,9 @@ class RightSideBar extends Component {
             </ListItem>
             <ListItem button className={classes.listItem}>
               <ZoomToolsFlyout />
+            </ListItem>
+            <ListItem button className={classes.listItem}>
+              <SettingsButton />
             </ListItem>
           </List>
           <Divider />

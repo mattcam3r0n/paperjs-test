@@ -20,7 +20,6 @@ class AccountMenu extends React.Component {
 
   render() {
     const { currentUser, authenticated, signOut } = this.props.appState;
-    console.log(authenticated);
     return (
       <DropDownMenu
         menuText={authenticated ? currentUser.attributes.email : 'Sign In'}
