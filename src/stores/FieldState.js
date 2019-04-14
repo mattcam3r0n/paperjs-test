@@ -1,12 +1,14 @@
 import paper from 'paper';
 import FieldDimensions from '../lib/field/FieldDimensions';
 import { observable, action } from 'mobx';
+import { merge } from 'lodash';
 
 export default class FieldState {
   @observable zoomFactor;
   @observable center;
   @observable fieldContainerSize;
   @observable count;
+  @observable fieldSettings;
 
   lastDelta;
   fieldPaperScope;
@@ -23,6 +25,7 @@ export default class FieldState {
       width: FieldDimensions.width,
       height: FieldDimensions.height,
     };
+    this.fieldSettings = {};
   }
 
   @action
@@ -66,6 +69,12 @@ export default class FieldState {
 
   setFieldPaperScope(paperScope) {
     this.fieldPaperScope = paperScope;
+  }
+
+  @action
+  setFieldSettings(settings) {
+    this.fieldSettings = merge({}, this.fieldSettings, settings);
+    console.log(this.fieldSettings);
   }
 
   @action

@@ -35,6 +35,10 @@ class FieldPainter {
     this.paperScope = paperScope;
     this.options = merge({}, defaultOptions, options);
     this.paperScope.activate();
+    this.fieldSurface = null;
+    this.hashes = [];
+    this.yardlines = [];
+    this.yardlineNumbers = [];
   }
 
   draw() {
@@ -45,6 +49,25 @@ class FieldPainter {
     this.drawHashmarks();
     this.drawYardlineNumbers();
     this.paperScope.view.draw();
+  }
+
+  setColors(options = {}) {
+    options = merge({}, defaultOptions, options);
+    if (this.fieldSurface) {
+      this.fieldSurface.fillColor = options.fieldColor;
+    }
+    if (this.sidelines) {
+      this.sidelines.strokeColor = options.yardlineColor;
+    }
+    this.yardlines.forEach(y => {
+      y.strokeColor = options.yardlineColor;
+    });
+    this.hashes.forEach(h => {
+      h.strokeColor = options.yardlineColor;
+    });
+    this.yardlineNumbers.forEach(y => {
+      y.fillColor = options.yardlineColor;
+    });
   }
 
   syncMarchers(drill) {
@@ -144,6 +167,7 @@ class FieldPainter {
   }
 
   drawYardlines() {
+    this.yardlines = [];
     for (let i = 0; i < 21; i++) {
       let x = FieldDimensions.goalLineX + i * 6;
       const yardline = new paper.Path({
@@ -155,6 +179,7 @@ class FieldPainter {
         [x, FieldDimensions.sidelineRect.top],
         [x, FieldDimensions.sidelineRect.bottom]
       );
+      this.yardlines.push(yardline);
     }
   }
 
@@ -164,6 +189,7 @@ class FieldPainter {
       strokeWidth: 0.25,
       opacity: this.options.yardlineOpacity,
     };
+    this.hashes = [];
     for (let i = 1; i < 20; i++) {
       let x = FieldDimensions.goalLineX + i * FieldDimensions.fiveYardsX;
       let farHashCoords = {
@@ -178,6 +204,7 @@ class FieldPainter {
       let nearHash = new paper.Path(lineOptions);
       farHash.add(farHashCoords.start, farHashCoords.end);
       nearHash.add(nearHashCoords.start, nearHashCoords.end);
+      this.hashes.push(farHash, nearHash);
     }
   }
 
@@ -194,7 +221,7 @@ class FieldPainter {
       fillColor: this.options.yardlineNumberColor,
       opacity: this.options.yardlineNumberOpacity,
     };
-
+    this.yardlineNumbers = [];
     // add near
     yardlineMarkers.forEach((m, i) => {
       this.drawYardlineNumber(m, i, true, textOptions);
@@ -248,10 +275,7 @@ class FieldPainter {
       point: point,
       content: digit.toString(),
     });
-    const text = new paper.PointText(textOptions);
-    // let text = new fabric.Text(digit, Object.assign(position, options));
-    // canvas.add(text);
-    // text.sendToBack();
+    this.yardlineNumbers.push(new paper.PointText(textOptions));
   }
 
   drawNumberArrow(position, leftOf50) {
@@ -263,6 +287,7 @@ class FieldPainter {
       opacity: this.options.yardlineNumberOpacity,
       rotation: leftOf50 ? 270 : 90,
     });
+    this.yardlineNumbers.push(arrow);
   }
 }
 

@@ -8,6 +8,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import FieldSettings from './FieldSettings';
+import Draggable from 'react-draggable';
 
 const styles = (theme) => ({
   root: {
@@ -17,6 +18,9 @@ const styles = (theme) => ({
     minHeight: '80vh',
     maxHeight: '80vh',
   },
+  handle: {
+      cursor: 'grab'
+  }
 });
 
 function TabContainer(props) {
@@ -43,6 +47,20 @@ class SettingsDialog extends React.Component {
   render() {
     const { classes, onClose, selectedValue, ...other } = this.props;
     const { tabValue } = this.state;
+
+    // had to define this inside render in order to 
+    // get access to classes.  had no luck passing a
+    // wrapped PaperComponent
+    const PaperComponent = (props) => {
+      return (
+        <Draggable
+            handle={'.' + classes.handle} // draggable expects a class selector
+        >
+          <Paper {...props} />
+        </Draggable>
+      );
+    };
+    
     return (
       <Dialog
         fullWidth={true}
@@ -55,9 +73,10 @@ class SettingsDialog extends React.Component {
             root: classes.root,
           },
         }}
+        PaperComponent={PaperComponent} // in order to make dialog draggable
         classes={{ paper: classes.dialogPaper }}
       >
-        <DialogTitle id="settings-dialog">Settings</DialogTitle>
+        <DialogTitle id="settings-dialog" className={classes.handle}>Settings</DialogTitle>
         <Paper square>
           <Tabs
             value={tabValue}
@@ -65,7 +84,7 @@ class SettingsDialog extends React.Component {
             textColor="primary"
             onChange={this.handleTabChange}
             style={{ minHeight: 100 }}
-            >
+          >
             <Tab label="Field" />
             {/* <Tab label="Disabled" disabled />
             <Tab label="Active" /> */}

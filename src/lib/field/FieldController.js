@@ -74,6 +74,13 @@ export default class FieldController {
         this.fieldPainter.syncMarcherPositions(this.designViewState.drill)
       }
     )
+
+    reaction(
+      () => this.fieldState.fieldSettings,
+      (settings, reaction) => {
+        this.fieldPainter.setColors(settings);
+      }
+    )
   }
 
 }
