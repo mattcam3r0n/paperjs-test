@@ -18,10 +18,6 @@ export default class AppState {
   }
 
   onAuthEvent(payload) {
-    console.log(
-      'A new auth event has happened: ',
-      payload.data.username + ' has ' + payload.event
-    );
     this.getCurrentUser();
   }
 
@@ -30,10 +26,19 @@ export default class AppState {
     Auth.currentAuthenticatedUser()
       .then((user) => {
         this.currentUser = user;
+        this.authenticated = true;
       })
       .catch(() => {
         this.currentUser = null;
+        this.authenticated = false;
       });
+  }
+
+  @action.bound
+  signOut() {
+    Auth.signOut();
+    this.authenticated = false;
+    this.currentUser = null;
   }
 
   //   async fetchData(pathname, id) {

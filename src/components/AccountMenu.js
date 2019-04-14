@@ -1,34 +1,38 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { observer, inject } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import DropDownMenu from './DropDownMenu';
 import DropDownMenuItem from './DropDownMenuItem';
 
 const styles = (theme) => ({});
 
-@inject('designViewState')
+@inject('appState')
 @observer
 class AccountMenu extends React.Component {
-  state = {};
 
-  handleOpen() {
-    console.log('handleOpen');
+  handleClick = () => {
+    const { authenticated } = this.props.appState;
+    console.log(authenticated);
+    if (authenticated) return;
+    // history.push('/login');
+    this.props.history.push('/login');
   }
 
   render() {
-    const { classes, designViewState } = this.props;
-    // const { anchorEl } = this.state;
+    const { currentUser, authenticated, signOut } = this.props.appState;
+    console.log(authenticated);
     return (
-      <DropDownMenu menuText="Account" openOnClick={true} onClick={this.handleOpen}>
-        <DropDownMenuItem onClick={designViewState.newDrill}>
-          Profile
-        </DropDownMenuItem>
-        <DropDownMenuItem>Sign Out</DropDownMenuItem>
+      <DropDownMenu
+        menuText={authenticated ? currentUser.attributes.email : 'Sign In'}
+        dontOpen={!authenticated}
+        onClick={this.handleClick}
+      >
+        <DropDownMenuItem onClick={() => {}}>Profile</DropDownMenuItem>
+        <DropDownMenuItem onClick={() => { signOut() }}>Sign Out</DropDownMenuItem>
       </DropDownMenu>
     );
   }
 }
 
-export default withStyles(styles)(AccountMenu);
+export default withStyles(styles)(withRouter(AccountMenu));

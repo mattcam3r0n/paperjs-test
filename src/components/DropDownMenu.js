@@ -19,7 +19,7 @@ class DropDownMenu extends Component {
     if (this.props.onClick) {
       this.props.onClick(event);
     }
-    if (!this.props.openOnClick) return;
+    if (this.props.dontOpen) return;
     this.setState({ anchorEl: event.currentTarget });
   };
 
