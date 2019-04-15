@@ -83,7 +83,7 @@ class SettingsDialog extends React.Component {
             indicatorColor="primary"
             textColor="primary"
             onChange={this.handleTabChange}
-            style={{ minHeight: 100 }}
+            // style={{ minHeight: 100 }}
           >
             <Tab label="Field" />
             {/* <Tab label="Disabled" disabled />

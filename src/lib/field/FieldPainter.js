@@ -55,18 +55,23 @@ class FieldPainter {
     options = merge({}, defaultOptions, options);
     if (this.fieldSurface) {
       this.fieldSurface.fillColor = options.fieldColor;
+      this.fieldSurface.opacity = options.fieldOpacity;
     }
     if (this.sidelines) {
       this.sidelines.strokeColor = options.yardlineColor;
+      this.sidelines.opacity = options.yardlineOpacity;
     }
     this.yardlines.forEach(y => {
       y.strokeColor = options.yardlineColor;
+      y.opacity = options.yardlineOpacity;
     });
     this.hashes.forEach(h => {
       h.strokeColor = options.yardlineColor;
+      h.opacity = options.yardlineOpacity;
     });
     this.yardlineNumbers.forEach(y => {
-      y.fillColor = options.yardlineColor;
+      y.fillColor = options.yardlineNumberColor;
+      y.opacity = options.yardlineNumberOpacity;
     });
   }
 

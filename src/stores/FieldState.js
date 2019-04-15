@@ -28,9 +28,9 @@ export default class FieldState {
     this.fieldSettings = {
       fieldColor: '#40703B',
       fieldOpacity: 1,
-      yardlineColor: 'white',
+      yardlineColor: '#FFFFFE',
       yardlineOpacity: 0.75,
-      yardlineNumberColor: 'white',
+      yardlineNumberColor: '#FFFFFE',
       yardlineNumberOpacity: 0.75,          
     };
   }
@@ -78,7 +78,7 @@ export default class FieldState {
     this.fieldPaperScope = paperScope;
   }
 
-  @action
+  @action.bound
   setFieldSettings(settings) {
     this.fieldSettings = merge({}, this.fieldSettings, settings);
   }

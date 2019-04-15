@@ -1,12 +1,12 @@
 import React from 'react';
 import { SketchPicker } from 'react-color';
 import { withStyles } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 
 const styles = (theme) => ({
   button: {
     height: 24,
+    width: '100%',
   },
   swatch: {
     padding: '5px',
@@ -32,9 +32,9 @@ const styles = (theme) => ({
 class ColorPicker extends React.Component {
   state = {
     displayColorPicker: false,
-    color: {
-      hex: '#FFFFFF'
-    },
+    // color: {
+    //   hex: '#FFFFFF',
+    // },
   };
 
   handleClick = () => {
@@ -46,39 +46,35 @@ class ColorPicker extends React.Component {
   };
 
   handleChange = (color) => {
-    this.setState({ color: color.rgb });
+    // this.setState({ color: color.hex });
     if (this.props.onChange) {
       this.props.onChange(color);
     }
   };
 
   render() {
-    const { classes, label = 'Pick Color', selectedColor = 'white' } = this.props;
+    const {
+      classes,
+      selectedColor = 'white',
+    } = this.props;
     return (
-      <div>
-        <FormControlLabel
-          label={label}
-          labelPlacement="top"
-          control={
-            <Button
-              variant="outlined"
-              className={classes.button}
-              style={{ background: selectedColor }}
-              onClick={this.handleClick}
-            >&nbsp;</Button>
-          }
-        />
+      <React.Fragment>
+        <Button
+          variant="outlined"
+          className={classes.button}
+          style={{ background: selectedColor }}
+          onClick={this.handleClick}
+        >
+          &nbsp;
+        </Button>
 
         {this.state.displayColorPicker ? (
           <div className={classes.popover}>
             <div className={classes.cover} onClick={this.handleClose} />
-            <SketchPicker
-              color={selectedColor}
-              onChange={this.handleChange}
-            />
+            <SketchPicker color={selectedColor} onChange={this.handleChange} />
           </div>
         ) : null}
-      </div>
+      </React.Fragment>
     );
   }
 }
