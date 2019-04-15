@@ -2,7 +2,21 @@ Next Steps
 * where should playback controls go?  eg, step forward, back, beginning etc.
   * flyout?  seems awkward
   * button bar below or above field?
+* spinner for long ops
 * add storage
+    * what buckets are needed?
+        * drills (protected)
+        * videos (public read-only?)
+        * music (protected)
+        * or can i use one bucket for drills and music, with a path?
+            * /protected/{user}/drills
+            * /protected/{user}/music
+    * where does this logic go? drillState? or designViewState?
+        * designViewState is mainly concerned with managing tools
+        * drillState with managing drills
+        * load/save
+        * current drill
+        * current drill count?
     * save/load drill in s3
       * straight json for now
     * rest api?
