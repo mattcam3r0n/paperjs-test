@@ -25,7 +25,14 @@ export default class FieldState {
       width: FieldDimensions.width,
       height: FieldDimensions.height,
     };
-    this.fieldSettings = {};
+    this.fieldSettings = {
+      fieldColor: '#40703B',
+      fieldOpacity: 1,
+      yardlineColor: 'white',
+      yardlineOpacity: 0.75,
+      yardlineNumberColor: 'white',
+      yardlineNumberOpacity: 0.75,          
+    };
   }
 
   @action

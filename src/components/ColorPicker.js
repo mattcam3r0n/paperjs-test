@@ -1,13 +1,12 @@
 import React from 'react';
 import { SketchPicker } from 'react-color';
 import { withStyles } from '@material-ui/core/styles';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Button from '@material-ui/core/Button';
 
 const styles = (theme) => ({
-  color: {
-    width: '36px',
-    height: '14px',
-    borderRadius: '2px',
-    background: 'rgba(241, 112, 19, 1)',
+  button: {
+    height: 24,
   },
   swatch: {
     padding: '5px',
@@ -34,10 +33,7 @@ class ColorPicker extends React.Component {
   state = {
     displayColorPicker: false,
     color: {
-      r: '241',
-      g: '112',
-      b: '19',
-      a: '1',
+      hex: '#FFFFFF'
     },
   };
 
@@ -52,25 +48,32 @@ class ColorPicker extends React.Component {
   handleChange = (color) => {
     this.setState({ color: color.rgb });
     if (this.props.onChange) {
-        this.props.onChange(color);
+      this.props.onChange(color);
     }
   };
 
   render() {
-    const { classes } = this.props;
-    const { color } = this.state;
-    const { r, g, b, a } = color;
-    const selectedColor = `rgba(${r}, ${g}, ${b}, ${a})`;
+    const { classes, label = 'Pick Color', selectedColor = 'white' } = this.props;
     return (
       <div>
-        <div className={classes.swatch} onClick={this.handleClick}>
-          <div className={classes.color} style={{ background: selectedColor}} />
-        </div>
+        <FormControlLabel
+          label={label}
+          labelPlacement="top"
+          control={
+            <Button
+              variant="outlined"
+              className={classes.button}
+              style={{ background: selectedColor }}
+              onClick={this.handleClick}
+            >&nbsp;</Button>
+          }
+        />
+
         {this.state.displayColorPicker ? (
           <div className={classes.popover}>
             <div className={classes.cover} onClick={this.handleClose} />
             <SketchPicker
-              color={this.state.color}
+              color={selectedColor}
               onChange={this.handleChange}
             />
           </div>

@@ -20,6 +20,8 @@ Next Steps
         * line/number intensity
         * graph paper mode
         * logo
+        * default color pickers to current settings (or defaults)
+        * themes? default, graph, light, dark
 * admin dashboard
 
 
