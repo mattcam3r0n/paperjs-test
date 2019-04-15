@@ -18,7 +18,8 @@
     "react-draggable": "^3.2.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^2.1.8",
-    "recompose": "^0.30.0"
+    "recompose": "^0.30.0",
+    "shortid": "^2.2.14"
   },
   "scripts": {
     "start": "react-app-rewired start",

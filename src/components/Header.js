@@ -23,13 +23,13 @@ const styles = (theme) => ({
   }
 });
 
-@inject('designViewState')
+@inject('designViewState', 'drillState')
 @observer
 class Header extends React.Component {
   state = {};
 
   render() {
-    const { classes, designViewState } = this.props;
+    const { classes, designViewState, drillState } = this.props;
     // const { anchorEl } = this.state;
     return (
       <AppBar position="absolute" className={classes.appBar}>
@@ -49,6 +49,7 @@ class Header extends React.Component {
               New Drill
             </DropDownMenuItem>
             <DropDownMenuItem>Open...</DropDownMenuItem>
+            <DropDownMenuItem onClick={drillState.saveDrill}>Save</DropDownMenuItem>
           </DropDownMenu>
           <DropDownMenu menuText="Edit">
             <DropDownMenuItem>Undo</DropDownMenuItem>
