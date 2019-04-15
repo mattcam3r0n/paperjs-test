@@ -9,6 +9,11 @@
             "UnauthRoleName": "precision-2-20190412122932-unauthRole",
             "StackName": "precision-2-20190412122932",
             "StackId": "arn:aws:cloudformation:us-east-1:509093440717:stack/precision-2-20190412122932/89529530-5d48-11e9-94e0-12967e4454e6"
+        },
+        "categories": {
+            "auth": {
+                "cognito4530c720": {}
+            }
         }
     },
     "dev": {
