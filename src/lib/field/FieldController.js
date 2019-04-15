@@ -62,7 +62,6 @@ export default class FieldController {
     reaction(
       () => this.designViewState.isPlaying,
       (isPlaying, reaction) => {
-        console.log('isPlaying', isPlaying);
       }
     )
 

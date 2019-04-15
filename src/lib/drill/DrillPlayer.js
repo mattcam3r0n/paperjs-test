@@ -49,7 +49,6 @@ export default class DrillPlayer {
         if (!step) return this.stop();
 
         if (event.time >= this.lastStepTime + step.delta) {
-            console.log(event.time, this.lastStepTime, step.delta);
             this.count++;
             this.lastStepTime = event.time;
             this.drillInterpreter.stepForward();
