@@ -3,12 +3,23 @@ Next Steps
   * flyout?  seems awkward
   * button bar below or above field?
 * add storage
+    * save/load drill in s3
+      * straight json for now
+    * rest api?
+      * store drill record associated with object in s3
+        * for searching, etc
+        * ideally, the s3 storage event would trigger creation/update of this record, but will do manually for now
+      * store user prefs (in dynamo or cognito)?
 * add analytics
+    * track user actions. which maneuvers, etc.
 * routing
+  * design view should be authenticated
+  * admin dashboard
+    * can i query pinpoint analytics? or just use aws dashboard?
+  * menu bar should adapt to appropriate view
 * Do I create Drill, Marcher, Script, Step classes?
     * would need to serialize/deserialize drill to pure json on save/load
     * 
-* alternate color schemes for field
 * timeline
 * marcher colors
 * music
@@ -22,7 +33,6 @@ Next Steps
         * logo
         * default color pickers to current settings (or defaults)
         * themes? default, graph, light, dark
-* admin dashboard
 
 
 Stores / Services
