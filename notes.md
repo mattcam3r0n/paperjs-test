@@ -24,6 +24,15 @@ Next Steps
         * for searching, etc
         * ideally, the s3 storage event would trigger creation/update of this record, but will do manually for now
       * store user prefs (in dynamo or cognito)?
+* API
+    * drills
+        * get by id
+        * list by user
+        * delete by id
+        * list all (for admins)
+        
+    * music
+    * userProfile
 * add analytics
     * track user actions. which maneuvers, etc.
 * routing
