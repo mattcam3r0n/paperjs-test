@@ -25,6 +25,13 @@ Next Steps
         * ideally, the s3 storage event would trigger creation/update of this record, but will do manually for now
       * store user prefs (in dynamo or cognito)?
 * API
+    * model
+        * Drill
+            * Id
+            * Name
+            * Description
+            * Owner
+            * 
     * drills
         * get by id
         * list by user
