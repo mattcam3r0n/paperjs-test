@@ -1,0 +1,10 @@
+{
+    "AppSyncApiName": "precisionAPI",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authcognito4530c720",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

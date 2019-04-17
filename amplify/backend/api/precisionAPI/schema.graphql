@@ -1,0 +1,10 @@
+type Drill @model {
+  id: ID!
+  name: String!
+  description: String
+  ownerEmail: AWSEmail!
+  userId: String!
+  storageKey: String!
+  createdDate: AWSDateTime
+  updatedDate: AWSDateTime
+}
