@@ -14,10 +14,10 @@ class DropDownMenuItem extends Component {
   };
 
   render() {
-    // const {  } = this.props;
+    const { onClick, children, ...other  } = this.props;
     return (
       <React.Fragment>
-        <MenuItem onClick={this.handleClick}>{ this.props.children }</MenuItem>
+        <MenuItem onClick={this.handleClick} {...other}>{ children }</MenuItem>
       </React.Fragment>
     );
   }

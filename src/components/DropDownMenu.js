@@ -39,6 +39,7 @@ class DropDownMenu extends Component {
         <Menu
           id="menu-appbar"
           anchorEl={anchorEl}
+          getContentAnchorEl={null} // to remove annoying warning related to anchorOrigin
           anchorOrigin={{
             vertical: 'center',
             horizontal: 'left',

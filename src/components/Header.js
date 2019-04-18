@@ -19,9 +19,16 @@ const styles = (theme) => ({
     marginRight: 32,
   },
   grow: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 });
+
+// this is a hack to work around a bug in material-ui that causes
+// the first menu item to always be (and stay) highlighted. adding
+// a hidden, dummy item seems to work around it.
+const HiddenMenuItem = () => (
+  <DropDownMenuItem style={{ display: 'none' }}>Dummy</DropDownMenuItem>
+);
 
 @inject('designViewState', 'drillState')
 @observer
@@ -45,13 +52,19 @@ class Header extends React.Component {
             Precision
           </Typography>
           <DropDownMenu menuText="File">
+            <HiddenMenuItem/>
             <DropDownMenuItem onClick={designViewState.newDrill}>
               New Drill
             </DropDownMenuItem>
-            <DropDownMenuItem onClick={drillState.getUserDrills}>Open...</DropDownMenuItem>
-            <DropDownMenuItem onClick={drillState.saveDrill}>Save</DropDownMenuItem>
+            <DropDownMenuItem onClick={drillState.getUserDrills}>
+              Open...
+            </DropDownMenuItem>
+            <DropDownMenuItem onClick={drillState.saveDrill}>
+              Save
+            </DropDownMenuItem>
           </DropDownMenu>
           <DropDownMenu menuText="Edit">
+          <HiddenMenuItem/>
             <DropDownMenuItem>Undo</DropDownMenuItem>
             <DropDownMenuItem>Redo</DropDownMenuItem>
           </DropDownMenu>
