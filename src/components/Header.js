@@ -48,7 +48,7 @@ class Header extends React.Component {
             <DropDownMenuItem onClick={designViewState.newDrill}>
               New Drill
             </DropDownMenuItem>
-            <DropDownMenuItem>Open...</DropDownMenuItem>
+            <DropDownMenuItem onClick={drillState.getUserDrills}>Open...</DropDownMenuItem>
             <DropDownMenuItem onClick={drillState.saveDrill}>Save</DropDownMenuItem>
           </DropDownMenu>
           <DropDownMenu menuText="Edit">
