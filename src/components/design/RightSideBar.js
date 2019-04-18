@@ -13,7 +13,7 @@ import MarcherToolsFlyout from './MarcherToolsFlyout';
 import ZoomToolsFlyout from './ZoomToolsFlyout';
 import SelectionToolsFlyout from './SelectionToolsFlyout';
 import EditToolsFlyout from './EditToolsFlyout';
-import SettingsButton from './SettingsButton';
+import SettingsButton from './settings/SettingsButton';
 
 const drawerWidth = 64;
 
