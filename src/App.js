@@ -10,7 +10,7 @@ import { styles, theme } from './App.styles';
 
 import PrivateRoute from './PrivateRoute';
 import Login from './components/Login';
-import Header from './components/Header';
+import Header from './components/header/Header';
 import DesignView from './components/DesignView';
 
 //import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';

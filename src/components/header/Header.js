@@ -54,7 +54,7 @@ class Header extends React.Component {
         <Toolbar variant="dense">
           <AppName classes={classes} />
           {/* show appropriate header menu for route */}
-          {headerMenu[route]}
+          {headerMenu[route] || <HomeHeader />}
           <Spacer />
           <AccountMenu />
         </Toolbar>
