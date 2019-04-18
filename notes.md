@@ -1,8 +1,10 @@
 Next Steps
+* rough out views and header transitions
 * where should playback controls go?  eg, step forward, back, beginning etc.
   * flyout?  seems awkward
   * button bar below or above field?
 * spinner for long ops
+* notification system for feedback
 * add storage
     * what buckets are needed?
         * drills (protected)
@@ -43,10 +45,16 @@ Next Steps
 * add analytics
     * track user actions. which maneuvers, etc.
 * routing
-  * design view should be authenticated
-  * admin dashboard
+  * Home 
+    * prompts for login if not authenticated
+    * if authenticated, show recent drills, new drill link, help info, etc
+    * Header shows links to Help, Admin (if admin)
+  * Design
+    * only accessible if authenticated
+    * Header shows File/Edit/Help menus (maybe Admin)
+  * Admin
+    * user list
     * can i query pinpoint analytics? or just use aws dashboard?
-  * menu bar should adapt to appropriate view
 * Do I create Drill, Marcher, Script, Step classes?
     * would need to serialize/deserialize drill to pure json on save/load
     * 
