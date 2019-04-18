@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fab from '@material-ui/core/Fab';
 import ButtonFlyOut from './ButtonFlyOut';
-import ToolNames from '../lib/tools/ToolNames';
+import ToolNames from '../../lib/tools/ToolNames';
 
 // icons
 import Search from '@material-ui/icons/Search';

@@ -11,7 +11,7 @@ import NearMe from '@material-ui/icons/NearMe';
 import Add from '@material-ui/icons/Add';
 import Delete from '@material-ui/icons/Delete';
 import ColorLens from '@material-ui/icons/ColorLens';
-import ToolNames from '../lib/tools/ToolNames';
+import ToolNames from '../../lib/tools/ToolNames';
 
 const styles = (theme) => ({
   fab: {

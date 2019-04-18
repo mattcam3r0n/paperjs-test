@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react';
 
 import Fab from '@material-ui/core/Fab';
 // import ButtonFlyOut from './ButtonFlyOut';
-import ToolNames from '../lib/tools/ToolNames';
+import ToolNames from '../../lib/tools/ToolNames';
 
 // icons
 import TabUnselected from '@material-ui/icons/TabUnselected';

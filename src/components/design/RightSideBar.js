@@ -8,7 +8,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 
-import ToolNames from '../lib/tools/ToolNames';
+import ToolNames from '../../lib/tools/ToolNames';
 import MarcherToolsFlyout from './MarcherToolsFlyout';
 import ZoomToolsFlyout from './ZoomToolsFlyout';
 import SelectionToolsFlyout from './SelectionToolsFlyout';

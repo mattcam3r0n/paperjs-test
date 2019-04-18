@@ -6,7 +6,7 @@ import PaletteButton from './PaletteButton';
 import { Done, Close, Timeline, Undo, Delete } from '@material-ui/icons';
 
 import Palette from './Palette';
-import ToolNames from '../lib/tools/ToolNames';
+import ToolNames from '../../lib/tools/ToolNames';
 
 const styles = (theme) => ({});
 

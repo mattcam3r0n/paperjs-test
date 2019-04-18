@@ -9,7 +9,7 @@ import ButtonFlyOut from './ButtonFlyOut';
 import NearMe from '@material-ui/icons/NearMe';
 import TabUnselected from '@material-ui/icons/TabUnselected';
 import Timeline from '@material-ui/icons/Timeline';
-import ToolNames from '../lib/tools/ToolNames';
+import ToolNames from '../../lib/tools/ToolNames';
 
 const styles = (theme) => ({
     fab: {

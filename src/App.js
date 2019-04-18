@@ -9,7 +9,7 @@ import { CssBaseline } from '@material-ui/core';
 import { styles, theme } from './App.styles';
 
 import PrivateRoute from './PrivateRoute';
-import Login from './components/Login';
+import Login from './components/home/Login';
 import Header from './components/header/Header';
 import DesignView from './components/design/DesignView';
 

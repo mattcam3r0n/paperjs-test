@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import SideBar from '../Sidebar';
-import RightSideBar from '../RightSideBar';
-import Field from '../Field';
-import Timeline from '../Timeline';
-import PathPalette from '../PathPalette';
-import SelectionPalette from '../SelectionPalette';
-import AddMarchersPalette from '../AddMarchersPalette';
+import SideBar from './Sidebar';
+import RightSideBar from './RightSideBar';
+import Field from './Field';
+import Timeline from './Timeline';
+import PathPalette from './PathPalette';
+import SelectionPalette from './SelectionPalette';
+import AddMarchersPalette from './AddMarchersPalette';
 
 const styles = (theme) => {
   return {
