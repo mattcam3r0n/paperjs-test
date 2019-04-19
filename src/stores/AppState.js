@@ -5,16 +5,28 @@ export default class AppState {
   @observable authenticated;
   @observable authenticating;
   @observable currentUser;
+  @observable isSpinning;
 
   constructor(root) {
     this.rootState = root;
     this.authenticated = false;
     this.authenticating = false;
     this.currentUser = null;
+    this.isSpinning = false;
     Hub.listen('auth', (data) => {
       this.onAuthEvent(data.payload);
     });
     this.getCurrentUser();
+  }
+
+  @action
+  startSpinner() {
+    this.isSpinning = true;
+  }
+
+  @action
+  stopSpinner() {
+    this.isSpinning = false;
   }
 
   onAuthEvent(payload) {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { observer, inject } from 'mobx-react';
 
 import DrillCard from './DrillCard';
 import SearchBar from './SearchBar';
@@ -20,7 +21,14 @@ const styles = (theme) => ({
   },
 });
 
+@inject('appState')
+@observer
 class DrillCardList extends Component {
+  handleChange = () => {
+    const { appState } = this.props;
+    appState.isSpinning? appState.stopSpinner() : appState.startSpinner();
+  }
+
   render() {
     const { classes } = this.props;
     // TODO: get user drills

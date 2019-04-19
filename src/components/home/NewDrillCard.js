@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { AddCircleOutline as AddBoxIcon } from '@material-ui/icons';
@@ -30,7 +31,7 @@ class NewDrillCard extends Component {
     const { classes, drill } = this.props;
     return (
       <Card className={classes.card}>
-        <CardActionArea>
+        <CardActionArea component={Link} to="/design">
           <CardContent className={classes.media}>
             <Grid container justify="center" alignItems="center">
               <Grid item>

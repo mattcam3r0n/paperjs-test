@@ -8,6 +8,7 @@ import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import { styles, theme } from './App.styles';
 
+import Spinner from './components/Spinner';
 import PrivateRoute from './PrivateRoute';
 import Home from './components/home/Home';
 import Login from './components/home/Login';
@@ -36,6 +37,7 @@ class App extends React.Component {
         <CssBaseline />
         <Router>
           <div className={classes.root}>
+            <Spinner />
             <Header />
             <Route exact path="/" component={Home} />
             <Route path="/home" component={Home} />

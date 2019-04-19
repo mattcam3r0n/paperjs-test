@@ -1,4 +1,14 @@
 Next Steps
+* opening a drill
+    * call drillState.open(drillId)
+    * drill state loads drill, sets currentDril
+    * then transition to design page
+        * who does this? drillState can't
+        * so must be calling component (drillPicker?)
+* need a spinner
+    * appState isSpinning
+    * appState.startSpinner
+    * appState.stopSpinner
 * rough out views and header transitions
   * Home 
     * prompts for login if not authenticated
