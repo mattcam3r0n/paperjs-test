@@ -9,7 +9,7 @@ export default class FieldController {
     // init paper js
     this.initializePaperScope(canvas);
     // initial draw
-    this.fieldPainter = new FieldPainter(this.fieldState.fieldPaperScope);
+    this.fieldPainter = new FieldPainter(this.fieldState.fieldPaperScope, this.fieldState.fieldSettings);
     this.fieldPainter.draw();
     // wire up reactions to respond to state changes
     this.configureReactions();
