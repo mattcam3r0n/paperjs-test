@@ -14,10 +14,10 @@ const styles = (theme) => ({
 
 class DrillPicker extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, onDrillSelected } = this.props;
     return (
       <div className={classes.root}>
-        <DrillCardList />
+        <DrillCardList onDrillSelected={onDrillSelected} />
       </div>
     );
   }

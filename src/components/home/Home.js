@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
+import { observer, inject } from 'mobx-react';
 
 import DrillPicker from './DrillPicker';
 
@@ -13,15 +15,24 @@ const styles = (theme) => ({
   },
 });
 
+@inject('drillState')
+@observer
 class Home extends Component {
+  handleDrillSelected = (drill) => {
+    const { drillState, history } = this.props;
+    console.log('drill selected: ' + drill.name);
+    drillState.openDrill(drill.id);
+    history.push('/design');
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <DrillPicker />
+        <DrillPicker onDrillSelected={this.handleDrillSelected} />
       </div>
     );
   }
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(withRouter(Home));

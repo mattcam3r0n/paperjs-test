@@ -25,18 +25,18 @@ const styles = (theme) => ({
 @observer
 class DrillCardList extends Component {
   handleChange = () => {
-    const { appState } = this.props;
-    appState.isSpinning? appState.stopSpinner() : appState.startSpinner();
+    // const { appState } = this.props;
+    // appState.isSpinning? appState.stopSpinner() : appState.startSpinner();
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, onDrillSelected } = this.props;
     // TODO: get user drills
     const drills = [
-      { name: 'New Drill 1' },
-      { name: 'Test Drill' },
-      {},
-      {},
+      { id: 1, name: 'test1' },
+      { id: 2, name: 'test2' },
+      { id: 'IyDDM_tqd', name: 'test drill'},
+      { id: 'sK0wJyits', name: 'test drill'},
       {},
       {},
       {},
@@ -67,7 +67,7 @@ class DrillCardList extends Component {
           </Grid>
           {drills.map((d, i) => (
             <Grid key={i} item xs={3}>
-              <DrillCard drill={d} />
+              <DrillCard drill={d} onDrillSelected={onDrillSelected} />
             </Grid>
           ))}
         </Grid>

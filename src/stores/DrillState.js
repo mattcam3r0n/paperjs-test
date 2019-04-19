@@ -4,7 +4,7 @@ import shortid from 'shortid';
 
 import { API, graphqlOperation } from 'aws-amplify';
 import { createDrill } from '../graphql/mutations';
-import { listDrills } from '../graphql/queries';
+import { getDrill, listDrills } from '../graphql/queries';
 
 export default class DrillState {
   @observable currentDrill;
@@ -22,15 +22,25 @@ export default class DrillState {
     this.rootState.appState.stopSpinner();
   }
 
-  @action
-  openDrill(key) {
-    // set currentDrill
+  @action.bound
+  async openDrill(drillId) {
+    if (!drillId) {
+      throw new Error('DrillState.openDrill: you must supply a drill id.');
+    }
+
+    const result = await API.graphql(
+      graphqlOperation(getDrill, {
+        id: drillId
+      })
+    );
+    this.currentDrill = result.data.getDrill;
+    console.log('currentDrill', this.currentDrill);
   }
 
   @action.bound
   async getUserDrills() {
     this.startSpinner();
-    const drills = await API.graphql(
+    const result = await API.graphql(
       graphqlOperation(listDrills, {
         filter: {
           userId: {
@@ -39,7 +49,7 @@ export default class DrillState {
         },
       })
     );
-    console.log(drills);
+    console.log(result.data.listDrills.items);
     this.stopSpinner();
   }
 

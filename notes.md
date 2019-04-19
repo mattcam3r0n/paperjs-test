@@ -1,10 +1,13 @@
 Next Steps
+* hook drill picker in to actual stored drills
+* work thru opening a drill / drillState
 * opening a drill
     * call drillState.open(drillId)
     * drill state loads drill, sets currentDril
     * then transition to design page
         * who does this? drillState can't
         * so must be calling component (drillPicker?)
+* general confirmation dialog component
 * rough out views and header transitions
   * Home 
     * prompts for login if not authenticated

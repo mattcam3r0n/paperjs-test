@@ -22,10 +22,10 @@ const styles = (theme) => ({
 
 class DrillCard extends Component {
   render() {
-    const { classes, drill } = this.props;
+    const { classes, drill, onDrillSelected } = this.props;
     return (
       <Card className={classes.card}>
-        <CardActionArea>
+        <CardActionArea onClick={() => onDrillSelected(drill)} >
           <CardMedia
             className={classes.media}
             image="/static/images/cards/contemplative-reptile.jpg"
