@@ -9,6 +9,7 @@ import { CssBaseline } from '@material-ui/core';
 import { styles, theme } from './App.styles';
 
 import PrivateRoute from './PrivateRoute';
+import Home from './components/home/Home';
 import Login from './components/home/Login';
 import Header from './components/header/Header';
 import DesignView from './components/design/DesignView';
@@ -16,7 +17,6 @@ import DesignView from './components/design/DesignView';
 //import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';
 
 // TODO: replace with real components
-const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 
 @inject('appState')
