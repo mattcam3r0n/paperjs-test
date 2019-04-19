@@ -65,8 +65,8 @@ class DrillCardList extends Component {
           <Grid item xs={3}>
             <NewDrillCard />
           </Grid>
-          {drills.map((d) => (
-            <Grid item xs={3}>
+          {drills.map((d, i) => (
+            <Grid key={i} item xs={3}>
               <DrillCard drill={d} />
             </Grid>
           ))}

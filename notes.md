@@ -5,10 +5,6 @@ Next Steps
     * then transition to design page
         * who does this? drillState can't
         * so must be calling component (drillPicker?)
-* need a spinner
-    * appState isSpinning
-    * appState.startSpinner
-    * appState.stopSpinner
 * rough out views and header transitions
   * Home 
     * prompts for login if not authenticated
@@ -23,7 +19,6 @@ Next Steps
 * where should playback controls go?  eg, step forward, back, beginning etc.
   * flyout?  seems awkward
   * button bar below or above field?
-* spinner for long ops
 * notification system for feedback
 * add storage
     * what buckets are needed?
