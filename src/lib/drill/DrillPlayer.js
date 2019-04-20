@@ -1,3 +1,4 @@
+import { observable } from 'mobx';
 import PlaybackScheduler from "./PlaybackScheduler";
 import DrillInterpreter from "./DrillInterpreter";
 
@@ -12,12 +13,12 @@ import DrillInterpreter from "./DrillInterpreter";
     communicate without mobx observing?  (May be faster for animation purposes)
 */
 export default class DrillPlayer {
+    @observable isPlaying = false;
+
     constructor(rootState) {
-        const { designViewState, drillState } = rootState;
+        const { fieldState, drillState } = rootState;
         this.rootState = rootState;
-        //this.
-        // this.fieldPaperScope = designViewState.fieldPaperScope;
-        this.view = designViewState.fieldPaperScope.view;
+        this.view = fieldState.fieldPaperScope.view;
         this.drill = drillState.currentDrill;
     }
 
@@ -38,11 +39,11 @@ export default class DrillPlayer {
         if (!this.isPlaying) return;
         this.isPlaying = false;
         this.view.onFrame = null; // stops playback
-        this.rootState.designViewState.stop();
     }
 
     onFrame(event) {
-        const { schedule, count } = this;
+        const { schedule, count, drillInterpreter } = this;
+        const { fieldState } = this.rootState;
         if (!schedule) return this.stop();
 
         const step = schedule[count];
@@ -51,9 +52,9 @@ export default class DrillPlayer {
         if (event.time >= this.lastStepTime + step.delta) {
             this.count++;
             this.lastStepTime = event.time;
-            this.drillInterpreter.stepForward();
-            this.rootState.fieldState.setCount(this.count); // update count so field can sync
-            this.rootState.fieldState.syncMarcherPositions();
+            drillInterpreter.stepForward();
+            fieldState.setCount(this.count); // update count so field can sync
+            fieldState.syncMarcherPositions();
         }
 
 

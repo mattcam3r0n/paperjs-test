@@ -14,14 +14,6 @@ export default class DesignViewState {
     this.toolFactory = new ToolFactory(this.rootState);
   }
 
-  get fieldState() {
-    return this.rootState.fieldState;
-  }
-
-  get fieldPaperScope() {
-    return this.rootState.fieldState.fieldPaperScope;
-  }
-
   @computed
   get isSelectionToolActive() {
     return (

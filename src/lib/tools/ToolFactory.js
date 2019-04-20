@@ -24,7 +24,7 @@ export default class ToolFactory {
   };
 
   get fieldPaperScope() {
-    return this.rootState.designViewState.fieldPaperScope;
+    return this.rootState.fieldState.fieldPaperScope;
   }
 
   get fieldState() {
