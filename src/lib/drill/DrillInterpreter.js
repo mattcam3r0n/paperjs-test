@@ -30,10 +30,12 @@ export default class DrillInterpreter {
   goToCount() {}
 
   isBeginningOfDrill() {
+    if (!this.drill.marchers) return true;
     return this.drill.marchers.every(m => this.scriptInterpreter.isBeginningOfScript(m.script));
   }
 
   isEndOfDrill() {
+    if (!this.drill.marchers) return true;
     return this.drill.marchers.every(m => this.scriptInterpreter.isEndOfScript(m.script));
   }
 }

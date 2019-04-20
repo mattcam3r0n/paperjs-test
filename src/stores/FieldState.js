@@ -1,7 +1,8 @@
 import paper from 'paper';
-import FieldDimensions from '../lib/field/FieldDimensions';
 import { observable, action } from 'mobx';
 import { merge } from 'lodash';
+import FieldDimensions from '../lib/field/FieldDimensions';
+import FieldPainter from '../lib/field/FieldPainter';
 
 export default class FieldState {
   @observable zoomFactor;
@@ -31,8 +32,44 @@ export default class FieldState {
       yardlineColor: '#FFFFFE',
       yardlineOpacity: 0.75,
       yardlineNumberColor: '#FFFFFE',
-      yardlineNumberOpacity: 0.75,          
+      yardlineNumberOpacity: 0.75,
     };
+  }
+
+  get drillState() {
+    return this.rootState.drillState;
+  }
+
+  @action.bound
+  initializeField(canvas) {
+    // init paperjs
+    this.fieldPaperScope = new paper.PaperScope();
+    this.fieldPaperScope.setup(canvas);
+    // draw field and initial marchers
+    this.fieldPainter = new FieldPainter(
+      this.fieldPaperScope,
+      this.fieldSettings
+    );
+    this.fieldPainter.draw();
+    this.syncMarchers(this.drillState.currentDrill);
+  }
+
+  syncMarchers() {
+    this.fieldPainter.syncMarchers(this.drillState.currentDrill);
+  }
+
+  syncMarcherPositions() {
+    this.fieldPainter.syncMarcherPositions(this.drillState.currentDrill)
+  }
+
+  @action.bound
+  resize(width, height) {
+    this.fieldPainter.resize(width, height);
+    this.setFieldContainerSize({
+      width: width,
+      height: height,
+    });
+    this.zoomToFit();
   }
 
   @action
@@ -46,6 +83,7 @@ export default class FieldState {
     this.zoomAndCenter(point, this.center, this.zoomFactor, 0.9);
   }
 
+  @action
   zoomAndCenter(point, currentCenter, currentZoom, zoomFactor) {
     // based on https://matthiasberth.com/tech/stable-zoom-and-pan-in-paperjs
     const c = new paper.Point(currentCenter);
@@ -58,11 +96,12 @@ export default class FieldState {
     this.setCenter(c.add(a));
   }
 
-  @action
+  @action.bound
   zoomToFit() {
     // TODO: need better algorithm that takes height into account
     this.zoomFactor =
       this.fieldContainerSize.width / FieldDimensions.widthInSteps;
+    this.fieldPainter.zoom(this.zoomFactor);
     this.reCenter();
   }
 
@@ -72,6 +111,7 @@ export default class FieldState {
       x: FieldDimensions.widthInSteps / 2,
       y: FieldDimensions.heightInSteps / 2,
     };
+    this.fieldPainter.setCenter(this.center);
   }
 
   setFieldPaperScope(paperScope) {
@@ -81,6 +121,7 @@ export default class FieldState {
   @action.bound
   setFieldSettings(settings) {
     this.fieldSettings = merge({}, this.fieldSettings, settings);
+    this.fieldPainter.setColors(settings);
   }
 
   @action
@@ -108,12 +149,11 @@ export default class FieldState {
 
   // passes thru to design view state.  not sure about this.
   setCursor(cursor) {
-      this.rootState.designViewState.setCursor(cursor);
+    this.rootState.designViewState.setCursor(cursor);
   }
 
   @action
   setCount(newCount) {
     this.count = newCount;
   }
-
 }

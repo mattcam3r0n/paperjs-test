@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import FieldController from '../../lib/field/FieldController';
 
 @inject('designViewState', 'drillState', 'fieldState')
 @observer
@@ -9,37 +8,26 @@ class Field extends Component {
   controller;
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
-  }
-
-  componentDidMount() {
-    const { designViewState, fieldState, drillState } = this.props;
-    const rootState = {
-      designViewState,
-      fieldState,
-      drillState
-    };
-
-    window.addEventListener('resize', this.onResize);
-
-    const canvas = document.getElementById('fieldCanvas');
-    this.controller = new FieldController(canvas, rootState);
-
-    this.onResize();
-    rootState.designViewState.fieldInitialized(); // necessary?
-  }
-
-  componentWillMount() {
     const { fieldState } = this.props;
+    window.removeEventListener('resize', this.onResize);
     // reset zoom to 1 when field is unmounted so that, when it is remounted,
     // it will detect a change and rezoom the field.  need a better way to handle.
     fieldState.setZoom(1);
   }
 
+  componentDidMount() {
+    const { fieldState } = this.props;
+
+    window.addEventListener('resize', this.onResize);
+
+    const canvas = document.getElementById('fieldCanvas');
+    fieldState.initializeField(canvas);
+    this.onResize();
+  }
+
   onResize = () => {
-    if (!this.controller) return;
     const fieldContainer = document.getElementById('fieldContainer');
-    this.controller.resize(fieldContainer.clientWidth, fieldContainer.clientHeight);
+    this.props.fieldState.resize(fieldContainer.clientWidth, fieldContainer.clientHeight);
   };
 
   render() {

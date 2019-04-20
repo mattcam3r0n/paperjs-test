@@ -100,6 +100,7 @@ class FieldPainter {
   }
 
   syncMarcherPositions(drill) {
+    if (!this.marchers) return;
     this.marchers.forEach((m) => {
       // TODO: need a better way to map paper marchers to drill marchers
       m._marcher.position.x = m.options.marcher.script.currentState.position.x;
@@ -115,13 +116,11 @@ class FieldPainter {
     this.paperScope.activate();
     this.paperScope.view.viewSize.width = width;
     this.paperScope.view.viewSize.height = height;
-    //paper.view.update();
   }
 
   zoom(zoomFactor) {
     this.paperScope.activate();
     this.paperScope.view.zoom = zoomFactor;
-    //this.center();
   }
 
   zoomToFit(width, height) {

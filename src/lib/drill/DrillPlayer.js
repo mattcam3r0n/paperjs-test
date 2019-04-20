@@ -13,12 +13,12 @@ import DrillInterpreter from "./DrillInterpreter";
 */
 export default class DrillPlayer {
     constructor(rootState) {
-        const { designViewState } = rootState;
+        const { designViewState, drillState } = rootState;
         this.rootState = rootState;
         //this.
         // this.fieldPaperScope = designViewState.fieldPaperScope;
         this.view = designViewState.fieldPaperScope.view;
-        this.drill = designViewState.drill;
+        this.drill = drillState.currentDrill;
     }
 
     play() {
@@ -53,6 +53,7 @@ export default class DrillPlayer {
             this.lastStepTime = event.time;
             this.drillInterpreter.stepForward();
             this.rootState.fieldState.setCount(this.count); // update count so field can sync
+            this.rootState.fieldState.syncMarcherPositions();
         }
 
 
