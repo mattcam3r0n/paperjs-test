@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import FieldController from '../../lib/field/FieldController';
 
-@inject('designViewState', 'fieldState')
+@inject('designViewState', 'drillState', 'fieldState')
 @observer
 class Field extends Component {
 
@@ -13,15 +13,27 @@ class Field extends Component {
   }
 
   componentDidMount() {
-    const { designViewState, fieldState } = this.props;
+    const { designViewState, fieldState, drillState } = this.props;
+    const rootState = {
+      designViewState,
+      fieldState,
+      drillState
+    };
 
     window.addEventListener('resize', this.onResize);
 
     const canvas = document.getElementById('fieldCanvas');
-    this.controller = new FieldController(canvas, designViewState, fieldState);
+    this.controller = new FieldController(canvas, rootState);
 
     this.onResize();
-    designViewState.fieldInitialized();
+    rootState.designViewState.fieldInitialized(); // necessary?
+  }
+
+  componentWillMount() {
+    const { fieldState } = this.props;
+    // reset zoom to 1 when field is unmounted so that, when it is remounted,
+    // it will detect a change and rezoom the field.  need a better way to handle.
+    fieldState.setZoom(1);
   }
 
   onResize = () => {

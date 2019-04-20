@@ -3,16 +3,29 @@ import paper from 'paper';
 import FieldPainter from './FieldPainter';
 
 export default class FieldController {
-  constructor(canvas, designViewState, fieldState) {
-    this.designViewState = designViewState;
-    this.fieldState = fieldState;
+  constructor(canvas, rootState) {
+    this.rootState = rootState;
     // init paper js
     this.initializePaperScope(canvas);
     // initial draw
     this.fieldPainter = new FieldPainter(this.fieldState.fieldPaperScope, this.fieldState.fieldSettings);
+    // draw field and initial marchers
     this.fieldPainter.draw();
+    this.fieldPainter.syncMarchers(this.drillState.currentDrill);
     // wire up reactions to respond to state changes
     this.configureReactions();
+  }
+
+  get designViewState() {
+    return this.rootState.designViewState;
+  }
+
+  get drillState() {
+    return this.rootState.drillState;
+  }
+
+  get fieldState() {
+    return this.rootState.fieldState;
   }
 
   initializePaperScope(canvas) {
@@ -37,8 +50,9 @@ export default class FieldController {
 
     // drill changed
     reaction(
-      () => this.designViewState.drill,
+      () => this.drillState.currentDrill,
       (drill, reaction) => {
+        console.log('FieldController drill reaction');
         this.fieldPainter.syncMarchers(drill);
       }
     );
@@ -70,7 +84,7 @@ export default class FieldController {
     reaction(
       () => this.fieldState.count,
       (count, reaction) => {
-        this.fieldPainter.syncMarcherPositions(this.designViewState.drill)
+        this.fieldPainter.syncMarcherPositions(this.drillState.currentDrill)
       }
     )
 

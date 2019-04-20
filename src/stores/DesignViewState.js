@@ -2,7 +2,6 @@ import { observable, action, computed } from 'mobx';
 import ToolNames from '../lib/tools/ToolNames';
 import ToolFactory from '../lib/tools/ToolFactory';
 import DrillPlayer from '../lib/drill/DrillPlayer';
-import BlockBuilder from '../lib/drill/BlockBuilder';
 
 export default class DesignViewState {
   @observable activeTool;
@@ -71,7 +70,6 @@ export default class DesignViewState {
   @action
   fieldInitialized() {
     // TODO: open last drill?
-    this.drill = this.createNewDrill();
   }
 
   @action
@@ -91,44 +89,4 @@ export default class DesignViewState {
     return this.drillPlayer && this.drillPlayer.isPlaying;
   }
 
-  @action.bound
-  newDrill() {
-    const x = Math.floor(Math.random() * 100);
-    const y = Math.floor(Math.random() * 100);
-    this.drill = this.createNewDrill({ x: x, y: y});
-  }
-
-  // temporary helper
-  createNewDrill(options = { x: 12, y: 6 }) {
-    const drill = {};
-    const block = new BlockBuilder()
-      .createBlock({
-        files: 10,
-        ranks: 33,
-        initialState: {
-          position: {
-            x: 12,
-            y: 6
-          }
-        }
-      })
-      .build();
-    drill.marchers = block;
-    // for (let i = 0; i < 16; i++) {
-    //   const m = {
-    //     initialState: {
-    //       x: options.x + (i % 4) * 2,
-    //       y: options.y + Math.floor(i / 4) * 2,
-    //       direction: 90,
-    //     },
-    //     currentState: {
-    //       x: options.x + (i % 4) * 2,
-    //       y: options.y + (i % 4) * 2,
-    //       direction: 90,
-    //     },
-    //   };
-    //   drill.marchers.push(m);
-    // }
-    return drill;
-  }
 }

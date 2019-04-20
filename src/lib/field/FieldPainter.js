@@ -81,6 +81,7 @@ class FieldPainter {
   }
 
   createMarchers(drill) {
+    if (!drill.marchers) return;
     this.marchers = drill.marchers.map((m) => {
       const { position } = m.script.currentState;
       return new Marcher(this.paperScope, {

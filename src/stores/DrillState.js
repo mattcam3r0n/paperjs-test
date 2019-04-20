@@ -5,13 +5,14 @@ import shortid from 'shortid';
 import { API, graphqlOperation } from 'aws-amplify';
 import { createDrill } from '../graphql/mutations';
 import { getDrill, listDrills } from '../graphql/queries';
+import BlockBuilder from '../lib/drill/BlockBuilder';
 
 export default class DrillState {
   @observable currentDrill;
 
   constructor(root) {
     this.rootState = root;
-    this.currentDrill = null;
+    this.currentDrill = this.createNewDrill();
   }
 
   startSpinner = () => {
@@ -34,7 +35,6 @@ export default class DrillState {
       })
     );
     this.currentDrill = result.data.getDrill;
-    console.log('currentDrill', this.currentDrill);
   }
 
   @action.bound
@@ -107,5 +107,31 @@ export default class DrillState {
     };
     await API.graphql(graphqlOperation(createDrill, { input: drillRecord }));
     console.log('drill record successfully created');
+  }
+
+  @action.bound
+  newDrill() {
+    const x = Math.floor(Math.random() * 100);
+    const y = Math.floor(Math.random() * 100);
+    this.drill = this.createNewDrill({ x: x, y: y});
+  }
+
+  // temporary helper
+  createNewDrill(options = { x: 12, y: 6 }) {
+    const drill = {};
+    const block = new BlockBuilder()
+      .createBlock({
+        files: 10,
+        ranks: 33,
+        initialState: {
+          position: {
+            x: 12,
+            y: 6
+          }
+        }
+      })
+      .build();
+    drill.marchers = block;
+    return drill;
   }
 }

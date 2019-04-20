@@ -11,18 +11,25 @@ const styles = (theme) => ({
     //overflowY: 'scroll',
     // width: '100%',
     marginTop: 48,
-    padding: 8
+    padding: 8,
   },
 });
 
-@inject('drillState')
+@inject('drillState', 'appState')
 @observer
 class Home extends Component {
   handleDrillSelected = (drill) => {
-    const { drillState, history } = this.props;
-    console.log('drill selected: ' + drill.name);
-    drillState.openDrill(drill.id);
-    history.push('/design');
+    const { appState, drillState, history } = this.props;
+    appState.startSpinner();
+    drillState
+      .openDrill(drill.id)
+      .then(() => {
+        history.push('/design');
+      })
+      .catch((ex) => {})
+      .finally(() => {
+        appState.stopSpinner();
+      });
   };
 
   render() {
