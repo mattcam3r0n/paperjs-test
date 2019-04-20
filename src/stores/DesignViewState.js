@@ -81,4 +81,10 @@ export default class DesignViewState {
     return this.drillPlayer && this.drillPlayer.isPlaying;
   }
 
+  @action.bound
+  newDrill() {
+    const { drillState, fieldState } = this.rootState;
+    drillState.newDrill();
+    fieldState.syncMarchers();
+  }
 }

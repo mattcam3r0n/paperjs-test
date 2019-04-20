@@ -30,19 +30,7 @@ class DrillCardList extends Component {
   }
 
   render() {
-    const { classes, onDrillSelected } = this.props;
-    // TODO: get user drills
-    const drills = [
-      { id: 1, name: 'test1' },
-      { id: 2, name: 'test2' },
-      { id: 'IyDDM_tqd', name: 'test drill'},
-      { id: 'sK0wJyits', name: 'test drill'},
-      {},
-      {},
-      {},
-      {},
-      {},
-    ];
+    const { classes, onDrillSelected, onNewDrillSelected, drills } = this.props;
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
@@ -63,7 +51,7 @@ class DrillCardList extends Component {
         </Grid>
         <Grid container spacing={24} className={classes.scroll}>
           <Grid item xs={3}>
-            <NewDrillCard />
+            <NewDrillCard onNewDrillSelected={onNewDrillSelected} />
           </Grid>
           {drills.map((d, i) => (
             <Grid key={i} item xs={3}>

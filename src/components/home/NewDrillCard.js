@@ -28,10 +28,10 @@ const styles = (theme) => ({
 
 class NewDrillCard extends Component {
   render() {
-    const { classes, drill } = this.props;
+    const { classes, onNewDrillSelected } = this.props;
     return (
       <Card className={classes.card}>
-        <CardActionArea component={Link} to="/design">
+        <CardActionArea onClick={onNewDrillSelected}>
           <CardContent className={classes.media}>
             <Grid container justify="center" alignItems="center">
               <Grid item>

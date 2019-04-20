@@ -18,6 +18,10 @@ const styles = (theme) => ({
 @inject('drillState', 'appState')
 @observer
 class Home extends Component {
+  state = {
+    drills: [],
+  };
+
   handleDrillSelected = (drill) => {
     const { appState, drillState, history } = this.props;
     appState.startSpinner();
@@ -32,11 +36,39 @@ class Home extends Component {
       });
   };
 
+  handleNewDrillSelected = () => {
+    const { appState, drillState, history } = this.props;
+    appState.startSpinner();
+    drillState
+      .newDrill()
+      .then(() => {
+        history.push('/design');
+      })
+      .catch((ex) => {})
+      .finally(() => {
+        appState.stopSpinner();
+      });
+  };
+
+  componentDidMount() {
+    const { drillState } = this.props;
+    drillState.getUserDrills().then((drills) => {
+      this.setState({
+        drills,
+      });
+    });
+  }
+
   render() {
     const { classes } = this.props;
+    const { drills } = this.state;
     return (
       <div className={classes.root}>
-        <DrillPicker onDrillSelected={this.handleDrillSelected} />
+        <DrillPicker
+          drills={drills}
+          onDrillSelected={this.handleDrillSelected}
+          onNewDrillSelected={this.handleNewDrillSelected}
+        />
       </div>
     );
   }

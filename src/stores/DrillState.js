@@ -3,7 +3,7 @@ import { Storage } from 'aws-amplify';
 import shortid from 'shortid';
 
 import { API, graphqlOperation } from 'aws-amplify';
-import { createDrill } from '../graphql/mutations';
+import { createDrill, updateDrill } from '../graphql/mutations';
 import { getDrill, listDrills } from '../graphql/queries';
 import BlockBuilder from '../lib/drill/BlockBuilder';
 
@@ -15,13 +15,17 @@ export default class DrillState {
     this.currentDrill = this.createNewDrill();
   }
 
+  get appState() {
+    return this.rootState.appState;
+  }
+
   startSpinner = () => {
     this.rootState.appState.startSpinner();
-  }
+  };
 
   stopSpinner = () => {
     this.rootState.appState.stopSpinner();
-  }
+  };
 
   @action.bound
   async openDrill(drillId) {
@@ -29,9 +33,25 @@ export default class DrillState {
       throw new Error('DrillState.openDrill: you must supply a drill id.');
     }
 
+    try {
+      const result = await Storage.get('drills/' + drillId, {
+        level: 'protected',
+        download: true,
+      });
+      const drill = JSON.parse(result.Body.toString());
+      this.currentDrill = drill;
+    } catch (error) {
+      console.log('DrillState.openDrill: ', error);
+    }
+  }
+
+  async getDrillRecord(drillId) {
+    if (!drillId) {
+      throw new Error('DrillState.getDrillRecord: you must supply a drill id.');
+    }
     const result = await API.graphql(
       graphqlOperation(getDrill, {
-        id: drillId
+        id: drillId,
       })
     );
     this.currentDrill = result.data.getDrill;
@@ -39,47 +59,62 @@ export default class DrillState {
 
   @action.bound
   async getUserDrills() {
+    const { userId } = this.appState;
     this.startSpinner();
     const result = await API.graphql(
       graphqlOperation(listDrills, {
         filter: {
           userId: {
-            eq: '1',
+            eq: userId,
           },
         },
       })
     );
-    console.log(result.data.listDrills.items);
+    const drills = result.data.listDrills.items;
     this.stopSpinner();
+    return drills;
   }
 
   @action.bound
-  async saveDrill(drill) {
-    const id = shortid.generate();
-    // TEMP
-    drill = {
-      id: id,
-      name: 'test drill',
-      ownerEmail: 'test@test.com',
-      userId: 1,
-      storageKey: 'drills/' + id,
-    };
-    return await this.createDrill(drill);
+  async saveDrill(drill = this.currentDrill) {
+    const isNew = !drill.id;
+    if (isNew) {
+      await this.createDrill(drill);
+    } else {
+      await this.updateDrill(drill);
+    }
   }
 
   async createDrill(drill) {
-    // Merge with saveDrill()?
     // TODO: how to compensate if one operation fails? need to ensure both
     // or none succeed
     try {
-      await this.createDrillFile(drill);
+      drill.id = shortid.generate();
+      drill.ownerEmail = this.appState.email;
+      drill.userId = this.appState.userId;
+      drill.storageKey = 'drills/' + drill.id;
+      drill.createdDate = new Date();
+      drill.updatedDate = new Date();
+      await this.putDrillFile(drill);
       await this.createDrillRecord(drill);
     } catch (err) {
       return console.log(err);
     }
   }
 
-  async createDrillFile(drill) {
+  async updateDrill(drill) {
+    // TODO: how to compensate if one operation fails? need to ensure both
+    // or none succeed
+    try {
+      drill.updatedDate = new Date();
+      await this.putDrillFile(drill);
+      await this.updateDrillRecord(drill);
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+
+  async putDrillFile(drill) {
     const result = await Storage.put(
       'drills/' + drill.id,
       JSON.stringify(drill),
@@ -91,44 +126,65 @@ export default class DrillState {
         },
       }
     );
-    console.log('drill file successfully created');
+    console.log('drill file successfully created', result);
   }
 
   async createDrillRecord(drill) {
+    const drillRecord = {
+      id: drill.id,
+      name: drill.name || 'New Drill',
+      description: drill.description,
+      ownerEmail: drill.ownerEmail,
+      userId: drill.userId,
+      storageKey: drill.storageKey,
+      createdDate: drill.createdDate,
+      updatedDate: drill.updatedDate,
+    };
+    const result = await API.graphql(
+      graphqlOperation(createDrill, { input: drillRecord })
+    );
+    console.log('drill record successfully created', drillRecord, result);
+  }
+
+  async updateDrillRecord(drill) {
     const drillRecord = {
       id: drill.id,
       name: drill.name,
       description: drill.description,
       ownerEmail: drill.ownerEmail,
       userId: drill.userId,
-      storageKey: 'drills/' + drill.id,
-      createdDate: new Date(),
-      updatedDate: new Date(),
+      storageKey: drill.storageKey,
+      createdDate: drill.createdDate,
+      updatedDate: drill.updatedDate,
     };
-    await API.graphql(graphqlOperation(createDrill, { input: drillRecord }));
-    console.log('drill record successfully created');
+    const result = await API.graphql(
+      graphqlOperation(updateDrill, { input: drillRecord })
+    );
+    console.log('drill record successfully updated', result);
   }
 
   @action.bound
   newDrill() {
     const x = Math.floor(Math.random() * 100);
-    const y = Math.floor(Math.random() * 100);
-    this.drill = this.createNewDrill({ x: x, y: y});
+    const y = 6; //Math.floor(Math.random() * 100);
+    const newDrill = this.createNewDrill({ x: x, y: y });
+    this.currentDrill = newDrill;
+    return Promise.resolve(newDrill);
   }
 
   // temporary helper
-  createNewDrill(options = { x: 12, y: 6 }) {
+  createNewDrill(options = { x: 6, y: 6 }) {
     const drill = {};
     const block = new BlockBuilder()
       .createBlock({
-        files: 10,
+        files: 7,
         ranks: 33,
         initialState: {
           position: {
-            x: 12,
-            y: 6
-          }
-        }
+            x: options.x,
+            y: options.y,
+          },
+        },
       })
       .build();
     drill.marchers = block;

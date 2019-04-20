@@ -19,6 +19,16 @@ export default class AppState {
     this.getCurrentUser();
   }
 
+  get userId() {
+    if (!this.currentUser) return null;
+    return this.currentUser.username; // cognito username
+  }
+
+  get email() {
+    if (!this.currentUser || !this.currentUser.attributes) return null;
+    return this.currentUser.attributes.email;
+  }
+
   @action
   startSpinner() {
     this.isSpinning = true;
