@@ -57,7 +57,7 @@ export default class AppState {
 
   @action
   getCurrentUser() {
-    Auth.currentAuthenticatedUser()
+    return Auth.currentAuthenticatedUser()
       .then((user) => {
         this.currentUser = user;
         this.authenticated = true;
@@ -65,6 +65,9 @@ export default class AppState {
       .catch(() => {
         this.currentUser = null;
         this.authenticated = false;
+      })
+      .finally(() => {
+        return this.currentUser;
       });
   }
 
