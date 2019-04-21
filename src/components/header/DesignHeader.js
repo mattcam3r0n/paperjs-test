@@ -10,9 +10,9 @@ const styles = (theme) => ({});
 // the first menu item to always be (and stay) highlighted. adding
 // a hidden, dummy item seems to work around it.
 const HiddenMenuItem = () => (
-    <DropDownMenuItem style={{ display: 'none' }}>Dummy</DropDownMenuItem>
-  );
-  
+  <DropDownMenuItem style={{ display: 'none' }}>Dummy</DropDownMenuItem>
+);
+
 @inject('designViewState', 'drillState', 'appState')
 @observer
 class DesignHeader extends React.Component {
@@ -21,6 +21,18 @@ class DesignHeader extends React.Component {
   handleNewDrill = () => {
     const { appState } = this.props;
     appState.openNewDrillDialog();
+  };
+
+  handleSaveDrill = () => {
+    const { appState, drillState } = this.props;
+    appState.startSpinner();
+    drillState
+      .saveDrill()
+      .then(() => {})
+      .catch(() => {})
+      .finally(() => {
+        appState.stopSpinner();
+      });
   };
 
   render() {
@@ -35,7 +47,7 @@ class DesignHeader extends React.Component {
           <DropDownMenuItem onClick={drillState.getUserDrills}>
             Open...
           </DropDownMenuItem>
-          <DropDownMenuItem onClick={drillState.saveDrill}>
+          <DropDownMenuItem onClick={this.handleSaveDrill}>
             Save
           </DropDownMenuItem>
         </DropDownMenu>
