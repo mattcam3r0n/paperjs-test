@@ -17,7 +17,7 @@ const styles = (theme) => ({
     height: 300
   },
   media: {
-    height: 140,
+    height: 130,
   },
   icon: {
     fontSize: 120,

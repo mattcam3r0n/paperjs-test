@@ -12,14 +12,21 @@ import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons';
 import ClampLines from 'react-clamp-lines';
 
 const styles = (theme) => ({
-  root: {},
+  root: {
+  },
   card: {
     maxWidth: 345,
     height: 300,
   },
   media: {
-    height: 140,
+    height: 130,
   },
+  description: {
+    height: 50,
+  },
+  buttons: {
+    float: 'right'
+  }
 });
 
 class DrillCard extends Component {
@@ -37,7 +44,7 @@ class DrillCard extends Component {
             <Typography gutterBottom variant="h5" component="h2">
               {drill.name || 'Drill'}
             </Typography>
-            <Typography component="div">
+            <Typography component="div" className={classes.description}>
               <ClampLines
                 text={drill.description || ''}
                 lines={3}
@@ -46,14 +53,13 @@ class DrillCard extends Component {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
+        <CardActions className={classes.buttons}>
+          {/* <Button size="small" color="primary">
             <EditIcon />
             Edit
-          </Button>
-          <Button size="small" color="secondary">
+          </Button> */}
+          <Button size="small" color="secondary" >
             <DeleteIcon />
-            Delete
           </Button>
         </CardActions>
       </Card>
