@@ -28,7 +28,6 @@ class NewDrillDialog extends Component {
       name: '',
       description: ''
     });
-    console.log('entered');
   }
 
   handleNameChange = (e) => {

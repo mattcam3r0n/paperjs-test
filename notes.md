@@ -1,6 +1,5 @@
 Next Steps
 * logging
-* clear new drill dialog fields on open
 * general confirmation dialog component
 * save drill spinner
 * make drillcards more uniform
