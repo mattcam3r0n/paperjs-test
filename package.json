@@ -13,6 +13,7 @@
     "mobx-react": "^5.4.3",
     "paper": "^0.12.0",
     "react": "^16.8.6",
+    "react-clamp-lines": "^2.4.0",
     "react-color": "^2.17.0",
     "react-dom": "^16.8.6",
     "react-draggable": "^3.2.1",

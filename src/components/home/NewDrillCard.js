@@ -48,12 +48,6 @@ class NewDrillCard extends Component {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
-            Edit
-          </Button>
-          <Button size="small" color="secondary">
-            Delete
-          </Button>
         </CardActions>
       </Card>
     );

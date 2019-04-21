@@ -9,12 +9,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons';
+import ClampLines from 'react-clamp-lines';
 
 const styles = (theme) => ({
   root: {},
   card: {
     maxWidth: 345,
-    height: 300
+    height: 300,
   },
   media: {
     height: 140,
@@ -26,7 +27,7 @@ class DrillCard extends Component {
     const { classes, drill, onDrillSelected } = this.props;
     return (
       <Card className={classes.card}>
-        <CardActionArea onClick={() => onDrillSelected(drill)} >
+        <CardActionArea onClick={() => onDrillSelected(drill)}>
           <CardMedia
             className={classes.media}
             image="/static/images/cards/contemplative-reptile.jpg"
@@ -36,8 +37,12 @@ class DrillCard extends Component {
             <Typography gutterBottom variant="h5" component="h2">
               {drill.name || 'Drill'}
             </Typography>
-            <Typography component="p">
-              {drill.description || ''}
+            <Typography component="div">
+              <ClampLines
+                text={drill.description || ''}
+                lines={3}
+                buttons={false}
+              />
             </Typography>
           </CardContent>
         </CardActionArea>
