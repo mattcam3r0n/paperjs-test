@@ -23,6 +23,14 @@ class NewDrillDialog extends Component {
       description: ''
   };
 
+  handleOnEnter = (e) => {
+    this.setState({
+      name: '',
+      description: ''
+    });
+    console.log('entered');
+  }
+
   handleNameChange = (e) => {
     this.setState({
         name: e.target.value
@@ -68,6 +76,7 @@ class NewDrillDialog extends Component {
         open={appState.isNewDrillDialogOpen}
         disableBackdropClick={true}
         aria-labelledby="form-dialog-title"
+        onEnter={this.handleOnEnter}
       >
         <DialogTitle id="form-dialog-title">New Drill</DialogTitle>
         <DialogContent>
