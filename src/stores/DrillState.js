@@ -164,17 +164,25 @@ export default class DrillState {
   }
 
   @action.bound
-  newDrill() {
+  newDrill(options = { name: 'New Drill', description: '' }) {
     const x = Math.floor(Math.random() * 100);
     const y = 6; //Math.floor(Math.random() * 100);
-    const newDrill = this.createNewDrill({ x: x, y: y });
+    const newDrill = this.createNewDrill({
+      x: x,
+      y: y,
+      name: options.name,
+      description: options.description,
+    });
     this.currentDrill = newDrill;
     return Promise.resolve(newDrill);
   }
 
   // temporary helper
-  createNewDrill(options = { x: 6, y: 6 }) {
-    const drill = {};
+  createNewDrill(options = { x: 6, y: 6, name: 'New Drill', decription: '' }) {
+    const drill = {
+      name: options.name,
+      description: options.description
+    };
     const block = new BlockBuilder()
       .createBlock({
         files: 7,

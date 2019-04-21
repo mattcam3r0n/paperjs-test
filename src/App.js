@@ -14,6 +14,7 @@ import Home from './components/home/Home';
 import Login from './components/home/Login';
 import Header from './components/header/Header';
 import DesignView from './components/design/DesignView';
+import NewDrillDialog from './components/design/NewDrillDialog';
 
 //import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';
 
@@ -37,13 +38,14 @@ class App extends React.Component {
         <CssBaseline />
         <Router>
           <div className={classes.root}>
-            <Spinner />
             <Header />
             <Route exact path="/" component={Home} />
             <Route path="/home" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/design" component={DesignView} />
             <PrivateRoute path="/about" user={currentUser} component={About} />
+            <Spinner />
+            <NewDrillDialog />
           </div>
         </Router>
       </MuiThemeProvider>

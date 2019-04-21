@@ -8,14 +8,12 @@ import DrillPicker from './DrillPicker';
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
-    //overflowY: 'scroll',
-    // width: '100%',
     marginTop: 48,
     padding: 8,
   },
 });
 
-@inject('drillState', 'appState')
+@inject('drillState', 'appState', 'designViewState')
 @observer
 class Home extends Component {
   state = {
@@ -37,17 +35,8 @@ class Home extends Component {
   };
 
   handleNewDrillSelected = () => {
-    const { appState, drillState, history } = this.props;
-    appState.startSpinner();
-    drillState
-      .newDrill()
-      .then(() => {
-        history.push('/design');
-      })
-      .catch((ex) => {})
-      .finally(() => {
-        appState.stopSpinner();
-      });
+    const { appState } = this.props;
+    appState.openNewDrillDialog();
   };
 
   componentDidMount() {

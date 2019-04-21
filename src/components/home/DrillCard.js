@@ -14,6 +14,7 @@ const styles = (theme) => ({
   root: {},
   card: {
     maxWidth: 345,
+    height: 300
   },
   media: {
     height: 140,
@@ -36,8 +37,7 @@ class DrillCard extends Component {
               {drill.name || 'Drill'}
             </Typography>
             <Typography component="p">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
+              {drill.description || ''}
             </Typography>
           </CardContent>
         </CardActionArea>

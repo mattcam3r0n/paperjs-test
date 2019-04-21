@@ -1,8 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import DropDownMenu from './DropDownMenu';
 import DropDownMenuItem from './DropDownMenuItem';
 
@@ -15,18 +13,23 @@ const HiddenMenuItem = () => (
     <DropDownMenuItem style={{ display: 'none' }}>Dummy</DropDownMenuItem>
   );
   
-@inject('designViewState', 'drillState')
+@inject('designViewState', 'drillState', 'appState')
 @observer
 class DesignHeader extends React.Component {
   state = {};
 
+  handleNewDrill = () => {
+    const { appState } = this.props;
+    appState.openNewDrillDialog();
+  };
+
   render() {
-    const { designViewState, drillState } = this.props;
+    const { drillState } = this.props;
     return (
       <React.Fragment>
         <DropDownMenu menuText="File">
           <HiddenMenuItem />
-          <DropDownMenuItem onClick={designViewState.newDrill}>
+          <DropDownMenuItem onClick={this.handleNewDrill}>
             New Drill
           </DropDownMenuItem>
           <DropDownMenuItem onClick={drillState.getUserDrills}>

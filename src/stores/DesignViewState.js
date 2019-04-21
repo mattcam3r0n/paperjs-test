@@ -82,9 +82,10 @@ export default class DesignViewState {
   }
 
   @action.bound
-  newDrill() {
+  async newDrill(options = { name: 'New Drill', description: ''}) {
     const { drillState, fieldState } = this.rootState;
-    drillState.newDrill();
+    const newDrill = await drillState.newDrill(options);
     fieldState.syncMarchers();
+    return newDrill;
   }
 }

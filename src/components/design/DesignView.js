@@ -24,9 +24,6 @@ const styles = (theme) => {
 };
 
 class DesignView extends Component {
-  constructor(props) {
-    super(props);
-  }
   //function DesignView(props) {
   render() {
     const { classes } = this.props;

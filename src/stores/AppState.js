@@ -6,6 +6,7 @@ export default class AppState {
   @observable authenticating;
   @observable currentUser;
   @observable isSpinning;
+  @observable isNewDrillDialogOpen;
 
   constructor(root) {
     this.rootState = root;
@@ -13,6 +14,7 @@ export default class AppState {
     this.authenticating = false;
     this.currentUser = null;
     this.isSpinning = false;
+    this.isNewDrillDialogOpen = false;
     Hub.listen('auth', (data) => {
       this.onAuthEvent(data.payload);
     });
@@ -37,6 +39,16 @@ export default class AppState {
   @action
   stopSpinner() {
     this.isSpinning = false;
+  }
+
+  @action
+  openNewDrillDialog() {
+    this.isNewDrillDialogOpen = true;
+  }
+
+  @action
+  closeNewDrillDialog() {
+    this.isNewDrillDialogOpen = false;
   }
 
   onAuthEvent(payload) {
