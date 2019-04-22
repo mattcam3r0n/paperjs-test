@@ -30,7 +30,7 @@ class DrillCardList extends Component {
   }
 
   render() {
-    const { classes, onDrillSelected, onNewDrillSelected, drills } = this.props;
+    const { classes, onDrillSelected, onNewDrillSelected, onDeleteDrill, drills } = this.props;
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
@@ -55,7 +55,7 @@ class DrillCardList extends Component {
           </Grid>
           {drills.map((d, i) => (
             <Grid key={i} item xs={3}>
-              <DrillCard drill={d} onDrillSelected={onDrillSelected} />
+              <DrillCard drill={d} onDrillSelected={onDrillSelected} onDeleteDrill={onDeleteDrill} />
             </Grid>
           ))}
         </Grid>

@@ -29,23 +29,12 @@ const styles = (theme) => ({
   },
 });
 
-@inject('appState', 'designViewState')
+@inject('appState', 'designViewState', 'drillState')
 @observer
 class DrillCard extends Component {
-  handleClick = () => {
-    const { appState } = this.props;
-    appState.openDialog(appState.DialogNames.CONFIRM, {
-      title: 'Delete Drill',
-      message: 'Are you sure you want to delete this drill?',
-      confirmButtonText: 'Delete'
-    }).then((status) => {
-      console.log('status', status);
-    });
-    console.log('delete click', appState.activeDialogName);
-  };
 
   render() {
-    const { classes, drill, onDrillSelected } = this.props;
+    const { classes, drill, onDrillSelected, onDeleteDrill } = this.props;
     return (
       <Card className={classes.card}>
         <CardActionArea onClick={() => onDrillSelected(drill)}>
@@ -73,7 +62,7 @@ class DrillCard extends Component {
             Edit
           </Button> */}
           <Button size="small" color="secondary">
-            <DeleteIcon onClick={this.handleClick} />
+            <DeleteIcon onClick={() => onDeleteDrill(drill)} />
           </Button>
         </CardActions>
       </Card>

@@ -50,17 +50,17 @@ class NewDrillDialog extends Component {
   handleContinue = () => {
     const { appState, designViewState, history } = this.props;
     const { name, description } = this.state;
+    appState.closeDialog(appState.DialogNames.NEW_DRILL);
     appState.startSpinner();
+    history.push('/design');
     designViewState
       .newDrill({
           name,
           description
       })
-      .then((drill) => {
-        appState.closeDialog(appState.DialogNames.NEW_DRILL);
-        history.push('/design');
+      .catch((ex) => {
+        console.log(ex);
       })
-      .catch((ex) => {})
       .finally(() => {
         appState.stopSpinner();
       });

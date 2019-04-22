@@ -3,7 +3,7 @@ import { Storage } from 'aws-amplify';
 import shortid from 'shortid';
 
 import { API, graphqlOperation } from 'aws-amplify';
-import { createDrill, updateDrill } from '../graphql/mutations';
+import { createDrill, updateDrill, deleteDrill } from '../graphql/mutations';
 import { getDrill, listDrills } from '../graphql/queries';
 import BlockBuilder from '../lib/drill/BlockBuilder';
 
@@ -85,6 +85,12 @@ export default class DrillState {
     }
   }
 
+  @action.bound
+  async deleteDrill(drill) {
+    await this.deleteDrillRecord(drill);
+    await this.deleteDrillFile(drill);
+  }
+
   async createDrill(drill) {
     // TODO: how to compensate if one operation fails? need to ensure both
     // or none succeed
@@ -114,6 +120,26 @@ export default class DrillState {
     }
   }
 
+  async deleteDrillFile(drill) {
+    const result = await Storage.remove(drill.storageKey, {
+      level: 'protected',
+    });
+    console.log('deleteDrillFile: ', result);
+    return result;
+  }
+
+  async deleteDrillRecord(drill) {
+    const result = await API.graphql(
+      graphqlOperation(deleteDrill, {
+        input: {
+          id: drill.id,
+        },
+      })
+    );
+    console.log('deleteDrillRecord: ', result);
+    return result;
+  }
+
   async putDrillFile(drill) {
     const result = await Storage.put(
       'drills/' + drill.id,
@@ -133,7 +159,7 @@ export default class DrillState {
     const drillRecord = {
       id: drill.id,
       name: drill.name || 'New Drill',
-      description: drill.description,
+      description: drill.description ? drill.description : null, // dynamodb doesn't like empty strings
       ownerEmail: drill.ownerEmail,
       userId: drill.userId,
       storageKey: drill.storageKey,
@@ -181,7 +207,7 @@ export default class DrillState {
   createNewDrill(options = { x: 6, y: 6, name: 'New Drill', decription: '' }) {
     const drill = {
       name: options.name,
-      description: options.description
+      description: options.description,
     };
     const block = new BlockBuilder()
       .createBlock({

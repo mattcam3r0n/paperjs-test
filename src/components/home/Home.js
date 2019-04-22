@@ -34,6 +34,23 @@ class Home extends Component {
       });
   };
 
+  handleDeleteDrill = (drill) => {
+    const { appState, drillState } = this.props;
+    appState.openDialog(appState.DialogNames.CONFIRM, {
+      title: 'Delete Drill',
+      message: 'Are you sure you want to delete this drill?',
+      confirmButtonText: 'Delete'
+    }).then((status) => {
+      if (status === 'CONFIRM') {
+        drillState.deleteDrill(drill);
+        this.setState({
+          drills: this.state.drills.filter(d => d.id !== drill.id)
+        });
+      }
+    });
+  };
+
+
   handleNewDrillSelected = () => {
     const { appState } = this.props;
     appState.openDialog(appState.DialogNames.NEW_DRILL);
@@ -57,6 +74,7 @@ class Home extends Component {
           drills={drills}
           onDrillSelected={this.handleDrillSelected}
           onNewDrillSelected={this.handleNewDrillSelected}
+          onDeleteDrill={this.handleDeleteDrill}
         />
       </div>
     );
