@@ -1,12 +1,18 @@
 import { observable, action } from 'mobx';
 import { Auth, Hub } from 'aws-amplify';
 
+const dialogNames = {
+  NEW_DRILL: 'newDrillDialog',
+  CONFIRM: 'confirmDialog'
+};
+
 export default class AppState {
   @observable authenticated;
   @observable authenticating;
   @observable currentUser;
   @observable isSpinning;
-  @observable isNewDrillDialogOpen;
+  @observable activeDialogName;
+  @observable dialogOptions;
 
   constructor(root) {
     this.rootState = root;
@@ -15,12 +21,18 @@ export default class AppState {
     this.currentUser = null;
     this.isSpinning = false;
     this.isNewDrillDialogOpen = false;
+    this.activeDialogName = null;
+    this.dialogOptions = {};
     Hub.listen('auth', (data) => {
       this.onAuthEvent(data.payload);
     });
     this.getCurrentUser();
   }
 
+  get DialogNames() {
+    return dialogNames;
+  }
+  
   get userId() {
     if (!this.currentUser) return null;
     return this.currentUser.username; // cognito username
@@ -42,13 +54,26 @@ export default class AppState {
   }
 
   @action
-  openNewDrillDialog() {
-    this.isNewDrillDialogOpen = true;
+  openDialog(name, options = {}) {
+    this.activeDialogName = name;
+    this.dialogOptions = {
+      ...options,
+    };
+    return new Promise((resolve, reject) => {
+      this.dialogOptions.resolve = resolve;
+      this.dialogOptions.reject = reject;
+    })
   }
 
   @action
-  closeNewDrillDialog() {
-    this.isNewDrillDialogOpen = false;
+  closeDialog(name, result) {
+    this.activeDialogName = null;
+    this.dialogOptions.resolve(result);
+    this.dialogOptions = {};
+  }
+
+  isDialogOpen(name) {
+    return this.activeDialogName === name;
   }
 
   onAuthEvent(payload) {

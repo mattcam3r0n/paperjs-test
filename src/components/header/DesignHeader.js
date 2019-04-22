@@ -20,7 +20,7 @@ class DesignHeader extends React.Component {
 
   handleNewDrill = () => {
     const { appState } = this.props;
-    appState.openNewDrillDialog();
+    appState.openDialog(appState.DialogNames.NEW_DRILL);
   };
 
   handleSaveDrill = () => {

@@ -36,7 +36,7 @@ class Home extends Component {
 
   handleNewDrillSelected = () => {
     const { appState } = this.props;
-    appState.openNewDrillDialog();
+    appState.openDialog(appState.DialogNames.NEW_DRILL);
   };
 
   componentDidMount() {

@@ -15,6 +15,7 @@ import Login from './components/home/Login';
 import Header from './components/header/Header';
 import DesignView from './components/design/DesignView';
 import NewDrillDialog from './components/design/NewDrillDialog';
+import ConfirmDialog from './components/ConfirmDialog';
 
 //import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';
 
@@ -46,6 +47,7 @@ class App extends React.Component {
             <PrivateRoute path="/about" user={currentUser} component={About} />
             <Spinner />
             <NewDrillDialog />
+            <ConfirmDialog />
           </div>
         </Router>
       </MuiThemeProvider>

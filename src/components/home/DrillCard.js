@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { observer, inject } from 'mobx-react';
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -8,12 +9,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons';
+import { Delete as DeleteIcon } from '@material-ui/icons';
 import ClampLines from 'react-clamp-lines';
 
 const styles = (theme) => ({
-  root: {
-  },
+  root: {},
   card: {
     maxWidth: 345,
     height: 300,
@@ -25,11 +25,25 @@ const styles = (theme) => ({
     height: 50,
   },
   buttons: {
-    float: 'right'
-  }
+    float: 'right',
+  },
 });
 
+@inject('appState', 'designViewState')
+@observer
 class DrillCard extends Component {
+  handleClick = () => {
+    const { appState } = this.props;
+    appState.openDialog(appState.DialogNames.CONFIRM, {
+      title: 'Delete Drill',
+      message: 'Are you sure you want to delete this drill?',
+      confirmButtonText: 'Delete'
+    }).then((status) => {
+      console.log('status', status);
+    });
+    console.log('delete click', appState.activeDialogName);
+  };
+
   render() {
     const { classes, drill, onDrillSelected } = this.props;
     return (
@@ -58,8 +72,8 @@ class DrillCard extends Component {
             <EditIcon />
             Edit
           </Button> */}
-          <Button size="small" color="secondary" >
-            <DeleteIcon />
+          <Button size="small" color="secondary">
+            <DeleteIcon onClick={this.handleClick} />
           </Button>
         </CardActions>
       </Card>

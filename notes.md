@@ -1,7 +1,6 @@
 Next Steps
 * logging
 * general confirmation dialog component
-* save drill spinner
 * make drillcards more uniform
 * delete drill
 * rough out views and header transitions

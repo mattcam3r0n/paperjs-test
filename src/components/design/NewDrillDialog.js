@@ -43,7 +43,8 @@ class NewDrillDialog extends Component {
   };
 
   handleCancel = () => {
-    this.props.appState.closeNewDrillDialog();
+    const {appState } = this.props;
+    appState.closeDialog(appState.DialogNames.NEW_DRILL);
   };
 
   handleContinue = () => {
@@ -56,8 +57,7 @@ class NewDrillDialog extends Component {
           description
       })
       .then((drill) => {
-        console.log('new drill', drill);
-        this.props.appState.closeNewDrillDialog();
+        appState.closeDialog(appState.DialogNames.NEW_DRILL);
         history.push('/design');
       })
       .catch((ex) => {})
@@ -72,7 +72,7 @@ class NewDrillDialog extends Component {
     const { appState } = this.props;
     return (
       <Dialog
-        open={appState.isNewDrillDialogOpen}
+        open={appState.isDialogOpen(appState.DialogNames.NEW_DRILL)}
         disableBackdropClick={true}
         aria-labelledby="form-dialog-title"
         onEnter={this.handleOnEnter}
