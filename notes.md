@@ -1,8 +1,7 @@
 Next Steps
 * logging
-* general confirmation dialog component
+* notification system for feedback
 * make drillcards more uniform
-* delete drill
 * rough out views and header transitions
   * Home 
     * prompts for login if not authenticated
@@ -17,7 +16,6 @@ Next Steps
 * where should playback controls go?  eg, step forward, back, beginning etc.
   * flyout?  seems awkward
   * button bar below or above field?
-* notification system for feedback
 * add storage
     * what buckets are needed?
         * drills (protected)
