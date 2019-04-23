@@ -1,9 +1,9 @@
 import { observable, action } from 'mobx';
-import { Auth, Hub } from 'aws-amplify';
+import { Auth, Hub, API } from 'aws-amplify';
 
 const dialogNames = {
   NEW_DRILL: 'newDrillDialog',
-  CONFIRM: 'confirmDialog'
+  CONFIRM: 'confirmDialog',
 };
 
 export default class AppState {
@@ -32,7 +32,7 @@ export default class AppState {
   get DialogNames() {
     return dialogNames;
   }
-  
+
   get userId() {
     if (!this.currentUser) return null;
     return this.currentUser.username; // cognito username
@@ -62,7 +62,7 @@ export default class AppState {
     return new Promise((resolve, reject) => {
       this.dialogOptions.resolve = resolve;
       this.dialogOptions.reject = reject;
-    })
+    });
   }
 
   @action
@@ -101,6 +101,17 @@ export default class AppState {
     Auth.signOut();
     this.authenticated = false;
     this.currentUser = null;
+  }
+
+  log() {
+    console.log('log');
+    const body = { message: 'test message' };
+    API.post('precisionREST', '/logs', { body })
+      .then((response) => console.log({ response }))
+      .catch((err) => console.log({ err }));
+    // API.get('precisionREST', '/logs')
+    //   .then((response) => console.log({ response }))
+    //   .catch((err) => console.log({ err }));
   }
 
   //   async fetchData(pathname, id) {

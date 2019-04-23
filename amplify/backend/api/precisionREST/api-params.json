@@ -1,0 +1,49 @@
+{
+    "paths": [
+        {
+            "name": "/logs",
+            "lambdaFunction": "logsLambda",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            }
+        }
+    ],
+    "resourceName": "precisionREST",
+    "apiName": "precisionREST",
+    "functionArns": [
+        {
+            "lambdaFunction": "logsLambda"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 1,
+        "authRoleName": "precision-2-20190412123231-authRole",
+        "unAuthRoleName": "precision-2-20190412123231-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "logsLambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "deae7de4"
+}

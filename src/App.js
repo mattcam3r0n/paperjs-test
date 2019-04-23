@@ -28,6 +28,7 @@ class App extends React.Component {
 
   componentDidMount() {
     // Analytics.record('quiz-app mounted.');
+    this.props.appState.log();
   }
 
   render() {
