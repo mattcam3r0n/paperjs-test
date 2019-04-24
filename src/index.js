@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import configureAnalytics from './ConfigureAnalytics';
 import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'mobx-react';
@@ -9,7 +10,11 @@ import RootState from './stores/RootState';
 
 import Amplify from 'aws-amplify';
 import awsmobile from './aws-exports';
-Amplify.configure(awsmobile);
+
+// Configuration
+window.LOG_LEVEL = 'VERBOSE'; // to turn on detailed logging of Amplify ops
+Amplify.configure(awsmobile); // configure Amplify
+configureAnalytics();         // configure Amplify analytics
 
 const rootState = new RootState();
 

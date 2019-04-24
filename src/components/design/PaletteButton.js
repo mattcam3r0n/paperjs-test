@@ -16,7 +16,7 @@ const styles = (theme) => ({
 });
 
 const PaletteButton = (props) => {
-  const { title, onClick, children, classes, color = 'default', selected = false } = props;
+  const { title, onClick, children, classes, color = 'default', selected = false, ...other } = props;
   return (
     <Tooltip title={title}>
       <IconButton
@@ -28,6 +28,7 @@ const PaletteButton = (props) => {
         className={classNames(classes.root, {
           [classes.selected]: selected === true
         })}
+        {...other}
       >
         {children}
       </IconButton>

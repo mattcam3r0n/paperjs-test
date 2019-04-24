@@ -1,40 +1,16 @@
 Next Steps
+* add analytics
+    * track user actions. which maneuvers, etc.
 * logging
   * modify lambda to send to papertrail?
   * batch logging to reduce calls?
 * make drillcards more uniform
-* rough out views and header transitions
-  * Home 
-    * prompts for login if not authenticated
-    * if authenticated, show recent drills, new drill link, help info, etc
-    * Header shows links to Help, Admin (if admin)
   * Admin
     * user list
     * can i query pinpoint analytics? or just use aws dashboard?
 * where should playback controls go?  eg, step forward, back, beginning etc.
   * flyout?  seems awkward
   * button bar below or above field?
-* add storage
-    * what buckets are needed?
-        * drills (protected)
-        * videos (public read-only?)
-        * music (protected)
-        * or can i use one bucket for drills and music, with a path?
-            * /protected/{user}/drills
-            * /protected/{user}/music
-    * where does this logic go? drillState? or designViewState?
-        * designViewState is mainly concerned with managing tools
-        * drillState with managing drills
-        * load/save
-        * current drill
-        * current drill count?
-    * save/load drill in s3
-      * straight json for now
-    * rest api?
-      * store drill record associated with object in s3
-        * for searching, etc
-        * ideally, the s3 storage event would trigger creation/update of this record, but will do manually for now
-      * store user prefs (in dynamo or cognito)?
 * API
     * model
         * Drill
@@ -51,8 +27,6 @@ Next Steps
         
     * music
     * userProfile
-* add analytics
-    * track user actions. which maneuvers, etc.
 * Do I create Drill, Marcher, Script, Step classes?
     * would need to serialize/deserialize drill to pure json on save/load
     * 

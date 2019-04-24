@@ -35,7 +35,12 @@ class SelectionPalette extends Component {
         <PaletteButton
           title="Rectangular Selection"
           onClick={this.handleRectangularSelection}
-          selected={designViewState.isToolActive(ToolNames.RECTANGULAR_SELECTION)}
+          selected={designViewState.isToolActive(
+            ToolNames.RECTANGULAR_SELECTION
+          )}
+          data-amplify-analytics-on="click"
+          data-amplify-analytics-name="click"
+          data-amplify-analytics-attrs="tool:rectangularSelection"
         >
           <Timeline />
         </PaletteButton>
@@ -43,6 +48,9 @@ class SelectionPalette extends Component {
           title="Irregular Selection"
           onClick={this.handleIrregularSelection}
           selected={designViewState.isToolActive(ToolNames.IRREGULAR_SELECTION)}
+          data-amplify-analytics-on="click"
+          data-amplify-analytics-name="click"
+          data-amplify-analytics-attrs="tool:irregularSelection"
         >
           <Timeline />
         </PaletteButton>

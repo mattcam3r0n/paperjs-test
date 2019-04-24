@@ -1,0 +1,20 @@
+{
+    "appName": "precisionAnalytics",
+    "roleName": "pinpointLambdaRole078291a7",
+    "cloudWatchPolicyName": "cloudWatchPolicy078291a7",
+    "pinpointPolicyName": "pinpointPolicy078291a7",
+    "authPolicyName": "pinpoint_amplify_078291a7",
+    "unauthPolicyName": "pinpoint_amplify_078291a7",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

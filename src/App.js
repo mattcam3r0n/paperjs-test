@@ -18,6 +18,8 @@ import NewDrillDialog from './components/design/NewDrillDialog';
 import ConfirmDialog from './components/ConfirmDialog';
 import Alerts from './components/Alerts';
 
+import { Analytics } from 'aws-amplify';
+
 //import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';
 
 // TODO: replace with real components
@@ -30,6 +32,9 @@ class App extends React.Component {
   componentDidMount() {
     // Analytics.record('quiz-app mounted.');
     this.props.appState.log();
+    Analytics.record({ name: 'precision visit', attributes: {
+      test: 'test'
+    } });
   }
 
   render() {

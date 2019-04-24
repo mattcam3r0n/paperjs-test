@@ -1,51 +1,57 @@
 {
-    "hosting": {
-        "S3AndCloudFront": {
-            "service": "S3AndCloudFront",
-            "providerPlugin": "awscloudformation"
-        }
-    },
-    "auth": {
-        "cognito4530c720": {
-            "service": "Cognito",
-            "providerPlugin": "awscloudformation"
-        }
-    },
-    "storage": {
-        "precisionstorage": {
-            "service": "S3",
-            "providerPlugin": "awscloudformation"
-        }
-    },
-    "api": {
-        "precisionAPI": {
-            "service": "AppSync",
-            "providerPlugin": "awscloudformation",
-            "output": {
-                "securityType": "AMAZON_COGNITO_USER_POOLS"
-            }
-        },
-        "precisionREST": {
-            "service": "API Gateway",
-            "providerPlugin": "awscloudformation",
-            "dependsOn": [
-                {
-                    "category": "function",
-                    "resourceName": "logsLambda",
-                    "attributes": [
-                        "Name",
-                        "Arn"
-                    ]
-                }
-            ]
-        }
-    },
-    "function": {
-        "logsLambda": {
-            "service": "Lambda",
-            "providerPlugin": "awscloudformation",
-            "build": true,
-            "dependsOn": []
-        }
-    }
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"auth": {
+		"cognito4530c720": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"storage": {
+		"precisionstorage": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"api": {
+		"precisionAPI": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"securityType": "AMAZON_COGNITO_USER_POOLS"
+			}
+		},
+		"precisionREST": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "logsLambda",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		}
+	},
+	"function": {
+		"logsLambda": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": []
+		}
+	},
+	"analytics": {
+		"precisionAnalytics": {
+			"service": "Pinpoint",
+			"providerPlugin": "awscloudformation"
+		}
+	}
 }
