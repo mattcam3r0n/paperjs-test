@@ -6,6 +6,7 @@ export const theme = createMuiTheme({
   },
   overrides: {
     root: {
+      display: 'flex'
       // MuiListItemIcon: {
       //   marginRight: 8,
       //   color: 'red'

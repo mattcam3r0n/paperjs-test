@@ -46,7 +46,7 @@ class App extends React.Component {
             <Route exact path="/" component={Home} />
             <Route path="/home" component={Home} />
             <Route path="/login" component={Login} />
-            <Route path="/design" component={DesignView} />
+            <PrivateRoute path="/design" user={currentUser} component={DesignView} />
             <PrivateRoute path="/about" user={currentUser} component={About} />
             <Spinner />
             <NewDrillDialog />
