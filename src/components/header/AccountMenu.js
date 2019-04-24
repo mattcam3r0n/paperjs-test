@@ -7,6 +7,13 @@ import DropDownMenuItem from './DropDownMenuItem';
 
 const styles = (theme) => ({});
 
+// this is a hack to work around a bug in material-ui that causes
+// the first menu item to always be (and stay) highlighted. adding
+// a hidden, dummy item seems to work around it.
+const HiddenMenuItem = () => (
+  <DropDownMenuItem style={{ display: 'none' }}>Dummy</DropDownMenuItem>
+);
+
 @inject('appState')
 @observer
 class AccountMenu extends React.Component {
@@ -26,6 +33,7 @@ class AccountMenu extends React.Component {
         dontOpen={!authenticated}
         onClick={this.handleClick}
       >
+        <HiddenMenuItem />
         <DropDownMenuItem onClick={() => {}}>Profile</DropDownMenuItem>
         <DropDownMenuItem onClick={() => { signOut() }}>Sign Out</DropDownMenuItem>
       </DropDownMenu>
