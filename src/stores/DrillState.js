@@ -19,14 +19,6 @@ export default class DrillState {
     return this.rootState.appState;
   }
 
-  startSpinner = () => {
-    this.rootState.appState.startSpinner();
-  };
-
-  stopSpinner = () => {
-    this.rootState.appState.stopSpinner();
-  };
-
   @action.bound
   async openDrill(drillId) {
     if (!drillId) {
@@ -60,7 +52,6 @@ export default class DrillState {
   @action.bound
   async getUserDrills() {
     const { userId } = this.appState;
-    this.startSpinner();
     const result = await API.graphql(
       graphqlOperation(listDrills, {
         filter: {
@@ -71,7 +62,6 @@ export default class DrillState {
       })
     );
     const drills = result.data.listDrills.items;
-    this.stopSpinner();
     return drills;
   }
 

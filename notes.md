@@ -8,9 +8,6 @@ Next Steps
     * prompts for login if not authenticated
     * if authenticated, show recent drills, new drill link, help info, etc
     * Header shows links to Help, Admin (if admin)
-  * Design
-    * only accessible if authenticated
-    * Header shows File/Edit/Help menus (maybe Admin)
   * Admin
     * user list
     * can i query pinpoint analytics? or just use aws dashboard?
