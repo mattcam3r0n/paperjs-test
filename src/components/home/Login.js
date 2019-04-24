@@ -6,7 +6,14 @@ import { withStyles } from '@material-ui/core/styles';
 import { Authenticator, Greetings } from 'aws-amplify-react';
 import { Redirect } from 'react-router-dom';
 
-const styles = (theme) => ({});
+const styles = (theme) => ({
+  root: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});
 
 @inject('appState')
 @observer
@@ -14,6 +21,7 @@ class Login extends React.Component {
   componentDidMount() {}
 
   render() {
+    const { classes } = this.props;
     const { currentUser } = this.props.appState;
     const { from } = this.props.location.state || { from: { pathname: '/' } }
     
@@ -21,7 +29,7 @@ class Login extends React.Component {
       return <Redirect to={from} />;
     }
 
-    return <Authenticator hide={[Greetings]} />;
+    return <div className={classes.root}><Authenticator hide={[Greetings]} /></div>;
   }
 }
 
