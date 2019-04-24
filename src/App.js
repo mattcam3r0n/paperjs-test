@@ -16,6 +16,7 @@ import Header from './components/header/Header';
 import DesignView from './components/design/DesignView';
 import NewDrillDialog from './components/design/NewDrillDialog';
 import ConfirmDialog from './components/ConfirmDialog';
+import Alerts from './components/Alerts';
 
 //import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';
 
@@ -39,6 +40,7 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
+        <Alerts />
           <div className={classes.root}>
             <Header />
             <Route exact path="/" component={Home} />

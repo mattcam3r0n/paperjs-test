@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import { Auth, Hub, API } from 'aws-amplify';
+import { merge } from 'lodash';
 
 const dialogNames = {
   NEW_DRILL: 'newDrillDialog',
@@ -13,6 +14,8 @@ export default class AppState {
   @observable isSpinning;
   @observable activeDialogName;
   @observable dialogOptions;
+  @observable isAlertOpen;
+  @observable alertMessage;
 
   constructor(root) {
     this.rootState = root;
@@ -20,6 +23,7 @@ export default class AppState {
     this.authenticating = false;
     this.currentUser = null;
     this.isSpinning = false;
+    this.isAlertOpen = false;
     this.isNewDrillDialogOpen = false;
     this.activeDialogName = null;
     this.dialogOptions = {};
@@ -74,6 +78,18 @@ export default class AppState {
 
   isDialogOpen(name) {
     return this.activeDialogName === name;
+  }
+
+  @action
+  showAlert(options) {
+    this.isAlertOpen = true;
+    this.alertOptions = merge({}, { variant: 'info', message: '' }, options);
+  }
+
+  @action
+  closeAlert() {
+    this.isAlertOpen = false;
+    this.alertOptions = null;
   }
 
   onAuthEvent(payload) {

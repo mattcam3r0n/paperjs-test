@@ -1,5 +1,7 @@
 Next Steps
 * logging
+  * modify lambda to send to papertrail?
+  * batch logging to reduce calls?
 * notification system for feedback
 * make drillcards more uniform
 * rough out views and header transitions

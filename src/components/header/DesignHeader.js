@@ -35,6 +35,12 @@ class DesignHeader extends React.Component {
       });
   };
 
+  handleOpen = () => {
+    const { appState, drillState } = this.props;
+    drillState.getUserDrills();
+    appState.showAlert({ variant: 'error', message: 'this is a really long test message to see how it looks in the snack bar.'});
+  };
+
   render() {
     const { drillState } = this.props;
     return (
@@ -44,7 +50,7 @@ class DesignHeader extends React.Component {
           <DropDownMenuItem onClick={this.handleNewDrill}>
             New Drill
           </DropDownMenuItem>
-          <DropDownMenuItem onClick={drillState.getUserDrills}>
+          <DropDownMenuItem onClick={this.handleOpen}>
             Open...
           </DropDownMenuItem>
           <DropDownMenuItem onClick={this.handleSaveDrill}>
