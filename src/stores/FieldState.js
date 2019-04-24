@@ -120,8 +120,9 @@ export default class FieldState {
 
   @action.bound
   setFieldSettings(settings) {
-    this.fieldSettings = merge({}, this.fieldSettings, settings);
-    this.fieldPainter.setColors(settings);
+    const merged = merge({}, this.fieldSettings, settings);
+    this.fieldSettings = merged;
+    this.fieldPainter.setColors(merged);
   }
 
   @action

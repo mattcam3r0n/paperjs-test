@@ -12,7 +12,7 @@ import Amplify from 'aws-amplify';
 import awsmobile from './aws-exports';
 
 // Configuration
-window.LOG_LEVEL = 'VERBOSE'; // to turn on detailed logging of Amplify ops
+//window.LOG_LEVEL = 'VERBOSE'; // to turn on detailed logging of Amplify ops
 Amplify.configure(awsmobile); // configure Amplify
 configureAnalytics();         // configure Amplify analytics
 
