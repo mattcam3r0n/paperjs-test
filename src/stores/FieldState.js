@@ -142,6 +142,7 @@ export default class FieldState {
       x: this.center.x - delta.x,
       y: this.center.y - delta.y,
     };
+    this.fieldPainter.setCenter(this.center);
   }
 
   @action
