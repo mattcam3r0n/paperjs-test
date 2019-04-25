@@ -120,7 +120,6 @@ export default class AppState {
   }
 
   log() {
-    console.log('log');
     const body = { message: 'test message' };
     API.post('precisionREST', '/logs', { body })
       .then((response) => console.log({ response }))

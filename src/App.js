@@ -29,8 +29,7 @@ const About = () => <h1>About</h1>;
 @observer
 class App extends React.Component {
   componentDidMount() {
-    // Analytics.record('quiz-app mounted.');
-    this.props.appState.log();
+    //this.props.appState.log();
     Analytics.record({
       name: 'precisionOpened',
       attributes: {
