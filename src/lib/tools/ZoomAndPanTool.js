@@ -52,8 +52,6 @@ export default class ZoomAndPanTool extends FieldTool {
   };
 
   onMouseDown = (event) => {
-    // event.preventDefault();
-    // event.stopPropagation();
     if (this.mode === 'zoomIn') return this.viewState.zoomIn(event.downPoint);
 
     if (this.mode === 'zoomOut') return this.viewState.zoomOut(event.downPoint);

@@ -79,7 +79,6 @@ export default class FieldState {
 
   @action
   zoomOut(point) {
-    //this.zoomFactor *= 0.9;
     this.zoomAndCenter(point, this.center, this.zoomFactor, 0.9);
   }
 
@@ -128,11 +127,13 @@ export default class FieldState {
   @action
   setZoom(newFactor) {
     this.zoomFactor = newFactor;
+    this.fieldPainter.zoom(newFactor);
   }
 
   @action
   setCenter(newCenter) {
     this.center = newCenter;
+    this.fieldPainter.setCenter(newCenter);
   }
 
   @action

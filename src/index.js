@@ -5,16 +5,34 @@ import App from './App';
 import configureAnalytics from './ConfigureAnalytics';
 import * as serviceWorker from './serviceWorker';
 
-import { Provider } from 'mobx-react';
+import { Provider, onError } from 'mobx-react';
 import RootState from './stores/RootState';
 
-import Amplify from 'aws-amplify';
+import Amplify, { Analytics } from 'aws-amplify';
 import awsmobile from './aws-exports';
 
 // Configuration
-//window.LOG_LEVEL = 'VERBOSE'; // to turn on detailed logging of Amplify ops
+window.LOG_LEVEL = 'VERBOSE'; // to turn on detailed logging of Amplify ops
 Amplify.configure(awsmobile); // configure Amplify
-configureAnalytics();         // configure Amplify analytics
+configureAnalytics(); // configure Amplify analytics
+
+// mobx error handler
+onError((error) => {
+  console.log('mobx err', error);
+});
+
+// global error handler
+window.onerror = (message, source, lineno, colno, error) => {
+  console.log('uncaughtException', message, source, error);
+  Analytics.record({
+    name: 'uncaughtException',
+    attributes: {
+      message: message,
+      testAttr: 'testAttr',
+      test: 'test',
+    },
+  });
+};
 
 const rootState = new RootState();
 

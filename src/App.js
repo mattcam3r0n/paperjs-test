@@ -28,13 +28,18 @@ const About = () => <h1>About</h1>;
 @inject('appState')
 @observer
 class App extends React.Component {
-
   componentDidMount() {
     // Analytics.record('quiz-app mounted.');
     this.props.appState.log();
-    Analytics.record({ name: 'precision visit', attributes: {
-      test: 'test'
-    } });
+    Analytics.record({
+      name: 'precisionOpened',
+      attributes: {
+      },
+    });
+  }
+
+  componentDidCatch(error, info) {
+    console.log('catch', error, info);
   }
 
   render() {
@@ -45,13 +50,17 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
-        <Alerts />
+          <Alerts />
           <div className={classes.root}>
             <Header />
             <Route exact path="/" component={Home} />
             <Route path="/home" component={Home} />
             <Route path="/login" component={Login} />
-            <PrivateRoute path="/design" user={currentUser} component={DesignView} />
+            <PrivateRoute
+              path="/design"
+              user={currentUser}
+              component={DesignView}
+            />
             <PrivateRoute path="/about" user={currentUser} component={About} />
             <Spinner />
             <NewDrillDialog />
