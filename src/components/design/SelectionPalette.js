@@ -7,6 +7,9 @@ import { Done, Close, Timeline, Undo, Delete } from '@material-ui/icons';
 
 import Palette from './Palette';
 import ToolNames from '../../lib/tools/ToolNames';
+import DirectionButtons from './DirectionButtons';
+import SelectionIcon from '../icons/SelectionIcon';
+import IrregularSelectionIcon from '../icons/IrregularSelectionIcon';
 
 const styles = (theme) => ({});
 
@@ -32,6 +35,7 @@ class SelectionPalette extends Component {
         left={left}
         top={top}
       >
+        <DirectionButtons />
         <PaletteButton
           title="Rectangular Selection"
           onClick={this.handleRectangularSelection}
@@ -42,7 +46,7 @@ class SelectionPalette extends Component {
           data-amplify-analytics-name="click"
           data-amplify-analytics-attrs="tool:rectangularSelection"
         >
-          <Timeline />
+          <SelectionIcon/>
         </PaletteButton>
         <PaletteButton
           title="Irregular Selection"
@@ -52,7 +56,7 @@ class SelectionPalette extends Component {
           data-amplify-analytics-name="click"
           data-amplify-analytics-attrs="tool:irregularSelection"
         >
-          <Timeline />
+          <IrregularSelectionIcon/>
         </PaletteButton>
         <PaletteButton title="Undo" onClick={this.handleUndo}>
           <Undo />

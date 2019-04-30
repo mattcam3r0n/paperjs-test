@@ -1,4 +1,14 @@
 Next Steps
+* editing
+    * step palette
+    * keyboard handler for adding steps, stepping thru drill
+    * maneuvers palette
+    * delete-to-beginning - makes current count the new starting point
+    * delete-to-end
+* convert zoom flyout to palette
+  * 
+* add marchers
+    * different shapes
 * add analytics
     * track user actions. which maneuvers, etc.
 * logging

@@ -12,6 +12,7 @@ const styles = (theme) => ({
     backgroundColor: 'silver',
     cursor: 'grab',
     // padding: 5,
+    flex: '1 1 auto',
     display: 'flex',
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
@@ -28,8 +29,12 @@ const styles = (theme) => ({
     // left: 200,
     zIndex: 100,
     // border: 'solid 1px black',
-    width: 100,
+    width: 110,
     // height: 100,
+    display: 'flex',
+    flexFlow: 'wrap',
+    justifyContent: 'space-around',
+    alignItems: 'center'
   },
 });
 

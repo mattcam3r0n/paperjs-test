@@ -7,7 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 const styles = (theme) => ({
   root: {
     margin: 2,
-    padding: 10,
+    padding: 0,
+    height: 32,
+    width: 32
   },
   selected: {
     backgroundColor: '#3f51b5',
@@ -16,7 +18,7 @@ const styles = (theme) => ({
 });
 
 const PaletteButton = (props) => {
-  const { title, onClick, children, classes, color = 'default', selected = false, ...other } = props;
+  const { title = '', onClick, children, classes, color = 'default', selected = false, ...other } = props;
   return (
     <Tooltip title={title}>
       <IconButton
