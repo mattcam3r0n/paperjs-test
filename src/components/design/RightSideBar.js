@@ -14,6 +14,8 @@ import ZoomToolsFlyout from './ZoomToolsFlyout';
 import SelectionToolsFlyout from './SelectionToolsFlyout';
 import EditToolsFlyout from './EditToolsFlyout';
 import SettingsButton from './settings/SettingsButton';
+import FlyoutButton from './FlyoutButton';
+import FootprintsIcon from '../icons/FootprintsIcon';
 
 const drawerWidth = 64;
 
@@ -68,6 +70,11 @@ class RightSideBar extends Component {
           <List>
             <ListItem button className={classes.listItem}>
               <SelectionToolsFlyout />
+            </ListItem>
+            <ListItem button className={classes.listItem}>
+              <FlyoutButton title="Steps Tool">
+                <FootprintsIcon/>
+              </FlyoutButton>
             </ListItem>
             <ListItem button className={classes.listItem}>
               <EditToolsFlyout />

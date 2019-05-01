@@ -14,7 +14,7 @@ class FlyoutButton extends Component {
   state = {};
 
   render() {
-    const { classes, children, onClick, title } = this.props;
+    const { classes, children, onClick, title = '' } = this.props;
     return (
       <Tooltip title={title}>
         <Fab
