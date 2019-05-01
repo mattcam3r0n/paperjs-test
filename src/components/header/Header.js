@@ -30,7 +30,7 @@ const Spacer = () => <div style={{ flexGrow: 1 }} />;
 
 const AppName = (props) => (
   <Typography
-    variant="title"
+    variant="h6"
     color="inherit"
     noWrap
     className={props.classes.appName}

@@ -1,12 +1,16 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
+  // to remove variant warnings
+  typography: {
+    useNextVariants: true,
+  },
   palette: {
     type: 'light',
   },
   overrides: {
     root: {
-      display: 'flex'
+      display: 'flex',
       // MuiListItemIcon: {
       //   marginRight: 8,
       //   color: 'red'
