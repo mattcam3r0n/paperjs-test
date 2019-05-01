@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { observer, inject } from 'mobx-react';
 
-import Fab from '@material-ui/core/Fab';
-// import ButtonFlyOut from './ButtonFlyOut';
+import ButtonFlyOut from './ButtonFlyOut';
+import FlyoutButton from './FlyoutButton';
 import ToolNames from '../../lib/tools/ToolNames';
 
 // icons
-import TabUnselected from '@material-ui/icons/TabUnselected';
+import SelectionIcon from '../icons/SelectionIcon';
+import IrregularSelectionIcon from '../icons/IrregularSelectionIcon';
+import SelectAllIcon from '../icons/SelectAllIcon';
+import DeselectAllIcon from '../icons/DeselectAllIcon';
 
 const styles = (theme) => ({
-    fab: {
-        margin: 0,
-      },  
+  fab: {
+    margin: 0,
+  },
 });
 
 @inject('designViewState')
@@ -22,56 +25,42 @@ class SelectionToolsFlyout extends Component {
 
   handlePointerTool = (e) => {
     //e.preventDefault();
-    //this.props.designViewState.activateRectangularSelectionTool();
     this.props.designViewState.activateTool(ToolNames.RECTANGULAR_SELECTION);
   };
 
   render() {
-    const { classes, designViewState } = this.props;
+    //const { classes, designViewState } = this.props;
     return (
-      <Fab
-      size="small"
-      className={classes.fab}
-      color={ designViewState.isSelectionToolActive ? 'primary' : 'default' }
-      onClick={this.handlePointerTool}
-    >
-      <TabUnselected />
-    </Fab>
-  // <ButtonFlyOut icon={<TabUnselected />} tooltip="Selection Tools">
-      //   <Fab
-      //     size="small"
-      //     className={classes.fab}
-      //     color="primary"
-      //     onClick={this.handlePointerTool}
-      //   >
-      //     <TabUnselected />
-      //   </Fab>
-      //   <Fab
-      //     size="small"
-      //     className={classes.fab}
-      //     color="inherit"
-      //     onClick={this.handlePointerTool}
-      //   >
-      //     <TabUnselected />
-      //   </Fab>
-      //   <Fab
-      //     size="small"
-      //     className={classes.fab}
-      //     color="inherit"
-      //     onClick={this.handlePointerTool}
-      //   >
-      //     <TabUnselected />
-      //   </Fab>
-      //   <Fab
-      //     size="small"
-      //     className={classes.fab}
-      //     color="inherit"
-      //     onClick={this.handlePointerTool}
-      //   >
-      //     <TabUnselected />
-      //   </Fab>
-      // </ButtonFlyOut>
+      <ButtonFlyOut icon={<SelectionIcon/>} tooltip="Selection Tools">
+        <FlyoutButton
+          title="Rectangular Selection"
+          onClick={this.handlePointerTool}
+        >
+          <SelectionIcon/>
+        </FlyoutButton>
+        <FlyoutButton
+          title="Freeform Selection"
+          onClick={this.handlePointerTool}
+        >
+          <IrregularSelectionIcon/>
+        </FlyoutButton>
+        <FlyoutButton
+          title="Select All">
+          <SelectAllIcon/>
+        </FlyoutButton>
+        <FlyoutButton
+          title="Deselect All">
+          <DeselectAllIcon/>
+        </FlyoutButton>
+        <FlyoutButton
+          title="Hide Unselected Marchers">
+        </FlyoutButton>
+        <FlyoutButton
+          title="Unhide All">
+        </FlyoutButton>
+      </ButtonFlyOut>
     );
+
   }
 }
 
