@@ -13,7 +13,6 @@ import MarcherToolsFlyout from './MarcherToolsFlyout';
 import ZoomToolsFlyout from './ZoomToolsFlyout';
 import SelectionToolsFlyout from './SelectionToolsFlyout';
 import EditToolsFlyout from './EditToolsFlyout';
-import SettingsButton from './settings/SettingsButton';
 import FlyoutButton from './FlyoutButton';
 import FootprintsIcon from '../icons/FootprintsIcon';
 
@@ -84,9 +83,6 @@ class RightSideBar extends Component {
             </ListItem>
             <ListItem button className={classes.listItem}>
               <ZoomToolsFlyout />
-            </ListItem>
-            <ListItem button className={classes.listItem}>
-              <SettingsButton />
             </ListItem>
           </List>
           <Divider />

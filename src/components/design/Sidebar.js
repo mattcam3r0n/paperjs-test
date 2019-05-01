@@ -11,6 +11,7 @@ import Fab from '@material-ui/core/Fab';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
+import SettingsButton from './settings/SettingsButton';
 
 const drawerWidth = 64;
 
@@ -81,6 +82,9 @@ class SideBar extends Component {
               <LibraryMusic />
             </Fab>
           </ListItem>
+          <ListItem button className={classes.listItem}>
+              <SettingsButton />
+            </ListItem>
         </List>
         <Divider />
         {/* <List>{otherMailFolderListItems}</List> */}
