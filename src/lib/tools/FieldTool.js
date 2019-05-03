@@ -1,8 +1,9 @@
 import paper from 'paper';
+import Tool from './Tool';
 
-export default class FieldTool {
+export default class FieldTool extends Tool {
   constructor(name, paperScope) {
-    this.name = name;
+    super(name);
     this.paperScope = paperScope;
     this.paperScope.activate();
     this.tool = new paper.Tool();
@@ -15,10 +16,6 @@ export default class FieldTool {
 
   activate() {
     this.tool.activate();
-  }
-
-  get cursor() {
-    return 'default';
   }
 
   isCanvasEvent(event) {

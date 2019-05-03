@@ -13,6 +13,9 @@ const styles = (theme) => ({
     margin: 5,
     float: 'left',
   },
+  popover: {
+    //width: 135
+  }
 });
 
 class ButtonFlyOut extends Component {
@@ -61,6 +64,12 @@ class ButtonFlyOut extends Component {
             </Fab>
           </Tooltip>
           <Popover
+            className={classes.popover}
+            PaperProps={{
+              classes: {
+                root: classes.popover
+              }
+            }}
             open={isOpen}
             anchorEl={anchorEl}
             onClose={this.handleClose}
@@ -70,7 +79,7 @@ class ButtonFlyOut extends Component {
             }}
             transformOrigin={{
               vertical: 'top',
-              horizontal: 'center',
+              horizontal: 'left' //'right',
             }}
           >
             {this.props.children.map((c, i) => {
@@ -87,11 +96,4 @@ class ButtonFlyOut extends Component {
   }
 }
 
-//export default withStyles(styles)(RightSideBar);
-
 export default withStyles(styles)(ButtonFlyOut);
-// export default compose(
-//   inject('appState'),
-//   observer,
-//   withStyles(styles)
-// )(ButtonFlyOut);

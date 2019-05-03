@@ -5,9 +5,11 @@ import ZoomAndPanTool from './ZoomAndPanTool';
 import FileSelectorTool from './FileSelectorTool';
 import RectangularSelectionTool from './RectangularSelectionTool';
 import IrregularSelectionTool from './IrregularSelectionTool';
+import StepsTool from './StepsTool';
 
 export default class ToolFactory {
   toolMap = {
+    [ToolNames.STEPS]: () => new StepsTool(),
     [ToolNames.ADD_MARCHERS]: () => new AddMarchersTool(this.fieldPaperScope),
     [ToolNames.ZOOM_IN]: () =>
       new ZoomAndPanTool(this.fieldPaperScope, this.fieldState, 'zoomIn'),

@@ -3,6 +3,7 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 
 /*
     Minified the Inkscape svg with https://jakearchibald.github.io/svgomg/
+    Resize tool https://www.iloveimg.com/resize-image 
 */
 export default function DeselectAllIcon(props) {
   return (

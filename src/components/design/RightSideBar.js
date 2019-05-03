@@ -13,8 +13,6 @@ import MarcherToolsFlyout from './MarcherToolsFlyout';
 import ZoomToolsFlyout from './ZoomToolsFlyout';
 import SelectionToolsFlyout from './SelectionToolsFlyout';
 import EditToolsFlyout from './EditToolsFlyout';
-import FlyoutButton from './FlyoutButton';
-import FootprintsIcon from '../icons/FootprintsIcon';
 
 const drawerWidth = 64;
 
@@ -56,6 +54,14 @@ class RightSideBar extends Component {
 
   render() {
     const { classes } = this.props;
+    const ButtonListItem = (props) => {
+      return (
+        <ListItem button className={classes.listItem}>
+          {props.children}
+        </ListItem>
+      );
+    };
+
     return (
       <React.Fragment>
         <Drawer
@@ -67,23 +73,18 @@ class RightSideBar extends Component {
           <div className={classes.toolbar} />
           {/* <List>{mailFolderListItems}</List> */}
           <List>
-            <ListItem button className={classes.listItem}>
+            <ButtonListItem>
               <SelectionToolsFlyout />
-            </ListItem>
-            <ListItem button className={classes.listItem}>
-              <FlyoutButton title="Steps Tool">
-                <FootprintsIcon/>
-              </FlyoutButton>
-            </ListItem>
-            <ListItem button className={classes.listItem}>
+            </ButtonListItem>
+            <ButtonListItem>
               <EditToolsFlyout />
-            </ListItem>
-            <ListItem button className={classes.listItem}>
+            </ButtonListItem>
+            <ButtonListItem>
               <MarcherToolsFlyout />
-            </ListItem>
-            <ListItem button className={classes.listItem}>
+            </ButtonListItem>
+            <ButtonListItem>
               <ZoomToolsFlyout />
-            </ListItem>
+            </ButtonListItem>
           </List>
           <Divider />
         </Drawer>

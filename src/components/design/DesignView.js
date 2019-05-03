@@ -7,6 +7,7 @@ import Timeline from './Timeline';
 import PathPalette from './PathPalette';
 import SelectionPalette from './SelectionPalette';
 import AddMarchersPalette from './AddMarchersPalette';
+import StepsPalette from './StepsPalette';
 
 const styles = (theme) => {
   return {
@@ -38,6 +39,7 @@ class DesignView extends Component {
         <PathPalette />
         <SelectionPalette />
         <AddMarchersPalette />
+        <StepsPalette />
       </React.Fragment>
     );
   }

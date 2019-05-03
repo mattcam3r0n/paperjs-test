@@ -3,7 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { observer, inject } from 'mobx-react';
 
 import PaletteButton from './PaletteButton';
-import { Done, Close, Timeline, Undo, Delete } from '@material-ui/icons';
+import { Done, Close, Undo, Delete } from '@material-ui/icons';
+import Divider from '@material-ui/core/Divider';
 
 import Palette from './Palette';
 import ToolNames from '../../lib/tools/ToolNames';
@@ -36,6 +37,9 @@ class SelectionPalette extends Component {
         top={top}
       >
         <DirectionButtons />
+        <div style={{ width: '100%'}}>
+          <Divider />
+        </div>
         <PaletteButton
           title="Rectangular Selection"
           onClick={this.handleRectangularSelection}
@@ -46,7 +50,7 @@ class SelectionPalette extends Component {
           data-amplify-analytics-name="click"
           data-amplify-analytics-attrs="tool:rectangularSelection"
         >
-          <SelectionIcon/>
+          <SelectionIcon />
         </PaletteButton>
         <PaletteButton
           title="Irregular Selection"
@@ -56,7 +60,7 @@ class SelectionPalette extends Component {
           data-amplify-analytics-name="click"
           data-amplify-analytics-attrs="tool:irregularSelection"
         >
-          <IrregularSelectionIcon/>
+          <IrregularSelectionIcon />
         </PaletteButton>
         <PaletteButton title="Undo" onClick={this.handleUndo}>
           <Undo />

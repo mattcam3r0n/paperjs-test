@@ -5,7 +5,9 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Draggable from 'react-draggable';
 import Paper from '@material-ui/core/Paper';
-import DragHandle from '@material-ui/icons/DragHandle';
+//import DragHandle from '@material-ui/icons/DragHandle';
+import DragIndicator from '@material-ui/icons/DragIndicator';
+import { Typography } from '@material-ui/core';
 
 const styles = (theme) => ({
   dragHandle: {
@@ -16,6 +18,9 @@ const styles = (theme) => ({
     display: 'flex',
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
+  },
+  dragIcon: {
+    marginTop: 3
   },
   title: {
     flex: '1 1 auto',
@@ -51,8 +56,9 @@ class Palette extends Component {
       <Draggable handle="div[name='drag-handle']">
         <Paper elevation={4} className={classes.paper} style={{ left: left, top: top }}>
           <div name="drag-handle" className={classes.dragHandle}>
-            <DragHandle />
-            <div className={classes.title}>{title}</div>
+            <DragIndicator className={classes.dragIcon} />
+            {/* <div className={classes.title}>{title}</div> */}
+            <Typography variant="overline">{title}</Typography>
           </div>
           {children}
         </Paper>

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 // import { observer, inject } from 'mobx-react';
-// import { compose } from 'recompose';
-import FootprintsIcon from '../icons/FootprintsIcon';
 
 import PaletteButton from './PaletteButton';
 import { ArrowForward } from '@material-ui/icons';
-import { Typography } from '@material-ui/core';
+//import { Typography } from '@material-ui/core';
 
 const styles = (theme) => ({
   buttonContainer: {
@@ -51,24 +49,7 @@ class DirectionButtons extends Component {
 
     return (
       <React.Fragment>
-        {/* <Tooltip title={tooltip} disableFocusListener={true}>
-            <Fab
-              size="small"
-              className={classes.fab}
-              color="inherit"
-              onClick={this.handleClick}
-            >
-              {this.props.icon}
-            </Fab>
-          </Tooltip> */}
         <div className={classes.buttonContainer}>
-          <Typography
-            variant="overline"
-            align="justify"
-            className={classes.title}
-          >
-            Add Step
-          </Typography>
           <PaletteButton>
             <ArrowForward className={classes.northWest} />
           </PaletteButton>
@@ -82,7 +63,6 @@ class DirectionButtons extends Component {
             <ArrowForward className={classes.west} />
           </PaletteButton>
           <PaletteButton>{/* <ArrowForward/> */}
-            <FootprintsIcon/>
           </PaletteButton>
           <PaletteButton>
             <ArrowForward className={classes.east} />

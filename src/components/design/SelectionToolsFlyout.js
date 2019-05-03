@@ -31,36 +31,29 @@ class SelectionToolsFlyout extends Component {
   render() {
     //const { classes, designViewState } = this.props;
     return (
-      <ButtonFlyOut icon={<SelectionIcon/>} tooltip="Selection Tools">
+      <ButtonFlyOut icon={<SelectionIcon />} tooltip="Selection Tools">
         <FlyoutButton
           title="Rectangular Selection"
           onClick={this.handlePointerTool}
         >
-          <SelectionIcon/>
+          <SelectionIcon />
         </FlyoutButton>
         <FlyoutButton
           title="Freeform Selection"
           onClick={this.handlePointerTool}
         >
-          <IrregularSelectionIcon/>
+          <IrregularSelectionIcon />
         </FlyoutButton>
-        <FlyoutButton
-          title="Select All">
-          <SelectAllIcon/>
+        <FlyoutButton title="Select All">
+          <SelectAllIcon />
         </FlyoutButton>
-        <FlyoutButton
-          title="Deselect All">
-          <DeselectAllIcon/>
+        <FlyoutButton title="Deselect All">
+          <DeselectAllIcon />
         </FlyoutButton>
-        <FlyoutButton
-          title="Hide Unselected Marchers">
-        </FlyoutButton>
-        <FlyoutButton
-          title="Unhide All">
-        </FlyoutButton>
+        <FlyoutButton title="Hide Unselected Marchers" />
+        <FlyoutButton title="Unhide All" />
       </ButtonFlyOut>
     );
-
   }
 }
 
